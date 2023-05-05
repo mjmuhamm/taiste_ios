@@ -120,6 +120,9 @@ class HomeViewController: UIViewController {
                             
                         storageRef.child("chefs/\(chefEmail)/profileImage/\(profileImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
                         
+                            if error != nil {
+                                print("error \(error)")
+                            }
                               let chefImage = UIImage(data: data!)!
                             
                             

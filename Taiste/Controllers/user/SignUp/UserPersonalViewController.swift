@@ -250,8 +250,10 @@ class UserPersonalViewController: UIViewController {
                     }
                     let data: [String: Any] = ["fullName" : self.fullName.text, "userName" : self.userName.text, "email": self.email.text,  "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text, "burger" : self.burger, "creative" : self.creative, "lowCal" : self.lowCal, "lowCarb" : self.lowCarb, "pasta" : self.pasta, "healthy" : self.healthy, "vegan" : self.vegan, "seafood" : self.seafood, "workout" : self.workout]
                     let data1: [String: Any] = ["username" : self.userName.text!, "email" : self.email.text!, "chefOrUser" : "user"]
+                    let data2: [String: Any] = ["chefOrUser" : "User"]
                     self.db.collection("User").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
+                    self.db.collection("User").document(authResult!.user.uid).setData(data2)
                     let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                     changeRequest?.displayName = self.userName.text
                     changeRequest?.commitChanges { error in

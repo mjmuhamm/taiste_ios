@@ -71,6 +71,7 @@ class ChefLoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
           // ...
+            chefOrUser = "CHef"
             self!.performSegue(withIdentifier: "LoginToChefTabSegue", sender: self)
             print("\(Auth.auth().currentUser)")
         }

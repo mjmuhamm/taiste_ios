@@ -16,7 +16,7 @@ import MaterialComponents.MaterialTextControls_OutlinedTextAreasTheming
 import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 
 
-
+var chefOrUser = ""
 class StartViewController: UIViewController {
     
     let date = Date()

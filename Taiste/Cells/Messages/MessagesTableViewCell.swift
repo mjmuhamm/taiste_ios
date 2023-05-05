@@ -14,13 +14,14 @@ class MessagesTableViewCell: UITableViewCell {
     @IBOutlet weak var awayDate: UILabel!
     
     @IBOutlet weak var awayButton: UIButton!
+    @IBOutlet weak var homeButton: UIButton!
     
     @IBOutlet weak var homeImage: UIImageView!
     @IBOutlet weak var homeMessage: UILabel!
     @IBOutlet weak var homeDate: UILabel!
     
     
-    var awayButtonTapped : (() -> ()) = {}
+    var profileButtonTapped : (() -> ()) = {}
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +36,10 @@ class MessagesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     @IBAction func awayButtonPressed(_ sender: Any) {
-        awayButtonTapped()
+        profileButtonTapped()
     }
     
+    @IBAction func homeButtonPressed(_ sender: Any) {
+        profileButtonTapped()
+    }
 }

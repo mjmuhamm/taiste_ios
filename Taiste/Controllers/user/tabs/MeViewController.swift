@@ -299,6 +299,7 @@ class MeViewController: UIViewController {
     }
     
     private func loadReviews() {
+        let storageRef = storage.reference()
         meTableView.register(UINib(nibName: "UserReviewsTableViewCell", bundle: nil), forCellReuseIdentifier: "UserReviewsReusableCell")
         
         userOrders.removeAll()
@@ -315,23 +316,28 @@ class MeViewController: UIViewController {
                         let data = doc.data()
                         
                         
-                        if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let chefUsername = data["chefUsername"] as? String, let date = data["date"] as? String, let documentID = data["documentID"] as? String, let itemTitle = data["itemTitle"] as? String, let itemType = data["itemType"] as? String, let liked = data["liked"] as? [String], let reviewItemID = data["reviewItemID"] as? String, let user = data["user"] as? String, let userChefRating = data["userChefRating"] as? Int, let userExpectationsRating = data["userExpectationsRating"] as? Int, let qualityRating = data["userQualityRating"] as? Int, let userRecommendation = data["userRecommendation"] as? Int, let userReviewTextField = data["userReviewTextField"] as? String {
-                            let image = UIImage()
+                        if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let chefUsername = data["chefUsername"] as? String, let date = data["date"] as? String, let itemTitle = data["itemTitle"] as? String, let itemType = data["itemType"] as? String, let user = data["user"] as? String, let userChefRating = data["chefRating"] as? Int, let userExpectationsRating = data["expectations"] as? Int, let qualityRating = data["quality"] as? Int, let userRecommendation = data["recommendation"] as? Int, let userReviewTextField = data["thoughts"] as? String, let liked = data["liked"] as? [String] {
+                            
+                            storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+                                
+                                   let chefImage = UIImage(data: data!)!
+                               
                             print("reviews happening")
-                            let newItem = UserReviews(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: image, chefName: chefUsername, date: date, documentID: documentID, itemTitle: itemTitle, itemType: itemType, liked: liked, reviewItemID: reviewItemID, user: user, userChefRating: userChefRating, userExpectationsRating: userExpectationsRating, userImageId: userImageId, userQualityRating: qualityRating, userRecommendation: userRecommendation, userReviewTextField: userReviewTextField)
+                                let newItem = UserReviews(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, chefName: chefUsername, date: date, documentID: doc.documentID, itemTitle: itemTitle, itemType: itemType, liked: liked, user: user, userChefRating: userChefRating, userExpectationsRating: userExpectationsRating, userImageId: userImageId, userQualityRating: qualityRating, userRecommendation: userRecommendation, userReviewTextField: userReviewTextField)
                             
                             if self.userReviews.isEmpty {
                                 self.userReviews.append(newItem)
                                 self.reviews = self.userReviews
                                 self.meTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
                             } else {
-                                let index = self.userReviews.firstIndex { $0.reviewItemID == reviewItemID }
+                                let index = self.userReviews.firstIndex(where: { $0.documentID == doc.documentID })
                                 if index == nil {
                                     self.userReviews.append(newItem)
                                     self.reviews = self.userReviews
                                     self.meTableView.insertRows(at: [IndexPath(item: self.reviews.count - 1, section: 0)], with: .fade)
                                 }
                             }
+                        }
                         }
                     }
                 }
@@ -555,7 +561,7 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             }
             cell.chefImageButtonTapped = {
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAsUser") as? ProfileAsUserViewController  {
-                vc.user = item.chefEmail
+                vc.user = item.chefImageId
                 vc.chefOrUser = "chef"
                 self.present(vc, animated: true, completion: nil)
             }
@@ -565,6 +571,7 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             cell.qualityRating.text = "\(item.userQualityRating)"
             cell.chefRating.text = "\(item.userChefRating)"
             cell.likeText.text = "\(item.liked.count)"
+            cell.chefImage.image = item.chefImage
             
         return cell
         }

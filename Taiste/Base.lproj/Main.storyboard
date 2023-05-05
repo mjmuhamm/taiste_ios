@@ -3517,6 +3517,16 @@
                                     <action selector="sendMessageButtonPressed:" destination="WFT-2O-fuq" eventType="touchUpInside" id="0MB-8A-78W"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EeX-JL-Tq9">
+                                <rect key="frame" x="258" y="92" width="147" height="31"/>
+                                <color key="backgroundColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Request Travel Fee"/>
+                                <connections>
+                                    <action selector="requestTravelFeeButtonPressed:" destination="WFT-2O-fuq" eventType="touchUpInside" id="FuO-eC-lyP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kjI-vR-gBG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -3540,7 +3550,9 @@
                             <constraint firstItem="4Q9-La-WQN" firstAttribute="trailing" secondItem="kjI-vR-gBG" secondAttribute="trailing" id="dSv-GX-SS5"/>
                             <constraint firstItem="Ekl-Cy-yeP" firstAttribute="leading" secondItem="qzw-8a-iHJ" secondAttribute="leading" id="f4I-eI-LP9"/>
                             <constraint firstAttribute="trailing" secondItem="Ekl-Cy-yeP" secondAttribute="trailing" id="fH0-Rd-d1v"/>
+                            <constraint firstItem="EeX-JL-Tq9" firstAttribute="top" secondItem="Ekl-Cy-yeP" secondAttribute="bottom" constant="11" id="ijd-kg-VP8"/>
                             <constraint firstItem="z6j-UK-gsj" firstAttribute="centerX" secondItem="qzw-8a-iHJ" secondAttribute="centerX" id="qFe-rI-clk"/>
+                            <constraint firstItem="kjI-vR-gBG" firstAttribute="trailing" secondItem="EeX-JL-Tq9" secondAttribute="trailing" constant="9" id="rmh-wB-Ayv"/>
                             <constraint firstItem="z6j-UK-gsj" firstAttribute="top" secondItem="Ekl-Cy-yeP" secondAttribute="bottom" constant="17.5" id="sbr-VZ-TFh"/>
                             <constraint firstItem="Ekl-Cy-yeP" firstAttribute="top" secondItem="Fnh-6Y-q5s" secondAttribute="bottom" constant="5.5" id="tdR-m2-oTI"/>
                             <constraint firstItem="Fnh-6Y-q5s" firstAttribute="top" secondItem="kjI-vR-gBG" secondAttribute="top" id="xzy-eT-Zj7"/>
@@ -3549,15 +3561,116 @@
                     <connections>
                         <outlet property="messageTableView" destination="4Q9-La-WQN" id="1qL-FX-zVk"/>
                         <outlet property="messageText" destination="UzB-B6-lQ9" id="qPk-G2-ECa"/>
+                        <outlet property="requestTravelFeeButton" destination="EeX-JL-Tq9" id="b1a-0m-LrX"/>
                         <outlet property="travelFeeLabel" destination="HVR-bS-Qoe" id="zzV-02-dJU"/>
                         <outlet property="travelFeeStack" destination="H5w-Qt-xIH" id="PHt-dO-QLC"/>
                         <outlet property="username" destination="z6j-UK-gsj" id="1wU-IM-oe7"/>
                         <segue destination="O7X-fF-rpK" kind="presentation" identifier="MessagesToProfileAsUserSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="gmU-Hz-wfQ"/>
+                        <segue destination="QD4-c3-dg6" kind="presentation" identifier="MessagesToTravelFeeSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="tQT-YS-PtT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NEs-f2-aMC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7255" y="-300"/>
+            <point key="canvasLocation" x="7241" y="-300"/>
+        </scene>
+        <!--Travel Fee View Controller-->
+        <scene sceneID="DbN-o2-tmN">
+            <objects>
+                <viewController id="QD4-c3-dg6" customClass="TravelFeeViewController" customModule="Taiste" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sua-Nd-34M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MZ-cc-rTD">
+                                <rect key="frame" x="0.0" y="553" width="414" height="343"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26w-zl-jr2">
+                                        <rect key="frame" x="-8" y="52.5" width="414" height="0.5"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="QcG-HK-dmS"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Fee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sX3-CG-zym">
+                                        <rect key="frame" x="167.5" y="21" width="79" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <color key="textColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sxg-9q-zsR">
+                                        <rect key="frame" x="4" y="16" width="45.5" height="31"/>
+                                        <color key="tintColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="QD4-c3-dg6" eventType="touchUpInside" id="PrU-kW-hE1"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="What is the price you would like to request for your travel?" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH1-Vz-SZ6">
+                                        <rect key="frame" x="31" y="61" width="197" height="72"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="72" id="jIY-pb-RJz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" systemColor="systemGray2Color"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Travel Fee Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0oP-23-WMS">
+                                        <rect key="frame" x="247.5" y="80" width="130.5" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tR9-Sb-XfO">
+                                        <rect key="frame" x="168.5" y="149" width="77" height="31"/>
+                                        <color key="backgroundColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Request"/>
+                                        <connections>
+                                            <action selector="requestButtonPressed:" destination="QD4-c3-dg6" eventType="touchUpInside" id="ixb-vA-Ng2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="0oP-23-WMS" firstAttribute="top" secondItem="26w-zl-jr2" secondAttribute="bottom" constant="27" id="7zv-Sn-ext"/>
+                                    <constraint firstItem="lH1-Vz-SZ6" firstAttribute="top" secondItem="26w-zl-jr2" secondAttribute="bottom" constant="8" symbolic="YES" id="FyF-1u-u9s"/>
+                                    <constraint firstAttribute="height" constant="343" id="HPg-RS-oPg"/>
+                                    <constraint firstItem="tR9-Sb-XfO" firstAttribute="top" secondItem="lH1-Vz-SZ6" secondAttribute="bottom" constant="16" id="HRs-km-FvZ"/>
+                                    <constraint firstItem="26w-zl-jr2" firstAttribute="leading" secondItem="8MZ-cc-rTD" secondAttribute="leading" constant="-8" id="NFm-pG-CLh"/>
+                                    <constraint firstItem="Sxg-9q-zsR" firstAttribute="leading" secondItem="8MZ-cc-rTD" secondAttribute="leading" constant="4" id="SXs-8d-cHc"/>
+                                    <constraint firstItem="26w-zl-jr2" firstAttribute="trailing" secondItem="8MZ-cc-rTD" secondAttribute="trailingMargin" id="Ug1-jh-lzg"/>
+                                    <constraint firstItem="26w-zl-jr2" firstAttribute="top" secondItem="Sxg-9q-zsR" secondAttribute="bottom" constant="5.5" id="XfB-YM-pLe"/>
+                                    <constraint firstAttribute="trailing" secondItem="0oP-23-WMS" secondAttribute="trailing" constant="36" id="bmq-DD-HbS"/>
+                                    <constraint firstItem="sX3-CG-zym" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sxg-9q-zsR" secondAttribute="trailing" constant="8" symbolic="YES" id="esr-l7-HOo"/>
+                                    <constraint firstItem="lH1-Vz-SZ6" firstAttribute="leading" secondItem="8MZ-cc-rTD" secondAttribute="leading" constant="31" id="fWY-Mx-WMF"/>
+                                    <constraint firstItem="Sxg-9q-zsR" firstAttribute="top" secondItem="8MZ-cc-rTD" secondAttribute="top" constant="16" id="ksz-lc-GxC"/>
+                                    <constraint firstItem="sX3-CG-zym" firstAttribute="centerX" secondItem="8MZ-cc-rTD" secondAttribute="centerX" id="obg-jC-uh6"/>
+                                    <constraint firstItem="sX3-CG-zym" firstAttribute="top" secondItem="8MZ-cc-rTD" secondAttribute="top" constant="21" id="rYr-44-t5G"/>
+                                    <constraint firstItem="tR9-Sb-XfO" firstAttribute="centerX" secondItem="8MZ-cc-rTD" secondAttribute="centerX" id="sN8-EB-5N1"/>
+                                    <constraint firstItem="0oP-23-WMS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lH1-Vz-SZ6" secondAttribute="trailing" constant="8" symbolic="YES" id="tiu-3I-b93"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="K5o-uq-rOz"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8MZ-cc-rTD" firstAttribute="centerX" secondItem="sua-Nd-34M" secondAttribute="centerX" id="KJv-9x-Rxb"/>
+                            <constraint firstItem="8MZ-cc-rTD" firstAttribute="trailing" secondItem="K5o-uq-rOz" secondAttribute="trailing" id="TAl-U7-bwv"/>
+                            <constraint firstAttribute="bottom" secondItem="8MZ-cc-rTD" secondAttribute="bottom" id="oyK-e7-nUp"/>
+                            <constraint firstItem="8MZ-cc-rTD" firstAttribute="leading" secondItem="K5o-uq-rOz" secondAttribute="leading" id="uS9-1l-96V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="engageLabel" destination="lH1-Vz-SZ6" id="uZy-Gh-4yK"/>
+                        <outlet property="requestButton" destination="tR9-Sb-XfO" id="5sm-SA-HM9"/>
+                        <outlet property="travelFeePrice" destination="0oP-23-WMS" id="WGu-7e-rBA"/>
+                        <outlet property="travelFeeTitle" destination="sX3-CG-zym" id="i1J-5F-KL8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GRO-4m-ZHs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7241" y="-996"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="bZH-Ee-zZo">

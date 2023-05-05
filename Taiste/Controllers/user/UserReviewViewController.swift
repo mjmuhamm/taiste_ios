@@ -226,7 +226,7 @@ class UserReviewViewController: UIViewController {
     
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        let data: [String: Any] = ["itemTitle" : item!.itemTitle, "itemDescription" : item!.itemDescription, "expectations" : expectationsNum, "quality" : qualityNum, "chefRating" : chefRatingNum, "recommend" : recommend, "thoughts" : thoughtsText.text ?? "", "date" :  df.string(from: date), "likes" : 0]
+        let data: [String: Any] = ["itemTitle" : item!.itemTitle, "itemDescription" : item!.itemDescription, "expectations" : expectationsNum, "quality" : qualityNum, "chefRating" : chefRatingNum, "recommend" : recommend, "thoughts" : thoughtsText.text ?? "", "date" :  df.string(from: date), "liked" : [], "chefEmail" : item!.chefEmail, "chefImageId" : item!.chefImageId, "itemType" : item!.typeOfService]
         db.collection(item!.typeOfService).document(item!.menuItemId).collection("UserReviews").document().setData(data)
         db.collection("User").document(Auth.auth().currentUser!.uid).collection("UserReviews").document().setData(data)
         self.performSegue(withIdentifier: "UserReviewToHomeSegue", sender: self)

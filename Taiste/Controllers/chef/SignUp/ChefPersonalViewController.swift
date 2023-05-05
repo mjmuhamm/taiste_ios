@@ -112,8 +112,10 @@ class ChefPersonalViewController: UIViewController {
                     }
                     let data: [String: Any] = ["fullName" : self.fullName.text, "chefName" : self.chefName.text, "email": self.email.text, "education" : self.education.text, "chefPassion" : self.chefPassion.text, "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text]
                     let data1: [String: Any] = ["username" : self.chefName.text!, "email" : self.email.text!, "chefOrUser" : "Chef"]
+                    let data2: [String: Any] = ["chefOrUser" : "Chef"]
                     self.db.collection("Chef").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
+                    self.db.collection("Chef").document(authResult!.user.uid).setData(data2)
                     let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                     changeRequest?.displayName = self.chefName.text
                     changeRequest?.commitChanges { error in

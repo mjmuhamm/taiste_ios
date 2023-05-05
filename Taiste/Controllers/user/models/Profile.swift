@@ -79,7 +79,6 @@ struct UserReviews {
     let itemTitle: String
     let itemType: String
     let liked: [String]
-    let reviewItemID: String
     let user: String
     let userChefRating: Int
     let userExpectationsRating: Int

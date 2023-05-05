@@ -69,10 +69,23 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGn-Tm-eLj">
+                        <rect key="frame" x="346" y="12" width="54" height="54"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="54" id="RS7-Lm-Wv5"/>
+                            <constraint firstAttribute="width" constant="54" id="hZb-2C-0ct"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                        <connections>
+                            <action selector="homeButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hSp-Ft-ip6"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="A26-Rq-sQL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="3h8-XW-4iU"/>
                     <constraint firstItem="O6G-Sf-bqL" firstAttribute="top" secondItem="A26-Rq-sQL" secondAttribute="bottom" constant="8" id="9AY-ky-9Yi"/>
+                    <constraint firstItem="nGn-Tm-eLj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="9dj-gw-u6r"/>
                     <constraint firstItem="5hJ-cq-CTC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="GQ8-5u-vnv"/>
                     <constraint firstItem="VTm-bG-10u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="JrL-Fu-ekz"/>
                     <constraint firstItem="ZZV-ob-3M1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="KQd-JH-bEe"/>
@@ -84,6 +97,7 @@
                     <constraint firstAttribute="trailing" secondItem="vla-Q4-06b" secondAttribute="trailing" constant="14" id="aFn-LR-6qP"/>
                     <constraint firstItem="A26-Rq-sQL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="b7O-Wr-8to"/>
                     <constraint firstItem="D8P-vX-2xt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="cBn-PO-Yry"/>
+                    <constraint firstAttribute="trailing" secondItem="nGn-Tm-eLj" secondAttribute="trailing" constant="14" id="l4p-lk-j2Z"/>
                     <constraint firstItem="VTm-bG-10u" firstAttribute="leading" secondItem="O6G-Sf-bqL" secondAttribute="trailing" constant="8" symbolic="YES" id="rtr-yz-deq"/>
                     <constraint firstItem="O6G-Sf-bqL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="s9x-dF-DJp"/>
                     <constraint firstAttribute="trailing" secondItem="VTm-bG-10u" secondAttribute="trailing" constant="14" id="yEI-Mf-Qph"/>
@@ -97,6 +111,7 @@
                 <outlet property="awayDate" destination="vla-Q4-06b" id="xcZ-eK-haM"/>
                 <outlet property="awayImage" destination="5hJ-cq-CTC" id="v8Y-Om-6hA"/>
                 <outlet property="awayMessage" destination="ZZV-ob-3M1" id="Zam-k6-9Rv"/>
+                <outlet property="homeButton" destination="nGn-Tm-eLj" id="rKS-qG-8Uh"/>
                 <outlet property="homeDate" destination="O6G-Sf-bqL" id="gee-zK-fNh"/>
                 <outlet property="homeImage" destination="VTm-bG-10u" id="zYb-lA-ov0"/>
                 <outlet property="homeMessage" destination="A26-Rq-sQL" id="q2K-D5-dRO"/>

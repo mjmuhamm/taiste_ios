@@ -74,6 +74,7 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
           // ...
+            chefOrUser = "User"
             self!.performSegue(withIdentifier: "LoginToUserTabSegue", sender: self)
         }
         }

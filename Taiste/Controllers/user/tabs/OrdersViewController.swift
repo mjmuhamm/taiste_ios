@@ -101,6 +101,7 @@ class OrdersViewController: UIViewController {
                                     self.ordersTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
                             }
+                            
                         } else if orderUpdate == "orderApproved" {
                             if self.scheduledOrders.isEmpty {
                                 self.scheduledOrders.append(newOrder)
@@ -183,6 +184,18 @@ class OrdersViewController: UIViewController {
         completeButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
     }
     
+    private var travelFeeOrMessage = ""
+    private var orderTransfer : Orders?
+    private var otherUser = ""
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserOrdersToMessagesSegue" {
+            let info = segue.destination as! MessagesViewController
+            info.travelFeeOrMessage = travelFeeOrMessage
+            info.order = orderTransfer
+            info.otherUser = otherUser
+        }
+    }
+    
 }
 
 extension OrdersViewController : UITableViewDataSource, UITableViewDelegate {
@@ -229,6 +242,13 @@ extension OrdersViewController : UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
+        }
+        
+        cell.messagesForTravelFeeButtonTapped = {
+            self.travelFeeOrMessage = "travelFee"
+            self.orderTransfer = order
+            self.otherUser = order.chefUsername
+            self.performSegue(withIdentifier: "UserOrdersToMessagesSegue", sender: self)
         }
         
         cell.showNotesButtonTapped = {

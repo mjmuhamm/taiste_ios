@@ -6,12 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 struct Messages {
     
     let homeOrAway: String
     let pictureId: String
+    let image: UIImage
     let message: String
-    let date: String
+    let date: Date
+    let documentId: String
+    let chefOrUser: String
+    let travelFee: String
     
 }
