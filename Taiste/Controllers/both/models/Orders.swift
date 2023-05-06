@@ -46,4 +46,5 @@ struct Orders {
     let documentId: String
     let creditsApplied: String
     let creditIds: [String]
+    let paymentId: String
 }
