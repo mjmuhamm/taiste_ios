@@ -15,6 +15,7 @@ struct Messages {
     let image: UIImage
     let message: String
     let date: Date
+    let dateString: String
     let documentId: String
     let chefOrUser: String
     let travelFee: String

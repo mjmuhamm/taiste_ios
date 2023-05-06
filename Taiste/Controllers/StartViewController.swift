@@ -16,7 +16,6 @@ import MaterialComponents.MaterialTextControls_OutlinedTextAreasTheming
 import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 
 
-var chefOrUser = ""
 class StartViewController: UIViewController {
     
     let date = Date()
@@ -38,9 +37,6 @@ class StartViewController: UIViewController {
         let year = dateString.prefix(4)
         let month = dateString.prefix(7).suffix(2)
 //        print("date \(year), \(month)")
-        
-        1683148684
-        1623451518
     }
     
     override func viewDidAppear(_ animated: Bool) {

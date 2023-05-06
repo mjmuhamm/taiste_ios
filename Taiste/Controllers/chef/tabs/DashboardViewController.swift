@@ -80,6 +80,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         itemMenu.selectionAction = { index, item in
             self.itemText.text = item
             if self.time == "Weekly" {
+                print("weekly \(self.items)")
                 self.loadItemWeeklyData(itemTitle: item)
             } else if self.time == "Monthly" {
                 self.loadItemMonthlyData(itemTitle: item)
@@ -143,7 +144,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         } else {
             itemType1 = itemType
         }
-        db.collection("Chef").document("malik@cheftesting.com").collection(itemType1).getDocuments { documents, error in
+        db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(itemType1).getDocuments { documents, error in
             
             if error == nil {
                 if documents != nil {
@@ -158,7 +159,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
                     }
                 } else {
                     self.items.append(FoodItems(menuItemId: "", itemTitle: "There no items in \(itemType)."))
-                    self.itemMenu.dataSource.append("There no items in \(itemType).")
+                    self.itemMenu.dataSource.append("There are no items in \(itemType).")
                     
                 }
             }
@@ -167,8 +168,11 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
     
     private func loadItemWeeklyData(itemTitle: String) {
         
+        let month = "\(df.string(from: date))".prefix(7).suffix(2)
+        let year = "\(df.string(from: date))".prefix(4)
+        let yearMonth = "\(year), \(month)"
         var itemId = ""
-        for i in 0..<(items.count - 1) {
+        for i in 0..<items.count {
             if items[i].itemTitle == itemTitle {
                 itemId = items[i].menuItemId
             }
@@ -180,7 +184,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         weeklyBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:labels)
         if itemId != "" {
                 for i in 1..<5 {
-                db.collection("Chef").document("malik@cheftesting.com").collection("Dashboard").document("\(self.itemTypeText.text!)").collection(itemId).document("Month").collection("2022, 02").document("Week").collection("Week \(i)").getDocuments { documents, error in
+                    db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document("\(self.itemTypeText.text!)").collection(itemId).document("Month").collection(yearMonth).document("Week").collection("Week \(i)").getDocuments { documents, error in
                
                 if error == nil {
                     if documents != nil {
@@ -258,7 +262,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         
         var newMonth = monthStart
         
-        for i in 0..<(items.count - 1) {
+        for i in 0..<items.count {
             if items[i].itemTitle == itemTitle {
                 itemId = items[i].menuItemId
             }
@@ -276,7 +280,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
             yearMonth = "2022, \(newMonth)"
             print("yearmonth \(yearMonth)")
             print("i \(i)")
-            db.collection("Chef").document("malik@cheftesting.com").collection("Dashboard").document("\(self.itemTypeText.text!)").collection(itemId).document("Month").collection(yearMonth).document("Total").getDocument { document, error in
+            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document("\(self.itemTypeText.text!)").collection(itemId).document("Month").collection(yearMonth).document("Total").getDocument { document, error in
                
                 if error == nil {
                     if document != nil {

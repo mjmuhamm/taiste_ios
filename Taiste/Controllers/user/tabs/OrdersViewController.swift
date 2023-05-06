@@ -38,7 +38,7 @@ class OrdersViewController: UIViewController {
     
     private var orders : [Orders] = []
     
-    private var toggle = "PendingOrders"
+    private var toggle = "Pending"
     
     
     override func viewDidLoad() {
@@ -76,7 +76,7 @@ class OrdersViewController: UIViewController {
             ordersI = completeOrders
         }
         if ordersI.isEmpty {
-            db.collection("User").document(Auth.auth().currentUser!.uid).collection(toggle).getDocuments { documents, error in
+            db.collection("User").document(Auth.auth().currentUser!.uid).collection("Orders").addSnapshotListener { documents, error in
             
             if error == nil {
                 if (documents != nil) {
@@ -85,10 +85,10 @@ class OrdersViewController: UIViewController {
                     
                     if let cancelled = data["cancelled"] as? String, let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let chefUsername = data["chefUsername"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let distance = data["distance"] as? String, let eventDates = data["eventDates"] as? [String], let eventTimes = data["eventTimes"] as? [String], let eventNotes = data["eventNotes"] as? String, let eventQuantity = data["eventQuantity"] as? String, let eventType = data["eventType"] as? String, let itemDescription = data["itemDescription"] as? String, let itemTitle = data["itemTitle"] as? String, let location = data["location"] as? String,let menuItemId = data["menuItemId"] as? String, let numberOfEvents = data["numberOfEvents"] as? Int, let orderDate = data["orderDate"] as? String, let orderId = data["orderId"] as? String, let orderUpdate = data["orderUpdate"] as? String, let priceToChef = data["priceToChef"] as? Double, let taxesAndFees = data["taxesAndFees"] as? Double, let totalCostOfEvent = data["totalCostOfEvent"] as? Double, let travelFeeExpenseOption = data["travelExpenseOption"] as? String, let travelFee = data["travelFee"] as? String, let travelFeeAccepted = data["travelFeeAccepted"] as? String, let travelFeeRequested = data["travelFeeRequested"] as? String, let typeOfService = data["typeOfService"] as? String, let unitPrice = data["unitPrice"] as? String, let user = data["user"] as? String, let userImageId = data["userImageId"] as? String, let creditsApplied = data["creditsApplied"] as? String, let creditIds = data["creditIds"] as? [String], let userNotificationToken = data["userNotificationToken"] as? String {
                         
-                        print("orders happening")
                         let newOrder = Orders(cancelled: cancelled, chefEmail: chefEmail, chefImageId: chefImageId, chefNotificationToken: "chefNotificationToken", chefUsername: chefUsername, city: city, distance: distance, eventDates: eventDates, eventTimes: eventTimes, eventNotes: eventNotes, eventType: eventType, eventQuantity: eventQuantity, itemDescription: itemDescription, itemTitle: itemTitle, location: location, menuItemId: menuItemId, numberOfEvents: numberOfEvents, orderDate: orderDate, orderId: orderId, orderUpdate: orderUpdate, priceToChef: priceToChef, state: state, taxesAndFees: taxesAndFees, totalCostOfEvent: totalCostOfEvent, travelFeeOption: travelFeeExpenseOption, travelFee: travelFee, travelFeeApproved: travelFeeAccepted, travelFeeRequested: travelFeeRequested, typeOfService: typeOfService, unitPrice: unitPrice, user: user, userImageId: userImageId, userNotificationToken: userNotificationToken, documentId: doc.documentID, creditsApplied: creditsApplied, creditIds: creditIds)
-                        
-                        if orderUpdate == "pendingChefAcceptance" {
+                        print("orderupdate \(orderUpdate)")
+                        if orderUpdate == "pending" {
+                            if self.toggle == "Pending" {
                             if self.pendingOrders.isEmpty  {
                                 self.pendingOrders.append(newOrder)
                                 self.orders = self.pendingOrders
@@ -101,8 +101,10 @@ class OrdersViewController: UIViewController {
                                     self.ordersTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
                             }
-                            
-                        } else if orderUpdate == "orderApproved" {
+                            }
+                        } else if orderUpdate == "scheduled" {
+                            if self.toggle == "Scheduled" {
+                            print("orders happening")
                             if self.scheduledOrders.isEmpty {
                                 self.scheduledOrders.append(newOrder)
                                 self.orders = self.scheduledOrders
@@ -115,7 +117,9 @@ class OrdersViewController: UIViewController {
                                     self.ordersTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
                             }
-                        } else if orderUpdate == "orderComplete" {
+                            }
+                        } else if orderUpdate == "complete" {
+                            if self.toggle == "Complete" {
                             if self.completeOrders.isEmpty {
                                 self.completeOrders.append(newOrder)
                                 self.orders = self.completeOrders
@@ -127,6 +131,7 @@ class OrdersViewController: UIViewController {
                                     self.orders = self.scheduledOrders
                                     self.ordersTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
+                            }
                             }
                         }
                     }
@@ -151,7 +156,7 @@ class OrdersViewController: UIViewController {
     
     @IBAction func pendingButtonPressed(_ sender: Any) {
         
-        toggle = "PendingOrders"
+        toggle = "Pending"
         loadOrders()
         pendingButton.setTitleColor(UIColor.white, for: .normal)
         pendingButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
@@ -163,7 +168,7 @@ class OrdersViewController: UIViewController {
     
     @IBAction func scheduledButtonPressed(_ sender: Any) {
         
-        toggle = "ScheduledOrders"
+        toggle = "Scheduled"
         loadOrders()
         pendingButton.backgroundColor = UIColor.white
         pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -174,7 +179,7 @@ class OrdersViewController: UIViewController {
     }
     
     @IBAction func completeButtonPressed(_ sender: Any) {
-        toggle = "CompleteOrders"
+        toggle = "Complete"
         loadOrders()
         pendingButton.backgroundColor = UIColor.white
         pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -193,6 +198,7 @@ class OrdersViewController: UIViewController {
             info.travelFeeOrMessage = travelFeeOrMessage
             info.order = orderTransfer
             info.otherUser = otherUser
+            info.chefOrUser = "User"
         }
     }
     
@@ -220,6 +226,15 @@ extension OrdersViewController : UITableViewDataSource, UITableViewDelegate {
         cell.itemTitle.text = order.itemTitle
         cell.eventTypeAndQuantity.text = "Event Type: \(order.eventType)   Event Quantity: \(order.eventQuantity)"
         cell.location.text = "Location: \(order.location)"
+        
+        
+        if toggle == "Scheduled" {
+            cell.messagesForTravelFeeButton.isHidden = true
+            cell.messageButtonPressed.isHidden = false
+        } else if toggle == "Pending" {
+            cell.messagesForTravelFeeButton.isHidden = false
+            cell.messageButtonPressed.isHidden = true
+        }
         
         if order.travelFeeOption == "No" {
             cell.messagesForTravelFeeButton.isHidden = true

@@ -378,32 +378,32 @@ class OrderDetailsViewController: UIViewController {
         } else if zipCode.text!.isEmpty {
                 showToast(message: "Please enter a zip code in the allotted field.", font: .systemFont(ofSize: 12))
         } else {
-        if streetAddressText2.text!.isEmpty {
+        if streetAddressText2.text == "" {
             locationI = "\(streetAddressText.text!) \(cityText.text!), \(stateText.text!) \(zipCode.text!)"
         } else {
             locationI = "\(streetAddressText.text!) \(streetAddressText2.text!) \(cityText.text!), \(stateText.text!) \(zipCode.text!)"
         }
             let geoCoder1 = CLGeocoder()
-            let location2 = "\(self.item!.city) \(self.item!.state)"
+            let location2 = "\(self.item!.city) \(self.item!.state) \(self.item!.zipCode)"
             var latitude1 : CLLocationDegrees?
             var longitude1 : CLLocationDegrees?
             
             geoCoder1.geocodeAddressString(location2) { placemarks, error in
                 guard let placemarks = placemarks,
-                      let location = placemarks.first?.location
+                      let location1 = placemarks.first?.location
                 else {
                     return
                 }
-                latitude1 = location.coordinate.latitude
-                longitude1 = location.coordinate.longitude
-            
+                latitude1 = location1.coordinate.latitude
+                longitude1 = location1.coordinate.longitude
+                
             
             
         let geoCoder = CLGeocoder()
-           geoCoder.geocodeAddressString(locationI) { (placemarks, error) in
+           geoCoder.geocodeAddressString(locationI) { (placemarks1, error) in
                guard
-                   let placemarks = placemarks,
-                   let location = placemarks.first?.location
+                   let placemarks1 = placemarks1,
+                   let location = placemarks1.first?.location
                else {
                    if self.no != "Yes" {
                        self.showToast(message: "We were unable to find a location. Please check your information and try again.", font: .systemFont(ofSize: 12))
@@ -427,13 +427,15 @@ class OrderDetailsViewController: UIViewController {
                    return
                }
                
-               self.latitude = location.coordinate.latitude
-               self.longitude = location.coordinate.longitude
+               let latitude3 = location.coordinate.latitude
+               let longitude3 = location.coordinate.longitude
                self.distance = "\(location.distance(from: CLLocation(latitude: latitude1!, longitude: longitude1!)) / 1609.34)"
                
                if (Double(self.distance)! > 45) {
                    self.showToast(message: "Please note that the chef will be given a travel fee option to be negotiated with you due to the distance of your event.", font: .systemFont(ofSize: 12))
                    self.travelFeeExpenseOption = "Yes"
+               } else {
+                   self.travelFeeExpenseOption = "No"
                }
                self.locationOfEventText.text = locationI
                if self.eventDays.count > 2 {

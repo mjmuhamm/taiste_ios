@@ -448,6 +448,7 @@
 				F4F8D9FD29C7D27E00D6831C /* AccountSettingsChefViewController.swift */,
 				F482BA6D29FB1379007965C9 /* MenuItemViewController.swift */,
 				F4A080AE29FD6B6500895938 /* AddContentViewController.swift */,
+				F4DA73212A05AC8D004FE58F /* TravelFeeViewController.swift */,
 			);
 			path = chef;
 			sourceTree = "<group>";
@@ -461,7 +462,6 @@
 				F4E44B1627C965AC007F6295 /* ProfileAsUserViewController.swift */,
 				F4A080C02A019D4500895938 /* MessagesViewController.swift */,
 				F4A080C92A01AF6000895938 /* SearchViewController.swift */,
-				F4DA73212A05AC8D004FE58F /* TravelFeeViewController.swift */,
 			);
 			path = both;
 			sourceTree = "<group>";

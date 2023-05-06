@@ -19,7 +19,7 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 class CheckoutViewController: UIViewController {
 
     var paymentSheet: PaymentSheet?
-      let backendCheckoutUrl = URL(string: "https://ruh.herokuapp.com/create-payment-intent")! // Your backend endpoint
+    let backendCheckoutUrl = URL(string: "https://ruh.herokuapp.com/create-payment-intent")! // Your backend endpoint
 
     
     private let storage = Storage.storage()
@@ -51,10 +51,6 @@ class CheckoutViewController: UIViewController {
         payButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .touchUpInside)
         payButton.isEnabled = false
 
-           
-         
-        
-        
         checkoutTableView.delegate = self
         checkoutTableView.dataSource = self
         checkoutTableView.register(UINib(nibName: "CheckoutTableViewCell", bundle: nil), forCellReuseIdentifier: "CheckoutReusableCell")
@@ -182,15 +178,14 @@ class CheckoutViewController: UIViewController {
         for i in 0..<checkoutItems.count {
             let item = checkoutItems[i]
             let orderId = UUID().uuidString
-            let data: [String: Any] = ["cancelled" : "", "chefEmail" : item.chefEmail, "chefImageId" : item.chefImageId, "chefNotificationToken" : "", "chefUsername" : item.chefUsername, "city" : item.city, "state" : item.state, "distance" : item.distance, "eventDates" : item.datesOfEvent, "eventNotes" : item.notesToChef, "eventTimes" : item.timesForDatesOfEvent, "eventType" : item.typeOfEvent, "itemDescription" : item.itemDescription, "itemTitle" : item.itemTitle, "menuItemId" : item.menuItemId, "numberOfEvents" : checkoutItems.count, "orderDate" : date, "orderId" : orderId, "orderUpdate" : "pendingChefAcceptance", "priceToChef" : item.priceToChef, "taxesAndFees" : totalPrice * 0.125, "totalCostOfEvent" : item.totalCostOfEvent, "travelFee" : "", "travelFeeAccepted" : "", "travelFeeRequested" : "", "travelFeeApproved" : "", "typeOfService" : item.typeOfService, "userImageId" : Auth.auth().currentUser!.uid, "userNotificationToken" : "", "user" : user, "unitPrice" : item.unitPrice, "imageCount" : item.imageCount, "liked" : item.liked, "itemOrders" : item.itemOrders, "itemRating" : item.itemRating, "itemCalories" : "\(item.itemCalories)", "location" : item.location, "eventQuantity" : item.quantityOfEvent, "travelExpenseOption" : item.travelExpenseOption, "creditsApplied" : creditsApplied, "creditIds" : creditsIds]
+            let data: [String: Any] = ["cancelled" : "", "chefEmail" : item.chefEmail, "chefImageId" : item.chefImageId, "chefNotificationToken" : "", "chefUsername" : item.chefUsername, "city" : item.city, "state" : item.state, "distance" : item.distance, "eventDates" : item.datesOfEvent, "eventNotes" : item.notesToChef, "eventTimes" : item.timesForDatesOfEvent, "eventType" : item.typeOfEvent, "itemDescription" : item.itemDescription, "itemTitle" : item.itemTitle, "menuItemId" : item.menuItemId, "numberOfEvents" : checkoutItems.count, "orderDate" : date, "orderId" : orderId, "orderUpdate" : "pending", "priceToChef" : item.priceToChef, "taxesAndFees" : totalPrice * 0.125, "totalCostOfEvent" : item.totalCostOfEvent, "travelFee" : "", "travelFeeAccepted" : "", "travelFeeRequested" : "", "travelFeeApproved" : "", "typeOfService" : item.typeOfService, "userImageId" : Auth.auth().currentUser!.uid, "userNotificationToken" : "", "user" : user, "unitPrice" : item.unitPrice, "imageCount" : item.imageCount, "liked" : item.liked, "itemOrders" : item.itemOrders, "itemRating" : item.itemRating, "itemCalories" : "\(item.itemCalories)", "location" : item.location, "eventQuantity" : item.quantityOfEvent, "travelExpenseOption" : item.travelExpenseOption, "creditsApplied" : creditsApplied, "creditIds" : creditsIds]
             
             
-            let data1: [String: Any] = ["cancelled" : "", "chefEmail" : item.chefEmail, "chefImageId" : item.chefImageId, "chefNotificationToken" : "", "chefUsername" : item.chefUsername, "city" : item.city, "state" : item.state, "distance" : item.distance, "eventDates" : item.datesOfEvent, "eventNotes" : item.notesToChef, "eventTimes" : item.timesForDatesOfEvent, "eventType" : item.typeOfEvent, "itemDescription" : item.itemDescription, "itemTitle" : item.itemTitle,"menuItemId" : item.menuItemId, "numberOfEvents" : checkoutItems.count, "orderDate" : date, "orderId" : orderId, "orderUpdate" : "pendingChefAcceptance", "priceToChef" : item.priceToChef, "taxesAndFees" : totalPrice * 0.125, "totalCostOfEvent" : item.totalCostOfEvent, "travelFee" : "", "travelFeeAccepted" : "", "travelFeeRequested" : "", "travelFeeApproved" : "", "typeOfService" : item.typeOfService, "userImageId" : Auth.auth().currentUser!.uid, "userNotificationToken" : "", "user" : user, "unitPrice" : item.unitPrice, "imageCount" : item.imageCount, "liked" : item.liked, "itemOrders" : item.itemOrders, "itemRating" : item.itemRating, "itemCalories" : "\(item.itemCalories)", "location" : item.location, "eventQuantity" : item.quantityOfEvent, "travelExpenseOption" : item.travelExpenseOption, "creditsApplied" : creditsApplied, "creditIds" : creditsIds, "paymentIntent" : paymentId]
+            let data1: [String: Any] = ["cancelled" : "", "chefEmail" : item.chefEmail, "chefImageId" : item.chefImageId, "chefNotificationToken" : "", "chefUsername" : item.chefUsername, "city" : item.city, "state" : item.state, "distance" : item.distance, "eventDates" : item.datesOfEvent, "eventNotes" : item.notesToChef, "eventTimes" : item.timesForDatesOfEvent, "eventType" : item.typeOfEvent, "itemDescription" : item.itemDescription, "itemTitle" : item.itemTitle,"menuItemId" : item.menuItemId, "numberOfEvents" : checkoutItems.count, "orderDate" : date, "orderId" : orderId, "orderUpdate" : "pending", "priceToChef" : (item.totalCostOfEvent - (item.totalCostOfEvent * 0.05)), "taxesAndFees" : item.totalCostOfEvent * 0.125, "totalCostOfEvent" : item.totalCostOfEvent, "travelFee" : "", "travelFeeAccepted" : "", "travelFeeRequested" : "", "travelFeeApproved" : "", "typeOfService" : item.typeOfService, "userImageId" : Auth.auth().currentUser!.uid, "userNotificationToken" : "", "user" : user, "unitPrice" : item.unitPrice, "imageCount" : item.imageCount, "liked" : item.liked, "itemOrders" : item.itemOrders, "itemRating" : item.itemRating, "itemCalories" : "\(item.itemCalories)", "location" : item.location, "eventQuantity" : item.quantityOfEvent, "travelExpenseOption" : item.travelExpenseOption, "creditsApplied" : creditsApplied, "creditIds" : creditsIds, "paymentIntent" : paymentId]
             
-            db.collection("Chef").document(item.chefImageId).collection("PendingOrders").document(orderId).setData(data)
-            db.collection("User").document(Auth.auth().currentUser!.uid).collection("PendingOrders").document(orderId).setData(data)
+            db.collection("Chef").document(item.chefImageId).collection("Orders").document(orderId).setData(data)
             db.collection("User").document(Auth.auth().currentUser!.uid).collection("Orders").document(orderId).setData(data)
-            db.collection("PendingOrders").document(orderId).setData(data1)
+            db.collection("Orders").document(orderId).setData(data1)
             db.collection("User").document(Auth.auth().currentUser!.uid).collection("Cart").document(item.documentId).delete()
             
             if (i == checkoutItems.count - 1) {

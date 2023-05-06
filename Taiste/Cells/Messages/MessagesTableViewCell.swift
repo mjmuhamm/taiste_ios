@@ -20,6 +20,7 @@ class MessagesTableViewCell: UITableViewCell {
     @IBOutlet weak var homeMessage: UILabel!
     @IBOutlet weak var homeDate: UILabel!
     
+    @IBOutlet weak var travelFeeMessage: UILabel!
     
     var profileButtonTapped : (() -> ()) = {}
     
@@ -27,6 +28,18 @@ class MessagesTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        awayImage.layer.borderWidth = 1
+        awayImage.layer.masksToBounds = false
+        awayImage.layer.borderColor = UIColor.white.cgColor
+        awayImage.layer.cornerRadius = awayImage.frame.height/2
+        awayImage.clipsToBounds = true
+        
+        
+        homeImage.layer.borderWidth = 1
+        homeImage.layer.masksToBounds = false
+        homeImage.layer.borderColor = UIColor.white.cgColor
+        homeImage.layer.cornerRadius = homeImage.frame.height/2
+        homeImage.clipsToBounds = true
     
     }
 

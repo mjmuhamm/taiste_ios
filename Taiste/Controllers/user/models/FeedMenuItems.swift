@@ -29,6 +29,7 @@ struct FeedMenuItems {
     let itemType: String
     let city: String
     let state: String
+    let zipCode: String
     let user: String
     let healthy: Int
     let creative: Int

@@ -74,7 +74,7 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
           // ...
-            chefOrUser = "User"
+            
             self!.performSegue(withIdentifier: "LoginToUserTabSegue", sender: self)
         }
         }
@@ -82,6 +82,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonPressed(_ sender: MDCButton) {
+        
+//        self.performSegue(withIdentifier: "LoginToUserSignUpSegue", sender: self)
     }
     
     func showToast(message : String, font: UIFont) {

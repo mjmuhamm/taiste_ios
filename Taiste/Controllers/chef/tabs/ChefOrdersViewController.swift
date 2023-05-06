@@ -14,6 +14,8 @@ import MaterialComponents
 
 class ChefOrdersViewController: UIViewController {
     
+    let date = Date()
+    let df = DateFormatter()
     private let db = Firestore.firestore()
 //    private let chef = Auth.auth().currentUser!.email!
 
@@ -43,6 +45,7 @@ class ChefOrdersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         orderTableView.register(UINib(nibName: "ChefOrdersTableViewCell", bundle: nil), forCellReuseIdentifier: "ChefOrdersReusableCell")
         orderTableView.delegate = self
         orderTableView.dataSource = self
@@ -61,7 +64,6 @@ class ChefOrdersViewController: UIViewController {
             orders.removeAll()
             orderTableView.reloadData()
         }
-        print("orders happening")
         
         var ordersI : [Orders]
         if toggle == "Pending" {
@@ -72,7 +74,7 @@ class ChefOrdersViewController: UIViewController {
             ordersI = completeOrders
         }
         if ordersI.isEmpty {
-            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("PendingOrders").addSnapshotListener({ documents, error in
+            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Orders").addSnapshotListener ({ documents, error in
             
             if error == nil {
                 if (documents != nil) {
@@ -86,44 +88,57 @@ class ChefOrdersViewController: UIViewController {
                         print("orders happening 3")
                         let newOrder = Orders(cancelled: cancelled, chefEmail: chefEmail, chefImageId: chefImageId, chefNotificationToken: "chefNotificationToken", chefUsername: chefUsername, city: city, distance: distance, eventDates: eventDates, eventTimes: eventTimes, eventNotes: eventNotes, eventType: eventType, eventQuantity: eventQuantity, itemDescription: itemDescription, itemTitle: itemTitle, location: location, menuItemId: menuItemId, numberOfEvents: numberOfEvents, orderDate: orderDate, orderId: orderId, orderUpdate: orderUpdate, priceToChef: priceToChef, state: state, taxesAndFees: taxesAndFees, totalCostOfEvent: totalCostOfEvent, travelFeeOption: travelFeeExpenseOption, travelFee: travelFee, travelFeeApproved: travelFeeAccepted, travelFeeRequested: travelFeeRequested, typeOfService: typeOfService, unitPrice: unitPrice, user: user, userImageId: userImageId, userNotificationToken: userNotificationToken, documentId: doc.documentID, creditsApplied: creditsApplied, creditIds: creditIds)
                         
-                        if orderUpdate == "pendingChefAcceptance" {
+                        if orderUpdate == "pending" {
+                            
                             if self.pendingOrders.isEmpty  {
                                 self.pendingOrders.append(newOrder)
+                                if self.toggle == "Pending" {
                                 self.orders = self.pendingOrders
                                 self.orderTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+                                }
                             } else {
                                 let index = self.pendingOrders.firstIndex { $0.documentId == doc.documentID }
                                 if index == nil {
                                     self.pendingOrders.append(newOrder)
+                                    if self.toggle == "Pending" {
                                     self.orders = self.pendingOrders
                                     self.orderTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
                             }
-                        } else if orderUpdate == "orderApproved" {
+                            }
+                        } else if orderUpdate == "scheduled" {
                             if self.scheduledOrders.isEmpty {
                                 self.scheduledOrders.append(newOrder)
+                                if self.toggle == "Scheduled" {
                                 self.orders = self.scheduledOrders
                                 self.orderTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+                                }
                             } else {
                                 let index = self.scheduledOrders.firstIndex { $0.documentId == doc.documentID }
                                 if index == nil {
                                     self.scheduledOrders.append(newOrder)
+                                    if self.toggle == "Scheduled" {
                                     self.orders = self.scheduledOrders
                                     self.orderTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
+                                }
                             }
-                        } else if orderUpdate == "orderComplete" {
+                        } else if orderUpdate == "complete" {
                             if self.completeOrders.isEmpty {
                                 self.completeOrders.append(newOrder)
+                                if self.toggle == "Complete" {
                                 self.orders = self.completeOrders
                                 self.orderTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+                                }
                             } else {
                                 let index = self.completeOrders.firstIndex { $0.documentId == doc.documentID }
                                 if index == nil {
                                     self.completeOrders.append(newOrder)
-                                    self.orders = self.scheduledOrders
+                                    if self.toggle == "Complete" {
+                                    self.orders = self.completeOrders
                                     self.orderTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                                 }
+                            }
                             }
                         }
                     }
@@ -204,19 +219,19 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
         cell.eventTypeAndQauntity.text = "Event Type: \(order.eventType)   Event Quantity: \(order.eventQuantity)"
         cell.location.text = "Location: \(order.location)"
         cell.costOfEventText.text = "$\(String(format: "%.2f", order.totalCostOfEvent))"
-        cell.taxesAndFeesText.text = "$\(String(format: "%.2f", order.totalCostOfEvent - order.taxesAndFees))"
-        cell.takeHomeText.text = "$\(String(format: "%.2f", order.priceToChef))"
+        cell.taxesAndFeesText.text = "$\(String(format: "%.2f", order.totalCostOfEvent * 0.05))"
+        cell.takeHomeText.text = "$\(String(format: "%.2f", (order.totalCostOfEvent - (order.totalCostOfEvent * 0.05))))"
         
         if order.travelFeeOption == "No" {
             cell.messagesForTravelFeeButton.isHidden = true
-            cell.showNotesConstraint.constant = 8
-            cell.cancelConstraint.constant = 8
-            cell.messageConstraint.constant = 8
+//            cell.showNotesConstraint.constant = 8
+//            cell.cancelConstraint.constant = 8
+//            cell.messageConstraint.constant = 8
         } else {
             cell.messagesForTravelFeeButton.isHidden = false
-            cell.showNotesConstraint.constant = 48
-            cell.cancelConstraint.constant = 48
-            cell.messageConstraint.constant = 48
+//            cell.showNotesConstraint.constant = 48
+//            cell.cancelConstraint.constant = 48
+//            cell.messageConstraint.constant = 48
         }
         
         if toggle == "Pending" {
@@ -225,6 +240,9 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
         } else {
             cell.messagesButton.setTitle("Messages", for: .normal)
             cell.messagesButton.isUppercaseTitle = false
+        }
+        if toggle == "Scheduled" {
+            cell.messagesForTravelFeeButton.isHidden = true
         }
         cell.showDatesButtonTapped = {
             cell.showInfoView.isHidden = false
@@ -240,17 +258,88 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
         }
         
         cell.messagesForTravelFeeButtonTapped = {
+            print("user \(order.user)")
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Messages") as? MessagesViewController  {
                 vc.otherUser = order.user
+                vc.chefOrUser = "Chef"
+                vc.order = order
+                vc.travelFeeOrMessage = "travelFee"
                 self.present(vc, animated: true, completion: nil)
             }
             //        ChefOrdersToMessagesSegue
         }
         
         cell.messagesButtonTapped = {
+            let month = "\(self.df.string(from: Date()))".prefix(7).suffix(2)
+            let year = "\(self.df.string(from: Date()))".prefix(4)
+            let yearMonth = "\(year), \(month)"
+            print("date \(self.df.string(from: Date()))")
+            print("month \(month)")
+            print("year \(year)")
+            print("yearMonth \(yearMonth)")
+            
+            let calendar = Calendar(identifier: .gregorian)
+            let currentWeek = calendar.component(.weekOfMonth, from: Date())
+            let data3: [String: Any] = ["totalPay" : (order.totalCostOfEvent - (order.totalCostOfEvent * 0.05))]
+            let data2: [String: Any] = ["orderUpdate" : "scheduled"]
+            
+            if self.toggle == "Pending" {
+                self.db.collection("User").document(order.userImageId).collection("Orders").document(order.documentId).updateData(data2)
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Orders").document(order.documentId).updateData(data2)
+                self.db.collection("Orders").document(order.documentId).updateData(data2)
+                
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Month").collection(yearMonth).document("Week").collection("Week \(currentWeek)").document().setData(data3)
+                
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Month").collection(yearMonth).document("Total").getDocument(completion: { document, error in
+                    if error == nil {
+                        if document != nil {
+                            let data = document!.data()
+                            if data != nil {
+                            if let total = data!["Total"] as? Double {
+                                let data5 : [String : Any] = ["totalPay" : total + Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Month").collection(yearMonth).document("Total").updateData(data5)
+                            }
+                            } else {
+                                let data5 : [String : Any] = ["totalPay" : Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Month").collection(yearMonth).document("Total").setData(data5)
+                            }
+                        }
+                    }
+                })
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order.typeOfService).getDocument { document, error in
+                    if error == nil {
+                        if document != nil {
+                            let data = document!.data()
+                            if data != nil {
+                            if let total = data!["Total"] as? Double {
+                                let data5 : [String : Any] = ["totalPay" : total + Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).updateData(data5)
+                            }
+                            } else {
+                                let data5 : [String : Any] = ["totalPay" : Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).setData(data5)
+                            }
+                        }
+                    }
+                }
+                
+                if let index = self.orders.firstIndex(where: { $0.documentId == order.documentId }) {
+                    self.scheduledOrders.append(self.orders[index])
+                    self.orders.remove(at: index)
+                    self.pendingOrders.remove(at: index)
+                    self.orderTableView.deleteRows(at: [IndexPath(item:index, section: 0)], with: .fade)
+                }
+               
+                
+               
+            } else {
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Messages") as? MessagesViewController  {
                 vc.otherUser = order.user
+                vc.chefOrUser = "Chef"
+                vc.order = order
+                vc.travelFeeOrMessage = "messages"
                 self.present(vc, animated: true, completion: nil)
+            }
             }
         }
         

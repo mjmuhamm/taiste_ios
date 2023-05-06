@@ -29,7 +29,7 @@ class ChefLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         emailText.setOutlineColor(UIColor.systemGray4, for: .normal)
         emailText.setOutlineColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .editing)
         emailText.setTextColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -71,7 +71,7 @@ class ChefLoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
           // ...
-            chefOrUser = "CHef"
+            
             self!.performSegue(withIdentifier: "LoginToChefTabSegue", sender: self)
             print("\(Auth.auth().currentUser)")
         }

@@ -449,7 +449,7 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             
             cell.chefImageButtonTapped = {
                 if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAsUser") as? ProfileAsUserViewController  {
-                    vc.user = order.chefEmail
+                    vc.user = order.chefImageId
                     vc.chefOrUser = "chef"
                     self.present(vc, animated: true, completion: nil)
                 }
