@@ -469,7 +469,7 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
                         if document != nil {
                             let data = document!.data()
                             if data != nil {
-                            if let total = data!["Total"] as? Double {
+                            if let total = data!["totalPay"] as? Double {
                                 let data5 : [String : Any] = ["totalPay" : total + Double(order.totalCostOfEvent)]
                                 self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Month").collection(yearMonth).document("Total").updateData(data5)
                             }
@@ -485,7 +485,7 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
                         if document != nil {
                             let data = document!.data()
                             if data != nil {
-                            if let total = data!["Total"] as? Double {
+                            if let total = data!["totalPay"] as? Double {
                                 let data5 : [String : Any] = ["totalPay" : total + Double(order.totalCostOfEvent)]
                                 self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).updateData(data5)
                             }
@@ -496,6 +496,21 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
                         }
                     }
                 }
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Total").getDocument { document, error in
+                    if error == nil {
+                        if document != nil {
+                            let data = document!.data()
+                            
+                            if let total = data!["totalPay"] as? Double {
+                                let data5 : [String : Any] = ["totalPay" : total + Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Total").updateData(data5)
+                            }
+                            } else {
+                                let data5 : [String : Any] = ["totalPay" : Double(order.totalCostOfEvent)]
+                                self.db.collection("Chef").document(order.chefImageId).collection("Dashboard").document(order.typeOfService).collection(order.menuItemId).document("Total").setData(data5)
+                            }
+                        }
+                    }
                 
                 if let index = self.orders.firstIndex(where: { $0.documentId == order.documentId }) {
                     self.scheduledOrders.append(self.orders[index])

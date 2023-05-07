@@ -145,8 +145,7 @@ class MessagesViewController: UIViewController {
             if error == nil {
                 if document != nil {
                     let data = document!.data()
-                    if data != nil {
-                    if let total = data!["Total"] as? Double {
+                    if let total = data!["totalPay"] as? Double {
                         let data5 : [String : Any] = ["totalPay" : total + Double(self.order!.totalCostOfEvent)]
                         self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).collection(self.order!.menuItemId).document("Month").collection(yearMonth).document("Total").updateData(data5)
                     }
@@ -154,15 +153,14 @@ class MessagesViewController: UIViewController {
                         let data5 : [String : Any] = ["totalPay" : Double(self.order!.totalCostOfEvent)]
                         self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).collection(self.order!.documentId).document("Month").collection(yearMonth).document("Total").setData(data5)
                     }
-                }
+                
             }
         })
         self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order!.typeOfService).getDocument { document, error in
             if error == nil {
                 if document != nil {
                     let data = document!.data()
-                    if data != nil {
-                    if let total = data!["Total"] as? Double {
+                    if let total = data!["totalPay"] as? Double {
                         let data5 : [String : Any] = ["totalPay" : total + Double(self.order!.totalCostOfEvent)]
                         self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).updateData(data5)
                     }
@@ -170,11 +168,25 @@ class MessagesViewController: UIViewController {
                         let data5 : [String : Any] = ["totalPay" : Double(self.order!.totalCostOfEvent)]
                         self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).setData(data5)
                     }
-                }
+                
             }
         }
         
-//            .setData(data3)
+        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(order!.typeOfService).collection(order!.menuItemId).document("Total").getDocument { document, error in
+            if error == nil {
+                if document != nil {
+                    let data = document!.data()
+                    
+                    if let total = data!["totalPay"] as? Double {
+                        let data5 : [String : Any] = ["totalPay" : total + Double(self.order!.totalCostOfEvent)]
+                        self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).collection(self.order!.menuItemId).document("Total").updateData(data5)
+                    }
+                    } else {
+                        let data5 : [String : Any] = ["totalPay" : Double(self.order!.totalCostOfEvent)]
+                        self.db.collection("Chef").document(self.order!.chefImageId).collection("Dashboard").document(self.order!.typeOfService).collection(self.order!.menuItemId).document("Total").setData(data5)
+                    }
+                }
+            }
         
         self.dismiss(animated: true, completion: nil)
     }
