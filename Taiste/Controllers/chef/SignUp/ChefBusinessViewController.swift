@@ -21,12 +21,38 @@ class ChefBusinessViewController: UIViewController {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    private var documentId = ""
+    
     var newOrEdit = "new"
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if newOrEdit == "new" {
             saveButton.setTitle("Continue", for: .normal)
+        } else {
+            loadBusinessInfo()
+            saveButton.setTitle("Save", for: .normal)
+        }
+    }
+    
+    private func loadBusinessInfo() {
+        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("BusinessInfo").getDocuments { documents, error in
+            if error == nil {
+                if documents != nil {
+                    for doc in documents!.documents {
+                        let data = doc.data()
+                        
+                        if let city = data["city"] as? String , let state = data["state"] as? String, let zipCode = data["zipCode"] as? String, let streetAddress = data["streetAddress"] as? String {
+                            
+                            self.streetAddress.text = streetAddress
+                            self.city.text = city
+                            self.state.text = state
+                            self.zipCode.text = zipCode
+                            self.documentId = doc.documentID
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -46,6 +72,33 @@ class ChefBusinessViewController: UIViewController {
 
             performSegue(withIdentifier: "ChefBusinessToChefBankingSegue", sender: self)
         } else {
+            let data : [String : Any] = ["streetAddress" : streetAddress.text, "city" : city.text, "state" : state.text, "zipCode" : zipCode.text]
+            
+            let array = ["Cater Items", "Executive Items", "MealKit Items"]
+            for i in 0..<array.count {
+            
+                db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(array[i]).getDocuments { documents, error in
+                    if error == nil {
+                        if documents != nil {
+                            for doc in documents!.documents {
+                                let data = doc.data()
+                                
+                                let data1 : [String : Any] = ["city" : self.city.text , "state" : self.state.text , "zipCode" : self.zipCode.text]
+                                if let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String {
+                                    
+                                    self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(array[i]).document(doc.documentID).updateData(data1)
+                                    self.db.collection(array[i]).document(doc.documentID).updateData(data1)
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("BusinessInfo").document(self.documentId).updateData(data)
+            
+            showToast(message: "Business info saved.", font: .systemFont(ofSize: 12))
+            }
             self.dismiss(animated: true, completion: nil)
         }
             

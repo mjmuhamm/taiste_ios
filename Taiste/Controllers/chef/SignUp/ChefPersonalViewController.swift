@@ -36,11 +36,17 @@ class ChefPersonalViewController: UIViewController {
     var userImageData: Data?
     var pictureId = UUID().uuidString
     
+    private var documentId = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if newOrEdit == "new" {
             saveButton.setTitle("Continue", for: .normal)
+        } else {
+            loadPersonalInfo()
+            self.email.isEnabled = false
+            saveButton.setTitle("Save", for: .normal)
         }
         userImage.layer.borderWidth = 1
         userImage.layer.masksToBounds = false
@@ -50,6 +56,42 @@ class ChefPersonalViewController: UIViewController {
         
         
     }
+    
+    private func loadPersonalInfo() {
+        let storageRef = storage.reference()
+        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("PersonalInfo").getDocuments { documents, error in
+            if error == nil {
+                if documents != nil {
+                    for doc in documents!.documents {
+                        let data = doc.data()
+                        
+                        if let chefName = data["chefName"] as? String, let chefPassion = data["chefPassion"] as? String, let city = data["city"] as? String, let education = data["education"] as? String, let email = data["email"] as? String, let fullName = data["fullName"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String {
+                            
+                            storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/profileImage/\(Auth.auth().currentUser!.uid).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+                                if error == nil {
+                                    self.userImage.image = UIImage(data: data!)
+                                }
+                            }
+                            
+                            self.chefName.text = chefName
+                            self.chefPassion.text = chefPassion
+                            self.city.text = city
+                            self.state.text = state
+                            self.zipCode.text = zipCode
+                            self.fullName.text = fullName
+                            self.education.text = education
+                            self.email.text = email
+                            self.password.text = "*********"
+                            self.confirmPassword.text = "*********"
+                            self.documentId = doc.documentID
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func backButtonPressed(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -86,6 +128,7 @@ class ChefPersonalViewController: UIViewController {
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         
+        if newOrEdit == "new" {
         if fullName.text == "" {
             self.showToast(message: "Please enter your full name.", font: .systemFont(ofSize: 12))
         } else if chefName.text == "" || "\(chefName.text)".contains(" ") == true {
@@ -102,7 +145,6 @@ class ChefPersonalViewController: UIViewController {
             self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
         } else  {
         
-        if newOrEdit == "new" {
             let storageRef = storage.reference()
             Auth.auth().createUser(withEmail: email.text!, password: password.text!) { authResult, error in
               
@@ -112,12 +154,13 @@ class ChefPersonalViewController: UIViewController {
                     }
                     let data: [String: Any] = ["fullName" : self.fullName.text, "chefName" : self.chefName.text, "email": self.email.text, "education" : self.education.text, "chefPassion" : self.chefPassion.text, "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text]
                     let data1: [String: Any] = ["username" : self.chefName.text!, "email" : self.email.text!, "chefOrUser" : "Chef"]
-                    let data2: [String: Any] = ["chefOrUser" : "Chef"]
+                    let data2: [String: Any] = ["chefOrUser" : "Chef", "chargeForPayout" : 0.0]
                     self.db.collection("Chef").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
                     self.db.collection("Chef").document(authResult!.user.uid).setData(data2)
                     let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                     changeRequest?.displayName = self.chefName.text
+                    
                     changeRequest?.commitChanges { error in
                       // ...
                     }
@@ -126,13 +169,49 @@ class ChefPersonalViewController: UIViewController {
                     self.showToast(message: "Something went wrong. Please try again. \(error?.localizedDescription)", font: .systemFont(ofSize: 12))
                 }
             }
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
+        }} else {
+            if fullName.text == "" {
+                self.showToast(message: "Please enter your full name.", font: .systemFont(ofSize: 12))
+            } else if chefName.text == "" || "\(chefName.text)".contains(" ") == true {
+                self.showToast(message: "Please enter your chefname with no spaces.", font: .systemFont(ofSize: 12))
+            } else if email.text == "" || !isValidEmail(email.text!) {
+                self.showToast(message: "Please enter your valid email.", font: .systemFont(ofSize: 12))
+            } else if education.text == "" {
+                self.showToast(message: "Please enter education. Can be 'Self-Educated'", font: .systemFont(ofSize: 12))
+            } else if chefPassion.text == "" {
+                self.showToast(message: "Please enter chef passion.", font: .systemFont(ofSize: 12))
+            } else if city.text == "" || state.text == "" || zipCode.text == "" {
+                self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
+            } else  {
+                
+            if !password.text!.contains("*") {
+                if isPasswordValid(password: password.text!) == false || password.text != confirmPassword.text {
+                    self.showToast(message: "Please make sure password has 1 uppercase letter, 1 special character, 1 number, 1 lowercase letter, and matches with the second insert.", font: .systemFont(ofSize: 12))
+                } else {
+                    Auth.auth().currentUser?.updatePassword(to: password.text!) { error in
+                      // ...
+                        if error == nil {
+                    let data: [String: Any] = ["fullName" : self.fullName.text, "chefName" : self.chefName.text, "email": self.email.text, "education" : self.education.text, "chefPassion" : self.chefPassion.text, "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text]
+                    let data1: [String: Any] = ["username" : self.chefName.text!, "email" : self.email.text!, "chefOrUser" : "Chef"]
+                    
+                            self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("PersonalInfo").document(self.documentId).updateData(data)
+                    self.db.collection("Usernames").document(Auth.auth().currentUser!.uid).updateData(data1)
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.displayName = self.chefName.text
+                    
+                    changeRequest?.commitChanges { error in
+                      // ...
+                    }
+                        self.dismiss(animated: true, completion: nil)
+                        } else {
+                            self.showToast(message: "Something went wrong. Please try again. \(error?.localizedDescription)", font: .systemFont(ofSize: 12))
+                        }
+                
+                print("yes")
+            }
+                }
         
-        }
-        
-    }
+            }}}}
     func showToast(message : String, font: UIFont) {
         
         let toastLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.size.height-180, width: (self.view.frame.width), height: 70))
@@ -171,6 +250,17 @@ extension ChefPersonalViewController: UIImagePickerControllerDelegate, UINavigat
         self.userImage.image = image
         self.userImage1 = image
         self.userImageData = image.pngData()
+        
+        if newOrEdit == "edit" {
+            let storageRef = self.storage.reference()
+            
+            storageRef.child("chefs/\(Auth.auth().currentUser!.email)/profileImage/\(Auth.auth().currentUser!.uid).png").putData(image.pngData()!, metadata: nil) { metatdata, error in
+                if error == nil {
+                    self.showToast(message: "Image Updated.", font: .systemFont(ofSize: 12))
+                }
+            }
+        }
+        
         picker.dismiss(animated: true, completion: nil)
         
     }
