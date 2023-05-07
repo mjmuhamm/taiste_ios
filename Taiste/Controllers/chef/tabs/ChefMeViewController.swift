@@ -332,8 +332,8 @@ class ChefMeViewController: UIViewController {
                     let currentlyDue = json["currently_due"],
                     let eventuallyDue = json["eventually_due"],
                     let current_deadline = json["current_deadline"],
-                    let available = json["available"],
-                    let pending = json["pending"],
+                    let available = json["available"] as? Int,
+                    let pending = json["pending"] as? Int,
                     let self = self else {
                 // Handle error
                 return
@@ -355,8 +355,8 @@ class ChefMeViewController: UIViewController {
                       self.statusUpdateInfoLabel.text = "\(currentlyDue); \(eventuallyDue); \(current_deadline)"
                   }
                   
-                  self.availableAmountLabel.text = "$\(available)"
-                  self.pendingAmountLabel.text = "$\(pending)"
+                  self.availableAmountLabel.text = "$\(String(format: "%.2f", Double(available / 100)))"
+                  self.pendingAmountLabel.text = "$\(String(format: "%.2f", Double(pending / 100)))"
                   
                   
                   print("card_payments \(cardPayments)")
@@ -389,8 +389,8 @@ class ChefMeViewController: UIViewController {
                     let currentlyDue = json["currently_due"],
                     let eventuallyDue = json["eventually_due"],
                     let current_deadline = json["current_deadline"],
-                    let available = json["available"],
-                    let pending = json["pending"],
+                    let available = json["available"] as? Int,
+                    let pending = json["pending"] as? Int,
                     let self = self else {
                 // Handle error
                 return
@@ -414,8 +414,8 @@ class ChefMeViewController: UIViewController {
                       self.statusUpdateInfoLabel.text = "\(currentlyDue); \(eventuallyDue); \(current_deadline)"
                   }
                   
-                  self.availableAmountLabel.text = "$\(available)"
-                  self.pendingAmountLabel.text = "$\(pending)"
+                  self.availableAmountLabel.text = "$\(String(format: "%.2f", available / 100))"
+                  self.pendingAmountLabel.text = "$\(String(format: "%.2f", pending / 100))"
                   
                   
                   print("card_payments \(cardPayments)")
@@ -649,6 +649,7 @@ extension ChefMeViewController :  UITableViewDelegate, UITableViewDataSource  {
                 vc.profileImageId = self.profileImageId
                 vc.menuItemId = item.menuItemId
                 vc.zipCode = self.zipCode
+                self.present(vc, animated: true, completion: nil)
             }
         }
         

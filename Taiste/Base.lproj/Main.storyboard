@@ -3712,7 +3712,7 @@
         <!--Menu Item View Controller-->
         <scene sceneID="3AA-oY-YQ2">
             <objects>
-                <viewController storyboardIdentifier="MenuItem" id="FNM-ZN-2tz" customClass="MenuItemViewController" customModule="Taiste" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuItem" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="FNM-ZN-2tz" customClass="MenuItemViewController" customModule="Taiste" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mwk-l7-fpK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -7483,7 +7483,7 @@
         <segue reference="o3x-XZ-YkT"/>
         <segue reference="tkP-ld-7rs"/>
         <segue reference="gmU-Hz-wfQ"/>
-        <segue reference="aRm-cT-Fkn"/>
+        <segue reference="jEP-Gm-UqI"/>
         <segue reference="KHa-l4-KAR"/>
         <segue reference="DDk-vG-n6t"/>
         <segue reference="tTE-cs-Wrc"/>

@@ -33,7 +33,7 @@ class TravelFeeViewController: UIViewController {
         travelFeePrice.text = travelFeePriceText
         
         
-        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         // Do any additional setup after loading the view.
     }
     

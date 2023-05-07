@@ -48,7 +48,7 @@ class MessagesViewController: UIViewController {
         super.viewDidLoad()
         
         payButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .touchUpInside)
-        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         
         messageTableView.delegate = self
         messageTableView.dataSource = self

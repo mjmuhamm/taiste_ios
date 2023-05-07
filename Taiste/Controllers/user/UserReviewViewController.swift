@@ -50,7 +50,7 @@ class UserReviewViewController: UIViewController {
     private var chefRatingNum = 0
     private var recommend = 1
     
-    var item : UserOrders?
+    var item : Orders?
     
     override func viewDidLoad() {
         super.viewDidLoad()

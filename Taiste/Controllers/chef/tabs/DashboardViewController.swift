@@ -179,7 +179,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         }
 //        var entries = [BarChartDataEntry]()
         
-        var weeklyData : [BarChartDataEntry] = [BarChartDataEntry(x: 1, y: 0), BarChartDataEntry(x: 2, y: 0), BarChartDataEntry(x: 3, y: 0), BarChartDataEntry(x: 4, y: 0)]
+        var weeklyData : [BarChartDataEntry] = [BarChartDataEntry(x: 0, y: 0), BarChartDataEntry(x: 1, y: 0), BarChartDataEntry(x: 2, y: 0), BarChartDataEntry(x: 3, y: 0)]
         let labels = ["Week 1", "Week 2", "Week 3", "Week 4"]
         weeklyBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:labels)
         if itemId != "" {
@@ -252,7 +252,10 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
     
     private func loadItemMonthlyData(itemTitle: String) {
         var itemId = ""
-        var monthlyData : [BarChartDataEntry] = [BarChartDataEntry(x: 1, y: 0), BarChartDataEntry(x: 2, y: 0), BarChartDataEntry(x: 3, y: 0), BarChartDataEntry(x: 4, y: 0), BarChartDataEntry(x: 5, y: 0), BarChartDataEntry(x: 6, y: 0)]
+        let year = "\(df.string(from: date))".prefix(4)
+        var yearMonth = "\(year), \(month)"
+        
+        var monthlyData : [BarChartDataEntry] = [BarChartDataEntry(x: 0, y: 0), BarChartDataEntry(x: 1, y: 0), BarChartDataEntry(x: 2, y: 0), BarChartDataEntry(x: 3, y: 0), BarChartDataEntry(x: 4, y: 0), BarChartDataEntry(x: 5, y: 0)]
         var labels = ["January", "February", "March", "April", "May", "June"]
         
         print("date \(year), \(month)")
@@ -277,7 +280,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
                     newMonth = "0\(newMonth)"
                 }
             }
-            yearMonth = "2022, \(newMonth)"
+            yearMonth = "\(year), \(newMonth)"
             print("yearmonth \(yearMonth)")
             print("i \(i)")
             db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document("\(self.itemTypeText.text!)").collection(itemId).document("Month").collection(yearMonth).document("Total").getDocument { document, error in
@@ -352,7 +355,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
         if itemTypeText.text != "" {
         if itemTypeText.text == "All" {
         for i in 0..<3 {
-            db.collection("Chef").document("malik@cheftesting.com").collection("Dashboard").document(array1[i]).getDocument { document, error in
+            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(array1[i]).getDocument { document, error in
                 
                 if error == nil {
                     if document != nil {
@@ -374,7 +377,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
             
         } else {
             
-            db.collection("Chef").document("malik@cheftesting.com").collection(self.itemTypeText.text!).getDocuments { documents, error in
+            db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(self.itemTypeText.text!).getDocuments { documents, error in
                 
                 if error == nil {
                     if documents?.documents != nil {
@@ -383,7 +386,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
                         
                             if let menuItemId = data["randomVariable"] as? String, let itemTitle = data["itemTitle"] as? String {
                         
-                                self.db.collection("Chef").document("malik@cheftesting.com").collection("Dashboard").document(self.itemTypeText.text!).collection(menuItemId).document("Total").getDocument { document, error in
+                                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("Dashboard").document(self.itemTypeText.text!).collection(menuItemId).document("Total").getDocument { document, error in
                             
                             if error == nil {
                                 if document != nil {

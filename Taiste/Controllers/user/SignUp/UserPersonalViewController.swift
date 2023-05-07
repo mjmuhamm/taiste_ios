@@ -95,7 +95,7 @@ class UserPersonalViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (handler) in
-            self.dismiss(animated: true, completion: nil)
+            alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
     }

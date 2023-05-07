@@ -445,7 +445,6 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             cell.ratingText.text = "\(order.itemRating)"
             cell.userImage.image = order.chefImage
             cell.itemImage.image = order.itemImage
-            cell.clickHereForDetailButton.setTitle(" Click here to review", for: .normal)
             
             cell.chefImageButtonTapped = {
                 if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAsUser") as? ProfileAsUserViewController  {
@@ -456,8 +455,14 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             }
             
             cell.itemImageButtonTapped = {
-                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "UserReviews") as? UserReviewViewController  {
-                    vc.item = order
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ItemDetail") as? ItemDetailViewController  {
+                    vc.chefEmail = order.chefEmail
+                    vc.imageCount = order.imageCount
+                    vc.menuItemId = order.documentId
+                    vc.itemType = order.typeOfService
+                    vc.itemTitleI = order.itemTitle
+                    vc.itemDescriptionI = order.itemDescription
+                    vc.itemImage = order.itemImage
                     self.present(vc, animated: true, completion: nil)
                 }
             }
@@ -511,7 +516,6 @@ extension MeViewController : UITableViewDataSource, UITableViewDelegate {
             cell.userImage.image = item.chefImage
             cell.itemImage.image = item.itemImage
             cell.likeImage.image = UIImage(systemName: "heart.fill")
-            cell.clickHereForDetailButton.setTitle(" Click here for detail", for: .normal)
             
             
             cell.chefImageButtonTapped = {

@@ -96,7 +96,7 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
     private func loadEditedItem() {
         let storageRef = storage.reference()
         
-        db.collection("Chef").document("malik@cheftesting.com").collection(typeOfitem).document(menuItemId).getDocument { document, error in
+        db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(typeOfitem).document(menuItemId).getDocument { document, error in
             
             if error == nil {
                 if document != nil {
@@ -105,7 +105,7 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
                     if let itemTitle = data!["itemTitle"] as? String, let imageCount = data!["imageCount"] as? Int, let itemDescription = data!["itemDescription"] as? String, let itemLikes = data!["itemLikes"] as? Int, let itemOrders = data!["itemOrders"] as? Int, let itemRating = data!["itemRating"] as? Int, let itemCalories = data!["itemCalories"] as? String, let itemPrice = data!["itemPrice"] as? String, let burger = data!["burger"] as? Int, let creative = data!["creative"] as? Int, let lowCal = data!["lowCal"] as? Int, let lowCarb = data!["lowCarb"] as? Int, let pasta = data!["pasta"] as? Int, let healthy = data!["healthy"] as? Int, let vegan = data!["vegan"] as? Int, let seafood = data!["seafood"] as? Int, let workout = data!["workout"] as? Int {
                         
                         for i in 0..<imageCount {
-                             storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/profileImage/\(self.menuItemId)\(i).png").getData(maxSize: 1 * 1024 * 1024) { data, error in
+                            storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(self.typeOfitem)/\(self.menuItemId)\(i).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
                                 
                                 if error == nil {
                                     self.imgArrData.append(data!)
@@ -203,10 +203,35 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func cancelImageButtonPressed(_ sender: Any) {
+        if newOrEdit == "edit" {
+            let alert = UIAlertController(title: "Are you sure you want to delete?", message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+                let storageRef = self.storage.reference()
+                storageRef.child("chefs/\(Auth.auth().currentUser!.email)/\(self.typeOfitem)/\(self.menuItemId)\(self.currentIndex).png").delete { error in
+                    if error == nil {
+                        self.showToast(message: "Image deleted.", font: .systemFont(ofSize: 12))
+                        
+                        self.imgArr.remove(at: self.currentIndex)
+                        self.imgArrData.remove(at: self.currentIndex)
+                        self.pageControl.numberOfPages = self.imgArr.count
+                        self.sliderCollectionView.reloadData()
+                    }
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            present(alert, animated: true, completion: nil)
+       
+        } else {
         imgArr.remove(at: currentIndex)
         imgArrData.remove(at: currentIndex)
         self.pageControl.numberOfPages = imgArr.count
         self.sliderCollectionView.reloadData()
+        }
     }
     
     @IBAction func addImageButtonPressed(_ sender: Any) {
@@ -401,6 +426,16 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
             }
         } else {
             db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(typeOfitem).document(menuItemId).updateData(data)
+            for i in 0..<imgArr.count {
+                storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(typeOfitem)/\(menuItemId)\(i).png").putData(imgArrData[i], metadata: nil) { data, error in
+                    if error == nil {
+                        
+                        if i == self.imgArr.count-1 {
+                            self.showToastCompletion(message: "Item Saved.", font: .systemFont(ofSize: 12))
+                        }
+                    }
+                }
+            }
         }
         
         
