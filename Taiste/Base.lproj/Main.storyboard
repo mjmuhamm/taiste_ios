@@ -927,7 +927,7 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2L-q8-Ggh" customClass="MDCButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2L-q8-Ggh">
                                 <rect key="frame" x="94" y="566" width="226" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="wef-6M-Y4H"/>
@@ -939,7 +939,7 @@
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="forgotPasswordButtonPressed:" destination="V7j-3n-LfI" eventType="touchUpInside" id="awD-ok-sEf"/>
+                                    <action selector="forgotPasswordButtonPressed:" destination="V7j-3n-LfI" eventType="touchUpInside" id="lHU-wT-qsn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -965,6 +965,7 @@
                     </view>
                     <connections>
                         <outlet property="emailText" destination="EDM-MT-D6i" id="jFz-Fe-eVI"/>
+                        <outlet property="forgotButton" destination="d2L-q8-Ggh" id="Dha-ct-hnA"/>
                         <outlet property="loginButton" destination="FWP-iP-uqS" id="1fx-4n-9S7"/>
                         <outlet property="passwordText" destination="ggO-TK-noe" id="E0b-Py-wD9"/>
                         <outlet property="signUpButton" destination="rZv-HC-z3h" id="joW-NH-YSc"/>
@@ -1509,7 +1510,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="loginButtonPressed:" destination="V7j-3n-LfI" eventType="touchUpInside" id="Z3H-f6-5If"/>
+                                    <action selector="loginButtonPressed:" destination="WS4-dx-SX0" eventType="touchUpInside" id="PK9-YB-LZs"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="qwO-EF-av6">
@@ -1546,7 +1547,7 @@
                                     <action selector="backButtonPressed:" destination="WS4-dx-SX0" eventType="touchUpInside" id="oVt-gW-Mb1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yr7-w9-IXI" customClass="MDCButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yr7-w9-IXI">
                                 <rect key="frame" x="94" y="557" width="226" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Ymq-5a-l3M"/>
@@ -1558,7 +1559,7 @@
                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="forgotPasswordButtonPressed:" destination="WS4-dx-SX0" eventType="touchUpInside" id="yfY-xU-mLY"/>
+                                    <action selector="forgotPasswordButtonPressed:" destination="WS4-dx-SX0" eventType="touchUpInside" id="Ihq-f1-QVa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1584,6 +1585,7 @@
                     </view>
                     <connections>
                         <outlet property="emailText" destination="UTH-tg-iLh" id="Mvo-ot-TZk"/>
+                        <outlet property="forgotButton" destination="yr7-w9-IXI" id="SfB-oz-f7S"/>
                         <outlet property="loginButton" destination="O1L-Fc-I5f" id="Lwi-xo-fc0"/>
                         <outlet property="passwordText" destination="j3L-DA-Iem" id="dla-Wa-YTz"/>
                         <outlet property="signUpButton" destination="273-pw-77Y" id="p8L-h9-q91"/>
@@ -3005,8 +3007,8 @@
                                     <constraint firstAttribute="height" constant="0.5" id="dM0-yg-LU1"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@mjmuhamm93" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJG-ID-38a">
-                                <rect key="frame" x="143.5" y="45" width="127" height="19.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJG-ID-38a">
+                                <rect key="frame" x="207" y="45" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3500,8 +3502,8 @@
                                     <constraint firstAttribute="height" constant="0.5" id="g1A-nn-YlM"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@user1234" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6j-UK-gsj">
-                                <rect key="frame" x="170.5" y="98.5" width="73" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6j-UK-gsj">
+                                <rect key="frame" x="207" y="98.5" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <color key="textColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3917,7 +3919,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="gCW-K7-8BB">
                                                 <rect key="frame" x="0.0" y="32" width="202" height="26"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fF8-Nx-S99" customClass="MDCButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fF8-Nx-S99" customClass="MDCButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="31" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -3934,7 +3936,7 @@
                                                             <action selector="pastaButtonPressed:" destination="FNM-ZN-2tz" eventType="touchUpInside" id="0t9-KB-Twz"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScA-vd-Glp" customClass="MDCButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScA-vd-Glp" customClass="MDCButton">
                                                         <rect key="frame" x="49" y="0.0" width="40" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -3951,7 +3953,7 @@
                                                             <action selector="healthyButtonPressed:" destination="FNM-ZN-2tz" eventType="touchUpInside" id="1X2-Zb-vcw"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fh-MC-wwc" customClass="MDCButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fh-MC-wwc" customClass="MDCButton">
                                                         <rect key="frame" x="107" y="0.0" width="33" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -3968,7 +3970,7 @@
                                                             <action selector="veganButtonPressed:" destination="FNM-ZN-2tz" eventType="touchUpInside" id="FeZ-JO-oDZ"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-xX-L5M" customClass="MDCButton">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-xX-L5M" customClass="MDCButton">
                                                         <rect key="frame" x="158" y="0.0" width="44" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -4076,6 +4078,9 @@
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="FNM-ZN-2tz" eventType="touchUpInside" id="rnp-Vb-eM2"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Item Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="C3Z-Ke-OfC">
                                 <rect key="frame" x="5" y="660" width="404" height="49"/>
@@ -4115,21 +4120,26 @@
                             <constraint firstItem="Aex-bb-7qC" firstAttribute="top" secondItem="mue-gR-YEh" secondAttribute="bottom" constant="73" id="cTG-C2-ScQ"/>
                             <constraint firstAttribute="trailing" secondItem="iQl-0n-h9H" secondAttribute="trailing" id="dXU-Ox-pNX"/>
                             <constraint firstItem="md7-Zr-DyB" firstAttribute="leading" secondItem="CFy-24-9qE" secondAttribute="leading" constant="6" id="jdU-mp-dW4"/>
+                            <constraint firstItem="LF3-Yt-hVJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="go3-vQ-W3r" secondAttribute="trailing" constant="8" symbolic="YES" id="k2V-uh-1bS"/>
                             <constraint firstItem="md7-Zr-DyB" firstAttribute="top" secondItem="iQl-0n-h9H" secondAttribute="bottom" constant="7.5" id="lHa-dR-t2h"/>
                             <constraint firstItem="LF3-Yt-hVJ" firstAttribute="top" secondItem="CFy-24-9qE" secondAttribute="top" constant="6" id="nZC-Lp-ovz"/>
                             <constraint firstItem="poq-oq-O4a" firstAttribute="centerX" secondItem="mwk-l7-fpK" secondAttribute="centerX" id="ofO-88-xAD"/>
                             <constraint firstItem="CFy-24-9qE" firstAttribute="bottom" secondItem="poq-oq-O4a" secondAttribute="bottom" constant="17" id="qic-82-DfZ"/>
                             <constraint firstItem="CFy-24-9qE" firstAttribute="trailing" secondItem="mue-gR-YEh" secondAttribute="trailing" constant="20" id="s6c-Py-YN1"/>
                             <constraint firstItem="C3Z-Ke-OfC" firstAttribute="top" secondItem="h9x-7t-C7n" secondAttribute="bottom" constant="8" symbolic="YES" id="uPU-XV-VxH"/>
+                            <constraint firstItem="Aex-bb-7qC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="poq-oq-O4a" secondAttribute="trailing" constant="8" symbolic="YES" id="wZ9-sS-aDu"/>
                             <constraint firstItem="GSD-ao-q0O" firstAttribute="top" secondItem="md7-Zr-DyB" secondAttribute="bottom" constant="4" id="x8D-sP-VRN"/>
+                            <constraint firstItem="UDb-xf-SxY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LF3-Yt-hVJ" secondAttribute="trailing" constant="8" symbolic="YES" id="xWq-XM-6iy"/>
                             <constraint firstItem="m9F-0Z-32G" firstAttribute="top" secondItem="md7-Zr-DyB" secondAttribute="bottom" constant="4" id="xel-Rg-h4l"/>
                             <constraint firstItem="go3-vQ-W3r" firstAttribute="leading" secondItem="CFy-24-9qE" secondAttribute="leading" constant="13" id="xx0-Hi-88w"/>
+                            <constraint firstItem="mue-gR-YEh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TRG-mg-E8Y" secondAttribute="trailing" constant="8" symbolic="YES" id="z6x-YL-bZg"/>
                             <constraint firstItem="C3Z-Ke-OfC" firstAttribute="top" secondItem="TQs-DP-mGF" secondAttribute="bottom" constant="5" id="zJN-72-Ncg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="burgerButton" destination="K18-nK-b2U" id="Xt2-05-liP"/>
                         <outlet property="creativeButton" destination="UCn-NN-hv6" id="XTf-Xw-pUQ"/>
+                        <outlet property="deleteButton" destination="UDb-xf-SxY" id="5St-Pa-1Ki"/>
                         <outlet property="healthyButton" destination="ScA-vd-Glp" id="irg-4U-sdn"/>
                         <outlet property="itemCalories" destination="TRG-mg-E8Y" id="PPd-Bq-un0"/>
                         <outlet property="itemDescription" destination="C3Z-Ke-OfC" id="BQb-0Y-W9s"/>
@@ -7528,7 +7538,7 @@
         <segue reference="o3x-XZ-YkT"/>
         <segue reference="tkP-ld-7rs"/>
         <segue reference="gmU-Hz-wfQ"/>
-        <segue reference="Rso-l9-LlW"/>
+        <segue reference="jEP-Gm-UqI"/>
         <segue reference="KHa-l4-KAR"/>
         <segue reference="S4F-HQ-YjE"/>
         <segue reference="tTE-cs-Wrc"/>

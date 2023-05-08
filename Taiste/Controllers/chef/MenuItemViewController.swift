@@ -44,6 +44,8 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var seafoodButton: MDCButton!
     @IBOutlet weak var workoutButton: MDCButton!
     
+    @IBOutlet weak var deleteButton: UIButton!
+    
     private var imgArr : [UIImage] = []
     private var imgArrData : [Data] = []
     
@@ -103,7 +105,7 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
                     let data = document!.data()
                     
                     if let itemTitle = data!["itemTitle"] as? String, let imageCount = data!["imageCount"] as? Int, let itemDescription = data!["itemDescription"] as? String, let itemLikes = data!["itemLikes"] as? Int, let itemOrders = data!["itemOrders"] as? Int, let itemRating = data!["itemRating"] as? Int, let itemCalories = data!["itemCalories"] as? String, let itemPrice = data!["itemPrice"] as? String, let burger = data!["burger"] as? Int, let creative = data!["creative"] as? Int, let lowCal = data!["lowCal"] as? Int, let lowCarb = data!["lowCarb"] as? Int, let pasta = data!["pasta"] as? Int, let healthy = data!["healthy"] as? Int, let vegan = data!["vegan"] as? Int, let seafood = data!["seafood"] as? Int, let workout = data!["workout"] as? Int {
-                        
+                        self.deleteButton.isHidden = false
                         for i in 0..<imageCount {
                             storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(self.typeOfitem)/\(self.menuItemId)\(i).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
                                 
@@ -202,9 +204,36 @@ class MenuItemViewController: UIViewController, UITextViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+         let alert = UIAlertController(title: "Are you sure you want to delete this item?", message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+                let storageRef = self.storage.reference()
+                for i in 0..<self.imgArr.count {
+                    storageRef.child("chefs/\(Auth.auth().currentUser!.email)/\(self.typeOfitem)/\(self.menuItemId)\(i).png").delete { error in
+                        if error == nil {
+                            self.showToast(message: "Item deleted.", font: .systemFont(ofSize: 12))
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                }
+                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(self.typeOfitem).document(self.menuItemId).delete()
+                self.db.collection(self.typeOfitem).document(self.menuItemId).delete()
+                alert.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func cancelImageButtonPressed(_ sender: Any) {
         if newOrEdit == "edit" {
-            let alert = UIAlertController(title: "Are you sure you want to delete?", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Are you sure you want to delete this image?", message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
                 let storageRef = self.storage.reference()

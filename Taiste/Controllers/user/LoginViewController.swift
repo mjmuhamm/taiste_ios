@@ -28,6 +28,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: MDCButton!
     @IBOutlet weak var signUpButton: MDCButton!
     
+    @IBOutlet weak var forgotButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 //
@@ -53,6 +54,7 @@ class LoginViewController: UIViewController {
         loginButton.applyOutlinedTheme(withScheme: globalContainerScheme())
         loginButton.layer.cornerRadius = 2
 
+        forgotButton.layer.cornerRadius = 2
         passwordText.label.text = "Password"
         passwordText.placeholder = "Password"
        
