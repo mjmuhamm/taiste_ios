@@ -82,6 +82,21 @@ class ChefLoginViewController: UIViewController {
        performSegue(withIdentifier: "ChefLoginToChefPersonalSegue", sender: self)
     }
     
+    @IBAction func forgotPasswordButtonPressed(_ sender: Any) {
+        if emailText.text == "" {
+            self.showToast(message: "Please enter your email in the email text field first.", font: .systemFont(ofSize: 12))
+        } else {
+            Auth.auth().sendPasswordReset(withEmail: self.emailText.text!) { error in
+            if error == nil {
+                self.showToast(message: "If you have an account with us, you shall receive an email with further instructions soon.", font: .systemFont(ofSize: 12))
+            } else {
+                self.showToast(message: "Something went wrong. Please try again another time.", font: .systemFont(ofSize: 12))
+            }
+        }
+        }
+    }
+    
+    
     func showToast(message : String, font: UIFont) {
         
         let toastLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.size.height-180, width: (self.view.frame.width), height: 50))

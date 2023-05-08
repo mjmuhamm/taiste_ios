@@ -82,9 +82,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonPressed(_ sender: MDCButton) {
-        
-//        self.performSegue(withIdentifier: "LoginToUserSignUpSegue", sender: self)
+        self.performSegue(withIdentifier: "LoginToUserSignUpSegue", sender: self)
     }
+    
+    @IBAction func forgotPasswordButtonPressed(_ sender: Any) {
+        if emailText.text == "" {
+            self.showToast(message: "Please enter your email in the email text field first.", font: .systemFont(ofSize: 12))
+        } else {
+            Auth.auth().sendPasswordReset(withEmail: self.emailText.text!) { error in
+            if error == nil {
+                self.showToast(message: "If you have an account with us, you shall receive an email with further instructions soon.", font: .systemFont(ofSize: 12))
+            } else {
+                self.showToast(message: "Something went wrong. Please try again another time.", font: .systemFont(ofSize: 12))
+            }
+        }
+        }
+    }
+    
     
     func showToast(message : String, font: UIFont) {
         
