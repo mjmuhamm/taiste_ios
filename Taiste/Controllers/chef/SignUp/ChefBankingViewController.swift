@@ -128,6 +128,7 @@ class ChefBankingViewController: UIViewController {
                         
                         self.externalAccountId = externalAccountId
                         self.stripeAccountId = stripeAccountId
+                        self.deleteAccountButton.isHidden = false
                         if accountType == "Individual" {
                             self.termsOfServiceAccept = "Yes"
                             self.individualView.isHidden = false
@@ -160,6 +161,7 @@ class ChefBankingViewController: UIViewController {
                 }
             } else {
                 self.newAccountOrEditedAccount = "new"
+                self.deleteAccountButton.isHidden = true
             }
             }
         }
@@ -657,7 +659,7 @@ class ChefBankingViewController: UIViewController {
         if newAccountOrEditedAccount == "edit" {
             
             
-                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your old stripe bank account.", message: nil, preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your stripe bank account.", message: nil, preferredStyle: .actionSheet)
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
                     self.deleteAccount(stripeAccountId: self.stripeAccountId)
@@ -721,7 +723,7 @@ class ChefBankingViewController: UIViewController {
     @IBAction func businessButtonPressed(_ sender: Any) {
         if newAccountOrEditedAccount == "edit" {
             
-                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your old stripe bank account.", message: nil, preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your stripe bank account.", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
                
                 self.deleteAccount(stripeAccountId: self.stripeAccountId)
@@ -1079,60 +1081,75 @@ class ChefBankingViewController: UIViewController {
     }
     
     @IBAction func deleteAccountButtonPressed(_ sender: Any) {
-        self.deleteAccount(stripeAccountId: stripeAccountId)
-        if self.individualView.isHidden == true {
-            
-            self.bMCCCode.text = ""
-            self.bBusinessURL.text = ""
-            self.companyPhone.text = ""
-            self.companyName.text = ""
-            self.bStreetAddress.text = ""
-            self.bCity.text = ""
-            self.bState.text = ""
-            self.bZipCode.text = ""
-            self.companyTaxId.text = ""
-            self.bAddAccountText.text = ""
-            self.addRepresentativeLabel.text = ""
-            self.representative = nil
-            self.addOwnerLabel.text = ""
-            self.addOwner2Label.text = ""
-            self.addOwner3Label.text = ""
-            self.addOwner4Label.text = ""
-            self.addOwner2Stack.isHidden = true
-            self.addOwner3Stack.isHidden = true
-            self.addOwner4Stack.isHidden = true
-            self.owners.removeAll()
-            self.businessSaveConstraint.constant = 41.5
-            self.companyTaxId.isEnabled = true
-            self.newAccountOrEditedAccount = "new"
+        
+        let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your stripe bank account.", message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+           
+            self.deleteAccount(stripeAccountId: self.stripeAccountId)
+            if self.individualView.isHidden == true {
+                
+                self.bMCCCode.text = ""
+                self.bBusinessURL.text = ""
+                self.companyPhone.text = ""
+                self.companyName.text = ""
+                self.bStreetAddress.text = ""
+                self.bCity.text = ""
+                self.bState.text = ""
+                self.bZipCode.text = ""
+                self.companyTaxId.text = ""
+                self.bAddAccountText.text = ""
+                self.addRepresentativeLabel.text = ""
+                self.representative = nil
+                self.addOwnerLabel.text = ""
+                self.addOwner2Label.text = ""
+                self.addOwner3Label.text = ""
+                self.addOwner4Label.text = ""
+                self.addOwner2Stack.isHidden = true
+                self.addOwner3Stack.isHidden = true
+                self.addOwner4Stack.isHidden = true
+                self.owners.removeAll()
+                self.businessSaveConstraint.constant = 41.5
+                self.companyTaxId.isEnabled = true
+                self.newAccountOrEditedAccount = "new"
+                self.externalAccountInfo = nil
+                
+                self.bIAcceptCircle.image = UIImage(systemName: "circle")
+                self.termsOfServiceAccept = ""
+            } else {
+                
+            self.mccCode.text = ""
+            self.businessUrl.text = ""
+            self.firstName.text = ""
+            self.lastName.text = ""
+            self.phoneNumber.text = ""
+            self.email.text = ""
+            self.day.text = ""
+            self.month.text = ""
+            self.year.text = ""
+            self.streetAddress.text = ""
+            self.city.text = ""
+            self.state.text = ""
+            self.zipCode.text = ""
+            self.last4ofSSN.text = ""
+            self.last4ofSSN.isEnabled = true
+            self.addAccountText.text = ""
             self.externalAccountInfo = nil
-            
-            self.bIAcceptCircle.image = UIImage(systemName: "circle")
+            self.newAccountOrEditedAccount = "new"
+                
             self.termsOfServiceAccept = ""
-        } else {
-            
-        self.mccCode.text = ""
-        self.businessUrl.text = ""
-        self.firstName.text = ""
-        self.lastName.text = ""
-        self.phoneNumber.text = ""
-        self.email.text = ""
-        self.day.text = ""
-        self.month.text = ""
-        self.year.text = ""
-        self.streetAddress.text = ""
-        self.city.text = ""
-        self.state.text = ""
-        self.zipCode.text = ""
-        self.last4ofSSN.text = ""
-        self.last4ofSSN.isEnabled = true
-        self.addAccountText.text = ""
-        self.externalAccountInfo = nil
-        self.newAccountOrEditedAccount = "new"
-            
-        self.termsOfServiceAccept = ""
-            self.iAcceptCircle.image = UIImage(systemName: "circle")
-        }
+                self.iAcceptCircle.image = UIImage(systemName: "circle")
+            }
+            }))
+        
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+           
+                alert.dismiss(animated: true, completion: nil)
+            }))
+        present(alert, animated: true, completion: nil)
+        
+        
         
     }
     
