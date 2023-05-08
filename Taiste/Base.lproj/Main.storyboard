@@ -6766,6 +6766,15 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="FuD-dI-baG">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXL-la-HjO">
+                                <rect key="frame" x="340" y="44" width="66" height="31"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteAccountButtonPressed:" destination="gVL-LH-Wan" eventType="touchUpInside" id="xX2-xg-hh4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WZm-pX-1gt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -6782,11 +6791,13 @@
                             <constraint firstItem="N5f-h1-IG4" firstAttribute="centerX" secondItem="Gs3-2f-N0p" secondAttribute="centerX" id="S1b-GM-DSh"/>
                             <constraint firstItem="aX7-bS-hbJ" firstAttribute="width" secondItem="Gs3-2f-N0p" secondAttribute="width" id="UhD-3T-FQR"/>
                             <constraint firstItem="CtX-ql-adM" firstAttribute="top" secondItem="aeM-xr-Rd8" secondAttribute="bottom" constant="1" id="a3e-TS-fpA"/>
+                            <constraint firstItem="WZm-pX-1gt" firstAttribute="trailing" secondItem="lXL-la-HjO" secondAttribute="trailing" constant="8" id="dGa-SZ-aEF"/>
                             <constraint firstItem="WZm-pX-1gt" firstAttribute="bottom" secondItem="HWs-CO-4Nz" secondAttribute="bottom" constant="5" id="gj8-ZS-LoS"/>
                             <constraint firstItem="Cye-pa-kxA" firstAttribute="top" secondItem="WZm-pX-1gt" secondAttribute="top" constant="7" id="jtW-U0-wXP"/>
                             <constraint firstItem="HWs-CO-4Nz" firstAttribute="leading" secondItem="WZm-pX-1gt" secondAttribute="leading" id="lFj-Az-cX0"/>
                             <constraint firstItem="aeM-xr-Rd8" firstAttribute="leading" secondItem="WZm-pX-1gt" secondAttribute="leading" constant="12" id="oRx-xB-h9K"/>
                             <constraint firstAttribute="trailing" secondItem="CtX-ql-adM" secondAttribute="trailing" id="rMC-O9-dip"/>
+                            <constraint firstItem="CtX-ql-adM" firstAttribute="top" secondItem="lXL-la-HjO" secondAttribute="bottom" constant="1" id="rs0-dh-CVa"/>
                             <constraint firstItem="lTy-dH-jYq" firstAttribute="top" secondItem="CtX-ql-adM" secondAttribute="bottom" constant="7.5" id="upV-L3-2wD"/>
                             <constraint firstItem="N5f-h1-IG4" firstAttribute="top" secondItem="lTy-dH-jYq" secondAttribute="bottom" constant="9" id="xOf-fJ-qLq"/>
                             <constraint firstItem="CtX-ql-adM" firstAttribute="leading" secondItem="Gs3-2f-N0p" secondAttribute="leading" id="yR1-Ae-15f"/>
@@ -6824,6 +6835,7 @@
                         <outlet property="companyPhone" destination="s36-ig-CRk" id="WrG-id-vCo"/>
                         <outlet property="companyTaxId" destination="crl-Pd-75U" id="ley-K4-SnV"/>
                         <outlet property="day" destination="mFk-pj-0FE" id="h3N-EP-8aY"/>
+                        <outlet property="deleteAccountButton" destination="lXL-la-HjO" id="Q5V-St-dEb"/>
                         <outlet property="email" destination="Iep-ak-hce" id="awJ-tP-tO2"/>
                         <outlet property="firstName" destination="Vd8-Uh-eao" id="uD3-cV-y8n"/>
                         <outlet property="iAcceptButton" destination="qdd-5K-wKn" id="H2P-vH-deW"/>
@@ -7478,13 +7490,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="L1E-yP-4iT"/>
         <segue reference="zEQ-Ml-IWA"/>
         <segue reference="Vbp-RS-odE"/>
         <segue reference="o3x-XZ-YkT"/>
         <segue reference="tkP-ld-7rs"/>
         <segue reference="gmU-Hz-wfQ"/>
-        <segue reference="jEP-Gm-UqI"/>
+        <segue reference="aRm-cT-Fkn"/>
         <segue reference="KHa-l4-KAR"/>
         <segue reference="DDk-vG-n6t"/>
         <segue reference="tTE-cs-Wrc"/>

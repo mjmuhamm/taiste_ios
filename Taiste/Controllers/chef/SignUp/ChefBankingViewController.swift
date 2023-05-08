@@ -92,6 +92,7 @@ class ChefBankingViewController: UIViewController {
     @IBOutlet weak var bSaveButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var deleteAccountButton: UIButton!
     
     var ownerTransfer : Representative?
     
@@ -109,10 +110,340 @@ class ChefBankingViewController: UIViewController {
             bSaveButton.setTitle("Continue", for: .normal)
             saveButton.setTitle("Continue", for: .normal)
         } else {
+            loadBankingInfo()
             bSaveButton.setTitle("Save", for: .normal)
             saveButton.setTitle("Save", for: .normal)
         }
         // Do any additional setup after loading the view.
+    }
+    
+    private func loadBankingInfo() {
+        db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("BankingInfo").getDocuments { documents, error in
+            if error == nil {
+            if documents != nil {
+                for doc in documents!.documents {
+                    let data = doc.data()
+                    
+                    if let accountType = data["accountType"] as? String, let externalAccountId = data["externalAccountId"] as? String, let stripeAccountId = data["stripeAccountId"] as? String {
+                        
+                        self.externalAccountId = externalAccountId
+                        self.stripeAccountId = stripeAccountId
+                        if accountType == "Individual" {
+                            self.termsOfServiceAccept = "Yes"
+                            self.individualView.isHidden = false
+                            self.businessView.isHidden = true
+                            self.iAcceptCircle.image = UIImage(systemName: "circle.fill")
+                            self.individualButton.setTitleColor(UIColor.white, for: .normal)
+                            self.individualButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+                            self.businessButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+                            self.businessButton.backgroundColor = UIColor.white
+                            self.loadIndividualBankingInfo(stripeAccountId: stripeAccountId)
+                            self.loadExternalAccount(stripeAccountId: stripeAccountId, externalAccountId: externalAccountId)
+                        } else {
+                            if let representativeId = data["representativeId"] as? String {
+                                
+                            self.termsOfServiceAccept = "Yes"
+                            self.individualView.isHidden = true
+                            self.businessView.isHidden = false
+                            self.bIAcceptCircle.image = UIImage(systemName: "circle.fill")
+                            self.businessButton.setTitleColor(UIColor.white, for: .normal)
+                            self.businessButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+                            self.individualButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+                            self.individualButton.backgroundColor = UIColor.white
+                            self.loadBusinessBankingInfo(stripeAccountId: stripeAccountId)
+                            self.loadExternalAccount(stripeAccountId: stripeAccountId, externalAccountId: externalAccountId)
+                            self.loadPerson(stripeAccountId: stripeAccountId, personId: representativeId, representative: "yes")
+                            }
+                        }
+                        
+                    }
+                }
+            } else {
+                self.newAccountOrEditedAccount = "new"
+            }
+            }
+        }
+    }
+    
+    private func loadIndividualBankingInfo(stripeAccountId: String) {
+        
+        let json: [String: Any] = ["stripeAccountId" : stripeAccountId]
+        
+    
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+        var request = URLRequest(url: URL(string: "https://ruh.herokuapp.com/retrieve-individual-account")!)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data,
+                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                  let mcc = json["mcc"] as? String,
+                  let url = json["url"] as? String,
+                  let firstName = json["first_name"] as? String,
+                  let lastName = json["last_name"] as? String,
+                  let phone = json["phone"],
+                  let email = json["email"] as? String,
+                  let dobDay = json["dob_day"],
+                  let dobMonth = json["dob_month"],
+                  let dobYear = json["dob_year"],
+                  let line1 = json["line1"] as? String,
+                  let postalCode = json["postal_code"],
+                  let state = json["state"] as? String,
+                  let city = json["city"] as? String,
+                   
+                
+                let self = self else {
+            // Handle error
+            return
+            }
+            
+            DispatchQueue.main.async {
+                print("individual load happening")
+                self.mccCode.text = mcc
+                self.businessUrl.text = url
+                self.firstName.text = firstName
+                self.lastName.text = lastName
+                self.phoneNumber.text = "\(phone)"
+                self.email.text = email
+                self.day.text = "\(dobDay)"
+                self.month.text = "\(dobMonth)"
+                self.year.text = "\(dobYear)"
+                self.streetAddress.text = line1
+                self.city.text = city
+                self.state.text = state
+                self.zipCode.text = "\(postalCode)"
+                self.last4ofSSN.text = "**********"
+                self.last4ofSSN.isEnabled = false
+                
+                }
+        })
+        task.resume()
+    }
+    
+    private func loadBusinessBankingInfo(stripeAccountId: String) {
+        
+            
+            let json: [String: Any] = ["stripeAccountId" : stripeAccountId]
+            
+        
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+            var request = URLRequest(url: URL(string: "https://ruh.herokuapp.com/retrieve-business-account")!)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+                guard let data = data,
+                    let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                      let mcc = json["mcc"] as? String,
+                      let url = json["url"] as? String,
+                      let companyName = json["name"] as? String,
+                      let companyPhone = json["phone"],
+                      let companyLine1 = json["company_line1"] as? String,
+                      let postalCode = json["company_postal_code"],
+                      let state = json["company_state"] as? String,
+                      let city = json["company_city"] as? String,
+                      let persons = json["persons"] as? [[String:Any]],
+                       
+                    
+                    let self = self else {
+                // Handle error
+                return
+                }
+                
+                DispatchQueue.main.async {
+//                    print("persons \(persons)")
+                    
+                    for i in 0..<persons.count {
+                        self.loadPerson(stripeAccountId: stripeAccountId, personId: "\(persons[i]["id"]!)", representative: "no")
+                    }
+                    
+                    self.bMCCCode.text = mcc
+                    self.bBusinessURL.text = url
+                    self.companyPhone.text = "\(companyPhone)"
+                    self.companyName.text = companyName
+                    self.bStreetAddress.text = companyLine1
+                    self.bCity.text = city
+                    self.bState.text = state
+                    self.bZipCode.text = "\(postalCode)"
+                    self.companyTaxId.text = "**********"
+                    self.companyTaxId.isEnabled = false
+                    
+                    }
+            })
+            task.resume()
+        
+    }
+    
+    private func loadPerson(stripeAccountId: String, personId: String, representative: String) {
+                
+        let json: [String: Any] = ["stripeAccountId" : stripeAccountId, "personId" : personId]
+                
+            
+                let jsonData = try? JSONSerialization.data(withJSONObject: json)
+                // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+                var request = URLRequest(url: URL(string: "https://ruh.herokuapp.com/retrieve-person")!)
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpMethod = "POST"
+                request.httpBody = jsonData
+                let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+                    guard let data = data,
+                        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                          let firstName = json["first_name"] as? String,
+                          let lastName = json["last_name"] as? String,
+                          let email = json["email"] as? String,
+                          let phoneNumber = json["phone_number"],
+                          let day = json["dob_day"],
+                          let month = json["dob_month"],
+                          let year = json["dob_year"],
+                          let streetAddress = json["street_address"] as? String,
+                          let zipCode = json["zip_code"],
+                          let state = json["state"] as? String,
+                          let city = json["city"] as? String,
+                          let executive = json["executive"],
+                          let owner = json["owner"],
+                           
+                        let self = self else {
+                    // Handle error
+                    return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        if representative == "yes" {
+                            self.representative = Representative(isPersonAnOwner: "\(owner)", isPersonAnExectutive: "\(executive)", firstName: firstName, lastName: lastName, month: "\(month)", day: "\(day)", year: "\(year)", streetAddress: streetAddress, city: city, state: state, zipCode: "\(zipCode)", emailAddress: email, phoneNumber: "\(phoneNumber)", last4OfSSN: "*********", id: personId)
+                            self.addRepresentativeLabel.text = "\(firstName) \(lastName)"
+                            
+                            if "\(owner)" == "1" {
+                                if let index = self.owners.firstIndex(where: { "\($0.firstName) \($0.lastName) \($0.last4OfSSN)" == "\(self.representative!.firstName) \(self.representative!.lastName) \($0.last4OfSSN)" }) {
+                                    self.owners[index] = self.representative!
+                                    if index == 0 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                } else if self.owners.count == 1 {
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                } else if self.owners.count == 2 {
+                                    self.addOwner3Label.text = "\(self.owners[2].firstName) \(self.owners[2].lastName)"
+                                } else if self.owners.count == 3 {
+                                    self.addOwner3Label.text = "\(self.owners[3].firstName) \(self.owners[3].lastName)"
+                                }
+                                } else {
+                                    self.owners.append(self.representative!)
+                                    if self.owners.count == 1 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                        self.addOwner1Stack.isHidden = false
+                                        self.addOwner2Stack.isHidden = true
+                                        self.addOwner3Stack.isHidden = true
+                                        self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 41.5
+                                } else if self.owners.count == 2 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = true
+                                    self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 80.5
+                                } else if self.owners.count == 3 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[2].firstName) \(self.owners[2].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = false
+                                    self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 101.5
+                                } else if self.owners.count == 4 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[2].firstName) \(self.owners[2].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[3].firstName) \(self.owners[3].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = false
+                                    self.addOwner4Stack.isHidden = false
+                                    self.businessSaveConstraint.constant = 147.5
+                                }
+                                }
+                            }
+                            
+                        } else {
+                                if let index = self.owners.firstIndex(where: { "\($0.firstName) \($0.lastName) \($0.phoneNumber)" == "\(firstName) \(lastName) \(phoneNumber)" }) {} else {
+                                    
+                                    self.owners.append(Representative(isPersonAnOwner: "\(owner)", isPersonAnExectutive: "\(executive)", firstName: firstName, lastName: lastName, month: "\(month)", day: "\(day)", year: "\(year)", streetAddress: streetAddress, city: city, state: state, zipCode: "\(zipCode)", emailAddress: email, phoneNumber: "\(phoneNumber)", last4OfSSN: "**********", id: personId))
+                                    print("owner count \(self.owners)")
+                                    if self.owners.count == 1 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                        self.addOwner1Stack.isHidden = false
+                                        self.addOwner2Stack.isHidden = true
+                                        self.addOwner3Stack.isHidden = true
+                                        self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 41.5
+                                } else if self.owners.count == 2 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = true
+                                    self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 80.5
+                                } else if self.owners.count == 3 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[2].firstName) \(self.owners[2].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = false
+                                    self.addOwner4Stack.isHidden = true
+                                    self.businessSaveConstraint.constant = 101.5
+                                } else if self.owners.count == 4 {
+                                    self.addOwnerLabel.text = "\(self.owners[0].firstName) \(self.owners[0].lastName)"
+                                    self.addOwner2Label.text = "\(self.owners[1].firstName) \(self.owners[1].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[2].firstName) \(self.owners[2].lastName)"
+                                    self.addOwner3Label.text = "\(self.owners[3].firstName) \(self.owners[3].lastName)"
+                                    self.addOwner1Stack.isHidden = false
+                                    self.addOwner2Stack.isHidden = false
+                                    self.addOwner3Stack.isHidden = false
+                                    self.addOwner4Stack.isHidden = false
+                                    self.businessSaveConstraint.constant = 147.5
+                                }
+                                }}
+                        
+                        }
+                })
+                task.resume()
+    }
+    
+    private func loadExternalAccount(stripeAccountId: String, externalAccountId: String) {
+        let json: [String: Any] = ["stripeAccountId" : stripeAccountId, "externalAccountId" : externalAccountId]
+        
+    
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+        var request = URLRequest(url: URL(string: "https://ruh.herokuapp.com/retrieve-external-account")!)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data,
+                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                  let bankName = json["bank_name"] as? String,
+                  let accountHolder = json["account_holder"] as? String,
+                  let routingNumber = json["routing_number"],
+                  let accountNumber = json["account_number"],
+                let self = self else {
+            // Handle error
+            return
+            }
+            
+            DispatchQueue.main.async {
+                self.externalAccountInfo = ExternalAccount(bankName: bankName, accountHolder: accountHolder, accountNumber: "\(accountNumber)", routingNumber: "\(routingNumber)", id: externalAccountId)
+                print("extenral Account \(self.externalAccountInfo)")
+                self.addAccountText.text = "****\("\(accountNumber)".suffix(4))"
+                
+                }
+        })
+        task.resume()
     }
     
     
@@ -207,6 +538,7 @@ class ChefBankingViewController: UIViewController {
         
     }
     
+    
     private func createPerson(stripeAccountId: String, i: Int) {
         
             let json : [String:Any] = ["account_id" : "\(stripeAccountId)", "first_name" : "\(owners[i].firstName)", "last_name" : "\(owners[i].lastName)", "dob_day" : "\(owners[i].day)", "dob_month" : "\(owners[i].month)", "dob_year" : "\(owners[i].year)", "line_1" : "\(owners[i].streetAddress)", "line_2" : "", "postal_code" : "\(owners[i].zipCode)", "city" : "\(owners[i].city)", "state" : "\(owners[i].state)", "email" : "\(owners[i].emailAddress)", "phone" : "\(owners[i].phoneNumber)", "id_number" : "\(owners[i].last4OfSSN)" , "title" : "Owner", "representative" : false, "owner" : true, "executive" : false]
@@ -242,7 +574,7 @@ class ChefBankingViewController: UIViewController {
     
     
     private func updateIndividualAccount() {
-        let json: [String: Any] = ["mcc": "\(mccCode.text!)", "url" :"\(businessUrl.text!)", "date": "\(Date())", "first_name" : "\(firstName.text!)", "last_name" : "\(lastName.text!)", "dob_day" : "\(day.text!)", "dob_month" : "\(month.text!)", "dob_year" : "\(year.text!)", "line_1" : "\(streetAddress.text!)", "line_2" : "", "postal_code" : "\(zipCode.text!)", "city" : "\(city.text!)", "state" : "\(state.text!)", "email" : "\(email.text!)", "phone" : "\(phoneNumber.text!)", "id_number" : "\(last4ofSSN.text!)"]
+        let json: [String: Any] = ["mcc": "\(mccCode.text!)", "url" :"\(businessUrl.text!)", "first_name" : "\(firstName.text!)", "last_name" : "\(lastName.text!)", "dob_day" : "\(day.text!)", "dob_month" : "\(month.text!)", "dob_year" : "\(year.text!)", "line_1" : "\(streetAddress.text!)", "line_2" : "", "postal_code" : "\(zipCode.text!)", "city" : "\(city.text!)", "state" : "\(state.text!)", "email" : "\(email.text!)", "phone" : "\(phoneNumber.text!)"]
         
         
         
@@ -260,13 +592,15 @@ class ChefBankingViewController: UIViewController {
             // Handle error
             return
             }
-            
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "ChefBankingToHomeSegue", sender: self)
+            }
         })
         task.resume()
     }
     
     private func updateBusinessAccount() {
-        let json: [String: Any] = ["mcc": "\(bMCCCode.text!)", "url" :"\(bBusinessURL.text!)", "date": "\(Date())", "company_name" : "\(companyName.text!)", "company_city" : "\(bCity.text!)", "company_line1" : "\(bStreetAddress.text!)", "company_line2" : "", "company_postal_code" : "\(bZipCode.text!)", "company_state" : "\(bState.text!)", "company_phone" : "\(companyPhone.text!)", "company_tax_id" : "\(companyTaxId.text!)"]
+        let json: [String: Any] = ["mcc": "\(bMCCCode.text!)", "url" :"\(bBusinessURL.text!)", "company_name" : "\(companyName.text!)", "company_city" : "\(bCity.text!)", "company_line1" : "\(bStreetAddress.text!)", "company_line2" : "", "company_postal_code" : "\(bZipCode.text!)", "company_state" : "\(bState.text!)", "company_phone" : "\(companyPhone.text!)"]
         
     
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
@@ -282,7 +616,33 @@ class ChefBankingViewController: UIViewController {
             // Handle error
             return
             }
-            
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "ChefBankingToHomeSegue", sender: self)
+            }
+        })
+        task.resume()
+    }
+    
+    private func deleteAccount(stripeAccountId: String) {
+        let json: [String: Any] = ["stripeAccountId": stripeAccountId]
+        
+    
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+        var request = URLRequest(url: URL(string: "https://ruh.herokuapp.com/delete-account")!)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data,
+                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                let self = self else {
+            // Handle error
+            return
+            }
+            DispatchQueue.main.async {
+                self.showToast(message: "Account Deleted.", font: .systemFont(ofSize: 12))
+            }
         })
         task.resume()
     }
@@ -293,25 +653,126 @@ class ChefBankingViewController: UIViewController {
     
     
     @IBAction func individualButtonPressed(_ sender: Any) {
-        termsOfServiceAccept = ""
-        individualView.isHidden = false
-        businessView.isHidden = true
-        individualButton.setTitleColor(UIColor.white, for: .normal)
-        individualButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
-        businessButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
-        businessButton.backgroundColor = UIColor.white
+        
+        if newAccountOrEditedAccount == "edit" {
+            
+            
+                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your old stripe bank account.", message: nil, preferredStyle: .actionSheet)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+                    self.deleteAccount(stripeAccountId: self.stripeAccountId)
+                    self.bMCCCode.text = ""
+                    self.bBusinessURL.text = ""
+                    self.companyPhone.text = ""
+                    self.companyName.text = ""
+                    self.bStreetAddress.text = ""
+                    self.bCity.text = ""
+                    self.bState.text = ""
+                    self.bZipCode.text = ""
+                    self.companyTaxId.text = ""
+                    self.bAddAccountText.text = ""
+                    self.addRepresentativeLabel.text = ""
+                    self.representative = nil
+                    self.addOwnerLabel.text = ""
+                    self.addOwner2Label.text = ""
+                    self.addOwner3Label.text = ""
+                    self.addOwner4Label.text = ""
+                    self.addOwner2Stack.isHidden = true
+                    self.addOwner3Stack.isHidden = true
+                    self.addOwner4Stack.isHidden = true
+                    self.owners.removeAll()
+                    self.businessSaveConstraint.constant = 41.5
+                    self.companyTaxId.isEnabled = true
+                    self.newAccountOrEditedAccount = "new"
+                    self.externalAccountInfo = nil
+                    
+                    self.bIAcceptCircle.image = UIImage(systemName: "circle")
+                    self.termsOfServiceAccept = ""
+                    self.individualView.isHidden = false
+                    self.businessView.isHidden = true
+                    self.individualButton.setTitleColor(UIColor.white, for: .normal)
+                    self.individualButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+                    self.businessButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+                    self.businessButton.backgroundColor = UIColor.white
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+                   
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                
+                
+                present(alert, animated: true, completion: nil)
+                
+        } else {
+            termsOfServiceAccept = ""
+            individualView.isHidden = false
+            businessView.isHidden = true
+            individualButton.setTitleColor(UIColor.white, for: .normal)
+            individualButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+            businessButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+            businessButton.backgroundColor = UIColor.white
+        }
         
         
     }
     
     @IBAction func businessButtonPressed(_ sender: Any) {
-        termsOfServiceAccept = ""
-        individualView.isHidden = true
-        businessView.isHidden = false
-        individualButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
-        individualButton.backgroundColor = UIColor.white
-        businessButton.setTitleColor(UIColor.white, for: .normal)
-        businessButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+        if newAccountOrEditedAccount == "edit" {
+            
+                let alert = UIAlertController(title: "Are you sure you want to continue? This will delete your old stripe bank account.", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+               
+                self.deleteAccount(stripeAccountId: self.stripeAccountId)
+            self.mccCode.text = ""
+            self.businessUrl.text = ""
+            self.firstName.text = ""
+            self.lastName.text = ""
+            self.phoneNumber.text = ""
+            self.email.text = ""
+            self.day.text = ""
+            self.month.text = ""
+            self.year.text = ""
+            self.streetAddress.text = ""
+            self.city.text = ""
+            self.state.text = ""
+            self.zipCode.text = ""
+            self.last4ofSSN.text = ""
+            self.last4ofSSN.isEnabled = true
+            self.addAccountText.text = ""
+            self.externalAccountInfo = nil
+            self.newAccountOrEditedAccount = "new"
+                
+            self.termsOfServiceAccept = ""
+                self.iAcceptCircle.image = UIImage(systemName: "circle")
+            self.individualView.isHidden = true
+            self.businessView.isHidden = false
+            self.individualButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+            self.individualButton.backgroundColor = UIColor.white
+            self.businessButton.setTitleColor(UIColor.white, for: .normal)
+            self.businessButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+                
+            alert.dismiss(animated: true, completion: nil)
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+               
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+            present(alert, animated: true, completion: nil)
+            
+        } else {
+            
+            termsOfServiceAccept = ""
+            individualView.isHidden = true
+            businessView.isHidden = false
+            individualButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+            individualButton.backgroundColor = UIColor.white
+            businessButton.setTitleColor(UIColor.white, for: .normal)
+            businessButton.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+        }
         
     }
     //Individual
@@ -337,20 +798,26 @@ class ChefBankingViewController: UIViewController {
         print("data \(externalAccountInfo)")
         bankingOrPerson = "banking"
         individualOrBanking = "individual"
-        if let vc = self.presentingViewController as? AddPersonViewController {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
             if self.externalAccountInfo != nil {
-                if self.externalAccountInfo != nil {
                 vc.newInfoOrEditedInfo = "edit"
-                }
                 vc.externalAccount = self.externalAccountInfo
-                
             }
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
             vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
-            vc.personLabel.text = "Banking"
-            vc.stripeAccountId = self.stripeAccountId
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
             
+            vc.stripeAccountId = self.stripeAccountId
+            self.present(vc, animated: true, completion: nil)
         }
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
+       
+//        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
         
     }
     
@@ -377,7 +844,11 @@ class ChefBankingViewController: UIViewController {
         } else if last4ofSSN.text == "" || last4ofSSN.text!.count != 9 {
             self.showToast(message: "Please enter your ssn.", font: .systemFont(ofSize: 12))
         } else {
+            if newAccountOrEditedAccount == "new" {
             saveIndividualAccountInfo()
+            } else {
+                updateIndividualAccount()
+            }
         }
         
     }
@@ -402,18 +873,27 @@ class ChefBankingViewController: UIViewController {
     @IBAction func bEditAccountButton(_ sender: Any) {
         bankingOrPerson = "banking"
         individualOrBanking = "business"
-        if let vc = self.presentingViewController as? AddPersonViewController {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
             if self.externalAccountInfo != nil {
                 vc.newInfoOrEditedInfo = "edit"
                 vc.externalAccount = self.externalAccountInfo
                 
             }
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
             vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
             vc.personLabel.text = "Banking"
             vc.stripeAccountId = self.stripeAccountId
+            self.present(vc, animated: true, completion: nil)
         }
         
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
+        
         
     }
     
@@ -422,19 +902,26 @@ class ChefBankingViewController: UIViewController {
         individualOrBanking = "business"
         representativeOrOwner = "representative"
         
-        if let vc = self.presentingViewController as? AddPersonViewController {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
             if self.representative != nil {
                 vc.representative = self.representative
                 vc.representativeId = self.representativeId
                 vc.personId = self.personId
                 
             }
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
             vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
             vc.personLabel.text = "Representative"
             vc.stripeAccountId = self.stripeAccountId
             vc.representativeOrOwner = "representative"
+            self.present(vc, animated: true, completion: nil)
         }
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
         
     }
     
@@ -445,7 +932,17 @@ class ChefBankingViewController: UIViewController {
         ownerTransfer = Representative(isPersonAnOwner: "Yes", isPersonAnExectutive: "", firstName: "", lastName: "", month: "", day: "", year: "", streetAddress: "", city: "", state: "", zipCode: "", emailAddress: "", phoneNumber: "", last4OfSSN: "", id: "")
         newInfoOrEditedInfo = "new"
         representativeOrOwner = "owner"
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
+            self.present(vc, animated: true, completion: nil)
+        }
         
     }
     
@@ -457,8 +954,19 @@ class ChefBankingViewController: UIViewController {
         ownerTransfer = self.owners[0]
         newInfoOrEditedInfo = "edit0"
         representativeOrOwner = "owner"
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
+                
+                    vc.bankingOrPerson = self.bankingOrPerson
+                    vc.individualOrBanking = self.individualOrBanking
+                    vc.representativeOrOwner = self.representativeOrOwner
+                    vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+                    vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+                    vc.representative = ownerTransfer
+                    vc.representativeId = self.representativeId
+                    vc.personId = self.personId
+                self.present(vc, animated: true, completion: nil)
+            }
         
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
         }
         
     }
@@ -470,8 +978,17 @@ class ChefBankingViewController: UIViewController {
         ownerTransfer = self.owners[1]
         newInfoOrEditedInfo = "edit1"
         representativeOrOwner = "owner"
-        
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func editOwner3Pressed(_ sender: Any) {
@@ -481,9 +998,18 @@ class ChefBankingViewController: UIViewController {
         ownerTransfer = self.owners[2]
         newInfoOrEditedInfo = "edit2"
         representativeOrOwner = "owner"
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
+            self.present(vc, animated: true, completion: nil)
+        }
         
-        
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
     }
     
     @IBAction func editOwner4Pressed(_ sender: Any) {bankingOrPerson = "person"
@@ -492,8 +1018,17 @@ class ChefBankingViewController: UIViewController {
         ownerTransfer = self.owners[3]
         newInfoOrEditedInfo = "edit3"
         representativeOrOwner = "owner"
-        
-        performSegue(withIdentifier: "ChefBankingToAddPersonSegue", sender: self)
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddPerson") as? AddPersonViewController  {
+            vc.bankingOrPerson = self.bankingOrPerson
+            vc.individualOrBanking = self.individualOrBanking
+            vc.representativeOrOwner = self.representativeOrOwner
+            vc.newInfoOrEditedInfo = self.newInfoOrEditedInfo
+            vc.newAccountOrEditedAccount = self.newAccountOrEditedAccount
+            vc.representative = ownerTransfer
+            vc.representativeId = self.representativeId
+            vc.personId = self.personId
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     
@@ -518,7 +1053,11 @@ class ChefBankingViewController: UIViewController {
         } else if companyTaxId.text == "" || companyTaxId.text!.count != 9 {
             self.showToast(message: "Please enter your company ein or your personal ssn", font: .systemFont(ofSize: 12))
         } else {
+            if newAccountOrEditedAccount == "new" {
             saveBusinessAccountInfo()
+            } else {
+                updateBusinessAccount()
+            }
         }
     }
     
@@ -538,6 +1077,65 @@ class ChefBankingViewController: UIViewController {
             
         }
     }
+    
+    @IBAction func deleteAccountButtonPressed(_ sender: Any) {
+        self.deleteAccount(stripeAccountId: stripeAccountId)
+        if self.individualView.isHidden == true {
+            
+            self.bMCCCode.text = ""
+            self.bBusinessURL.text = ""
+            self.companyPhone.text = ""
+            self.companyName.text = ""
+            self.bStreetAddress.text = ""
+            self.bCity.text = ""
+            self.bState.text = ""
+            self.bZipCode.text = ""
+            self.companyTaxId.text = ""
+            self.bAddAccountText.text = ""
+            self.addRepresentativeLabel.text = ""
+            self.representative = nil
+            self.addOwnerLabel.text = ""
+            self.addOwner2Label.text = ""
+            self.addOwner3Label.text = ""
+            self.addOwner4Label.text = ""
+            self.addOwner2Stack.isHidden = true
+            self.addOwner3Stack.isHidden = true
+            self.addOwner4Stack.isHidden = true
+            self.owners.removeAll()
+            self.businessSaveConstraint.constant = 41.5
+            self.companyTaxId.isEnabled = true
+            self.newAccountOrEditedAccount = "new"
+            self.externalAccountInfo = nil
+            
+            self.bIAcceptCircle.image = UIImage(systemName: "circle")
+            self.termsOfServiceAccept = ""
+        } else {
+            
+        self.mccCode.text = ""
+        self.businessUrl.text = ""
+        self.firstName.text = ""
+        self.lastName.text = ""
+        self.phoneNumber.text = ""
+        self.email.text = ""
+        self.day.text = ""
+        self.month.text = ""
+        self.year.text = ""
+        self.streetAddress.text = ""
+        self.city.text = ""
+        self.state.text = ""
+        self.zipCode.text = ""
+        self.last4ofSSN.text = ""
+        self.last4ofSSN.isEnabled = true
+        self.addAccountText.text = ""
+        self.externalAccountInfo = nil
+        self.newAccountOrEditedAccount = "new"
+            
+        self.termsOfServiceAccept = ""
+            self.iAcceptCircle.image = UIImage(systemName: "circle")
+        }
+        
+    }
+    
     
     func showToast(message : String, font: UIFont) {
         

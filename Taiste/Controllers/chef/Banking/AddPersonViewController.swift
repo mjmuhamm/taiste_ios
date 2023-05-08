@@ -73,7 +73,7 @@ class AddPersonViewController: UIViewController {
         super.viewDidLoad()
         
         if newAccountOrEditedAccount == "edit" {
-            bankingSaveButton.isEnabled = false
+//            bankingSaveButton.isEnabled = false
             personSaveButton.isEnabled = false
         } else {
             bankingSaveButton.isEnabled = true
@@ -147,6 +147,7 @@ class AddPersonViewController: UIViewController {
             accountHolderName.text = externalAccount!.accountHolder
             accountNumber.text = externalAccount!.accountNumber
             routingNumber.text = externalAccount!.routingNumber
+            self.personLabel.text = "Banking"
         }
         
 
@@ -320,7 +321,8 @@ class AddPersonViewController: UIViewController {
             self.showToast(message: "Please enter your ssn", font: .systemFont(ofSize: 12))
         } else {
             representative = Representative(isPersonAnOwner: isPersonAnOwner, isPersonAnExectutive: isPersonAnExectutive, firstName: firstName.text!, lastName: lastName.text!, month: month.text!, day: day.text!, year: year.text!, streetAddress: streetAddress.text!, city: city.text!, state: state.text!, zipCode: zipCode.text!, emailAddress: emailAddress.text!, phoneNumber: phoneNumber.text!, last4OfSSN: last4OfSSN.text!, id: "")
-            if let vc = self.presentingViewController as? ChefBankingViewController {
+            
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChefBanking") as? ChefBankingViewController  {
                 if self.representativeOrOwner == "representative" {
                     vc.representative = self.representative
                     vc.addRepresentativeLabel.text = "\(firstName.text!) \(lastName.text!)"
@@ -416,8 +418,8 @@ class AddPersonViewController: UIViewController {
                         vc.owners[Int(self.newInfoOrEditedInfo.suffix(1))!] = self.representative!
                     }
                 }
+                    self.present(vc, animated: true, completion: nil)
             }
-            self.dismiss(animated: true, completion: nil)
         }
         
         
@@ -431,7 +433,6 @@ class AddPersonViewController: UIViewController {
             let alert = UIAlertController(title: "Please make sure that there are no pending deposits before continuing.", message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (handler) in
-                if UIImagePickerController.isSourceTypeAvailable(.camera) {
                     if self.bankName.text == "" {
                         self.showToast(message: "Please enter your bank name", font: .systemFont(ofSize: 12))
                     } else if self.accountHolderName.text == "" {
@@ -441,21 +442,21 @@ class AddPersonViewController: UIViewController {
                     } else if self.routingNumber.text == "" {
                         self.showToast(message: "Please enter your routing number", font: .systemFont(ofSize: 12))
                     } else {
-                    if let vc = self.presentingViewController as? ChefBankingViewController {
+                        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChefBanking") as? ChefBankingViewController  {
                         vc.externalAccountInfo = ExternalAccount(bankName: self.bankName.text!, accountHolder: self.accountHolderName.text!, accountNumber: self.accountNumber.text!, routingNumber: self.routingNumber.text!, id: "")
                         if self.individualOrBanking == "individual" {
                             vc.addAccountText.text = "****\(self.accountNumber.text!.suffix(4))"
                         } else {
                             vc.bAddAccountText.text = "****\(self.accountNumber.text!.suffix(4))"
                         }
-                    
-                    }
-                        self.deleteExternalAccount(stripeAccountId: self.stripeAccountId, externalAccount: self.externalAccountId)
+                            
+                        self.deleteExternalAccount(stripeAccountId: self.stripeAccountId,externalAccount: self.externalAccountId)
                         self.createExternalAccount(stripeAccountId: self.stripeAccountId)
-                        
-                        self.dismiss(animated: true)
+                        self.present(vc, animated: true, completion: nil)
                     }
-                }
+                        
+                    }
+                
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (handler) in
@@ -472,16 +473,17 @@ class AddPersonViewController: UIViewController {
             } else if routingNumber.text == "" {
                 self.showToast(message: "Please enter your routing number", font: .systemFont(ofSize: 12))
             } else {
-            if let vc = self.presentingViewController as? ChefBankingViewController {
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChefBanking") as? ChefBankingViewController  {
                 vc.externalAccountInfo = ExternalAccount(bankName: bankName.text!, accountHolder: accountHolderName.text!, accountNumber: accountNumber.text!, routingNumber: routingNumber.text!, id: "")
                 if individualOrBanking == "individual" {
                     vc.addAccountText.text = "****\(accountNumber.text!.suffix(4))"
                 } else {
                     vc.bAddAccountText.text = "****\(accountNumber.text!.suffix(4))"
                 }
+                    self.present(vc, animated: true, completion: nil)
             }
                 
-                self.dismiss(animated: true)
+                
             }
         }
         
@@ -490,7 +492,7 @@ class AddPersonViewController: UIViewController {
     
     @IBAction func delerteButtonPressed(_ sender: UIButton) {
         if newAccountOrEditedAccount == "new" {
-                if let vc = self.presentingViewController as? ChefBankingViewController {
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChefBanking") as? ChefBankingViewController  {
                     if let index = vc.owners.firstIndex(where: { "\($0.firstName) \($0.lastName) \($0.last4OfSSN)" == "\(self.representative!.firstName) \(self.representative!.lastName) \($0.last4OfSSN)" }) {
                         vc.owners.remove(at: index)
                         if vc.owners.count == 0 {
@@ -513,19 +515,40 @@ class AddPersonViewController: UIViewController {
                             vc.businessSaveConstraint.constant = 101.5
                         }
                     }
+                self.present(vc, animated: true, completion: nil)
                 }
                 
-            self.dismiss(animated: true, completion: nil)
                 
         } else {
             let alert = UIAlertController(title: "Are you sure you want to delete this person?", message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (handler) in
-                if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                   
+                if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChefBanking") as? ChefBankingViewController  {
+                            if let index = vc.owners.firstIndex(where: { $0.id == self.representative!.id}) {
+                                vc.owners.remove(at: index)
+                                if vc.owners.count == 0 {
+                                    vc.addOwnerLabel.text = "Add Owner"
+                                } else if vc.owners.count == 1 {
+                                    vc.addOwnerLabel.text = "\(vc.owners[0].firstName) \(vc.owners[0].lastName)"
+                                    vc.addOwner2Stack.isHidden = true
+                                    vc.businessSaveConstraint.constant = 41.5
+                                } else if vc.owners.count == 2 {
+                                    vc.addOwnerLabel.text = "\(vc.owners[0].firstName) \(vc.owners[0].lastName)"
+                                    vc.addOwner2Label.text = "\(vc.owners[1].firstName) \(vc.owners[1].lastName)"
+                                    vc.addOwner3Stack.isHidden = true
+                                    vc.businessSaveConstraint.constant = 80.5
+                                } else if vc.owners.count == 3 {
+                                    vc.addOwnerLabel.text = "\(vc.owners[0].firstName) \(vc.owners[0].lastName)"
+                                    vc.addOwner2Label.text = "\(vc.owners[1].firstName) \(vc.owners[1].lastName)"
+                                    vc.addOwner3Label.text = "\(vc.owners[2].firstName) \(vc.owners[2].lastName)"
+                                    vc.addOwner4Stack.isHidden = true
+                                    vc.addOwnerButton.isHidden = false
+                                    vc.businessSaveConstraint.constant = 101.5
+                                }
+                        }
                     self.deletePerson(stripeId: self.stripeAccountId, personId: self.representative!.id)
                         self.dismiss(animated: true)
-                    }
+                        }
                 }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (handler) in
