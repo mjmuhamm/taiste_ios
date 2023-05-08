@@ -459,6 +459,8 @@ extension ProfileAsUserViewController: UICollectionViewDelegate, UICollectionVie
         let content = content[indexPath.row]
         let url = URL(string: content.dataUri)
         let data = try? Data(contentsOf: url!)
+        
+        cell.image.image = UIImage(data: data!)
        
         if data != nil {
 //        cell.videoView.image = UIImage(data: data!)

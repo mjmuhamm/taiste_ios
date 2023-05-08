@@ -20,7 +20,18 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZY-4i-tT6">
                         <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0md-zv-pkv">
+                                <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="0md-zv-pkv" secondAttribute="bottom" id="Iq1-zQ-7LW"/>
+                            <constraint firstItem="0md-zv-pkv" firstAttribute="top" secondItem="JZY-4i-tT6" secondAttribute="top" id="Pyj-Wk-zT5"/>
+                            <constraint firstItem="0md-zv-pkv" firstAttribute="leading" secondItem="JZY-4i-tT6" secondAttribute="leading" id="RA3-R6-tqG"/>
+                            <constraint firstAttribute="trailing" secondItem="0md-zv-pkv" secondAttribute="trailing" id="yBe-sY-rYo"/>
+                        </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kPM-GI-TS1">
                         <rect key="frame" x="6" y="164" width="47" height="20"/>
@@ -51,6 +62,7 @@
             </constraints>
             <size key="customSize" width="136" height="190"/>
             <connections>
+                <outlet property="image" destination="0md-zv-pkv" id="q0r-be-63G"/>
                 <outlet property="videoView" destination="JZY-4i-tT6" id="I7M-6Y-z0J"/>
                 <outlet property="viewText" destination="4pf-cO-cmk" id="D4J-vf-aCU"/>
             </connections>

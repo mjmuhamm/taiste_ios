@@ -14,12 +14,14 @@ class ChefContentCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var viewText: UILabel!
     
+    @IBOutlet weak var image: UIImageView!
     
     var player : AVPlayer!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
+//        image.contentMode = .scaleAspectFit
         // Initialization code
         
     }
@@ -29,8 +31,10 @@ class ChefContentCollectionViewCell: UICollectionViewCell {
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resizeAspectFill
         playerLayer.frame = contentView.bounds
+        playerLayer.fillMode = .both
+//        player.seek(to: CMTime(seconds: 5.0, preferredTimescale: .max))
         videoView.layer.addSublayer(playerLayer)
-      
+
     }
     
 }
