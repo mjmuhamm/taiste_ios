@@ -93,9 +93,12 @@ class ItemDetailViewController: UIViewController {
                 if error == nil {
                     let itemData = try? Data(contentsOf: itemUri!)
 
+                    DispatchQueue.main.async {
+                       
                     self.imgArr.append(UIImage(data: itemData!)!)
                     self.pageControl.numberOfPages = self.imgArr.count
                     self.sliderCollectionView.reloadData()
+                    }
                     
                 }
             }
@@ -109,6 +112,10 @@ class ItemDetailViewController: UIViewController {
     }
     
     @IBAction func reviewsButtonPressed(_ sender: UIButton) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Reviews") as? ReviewsViewController {
+            vc.item = self.item
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
 

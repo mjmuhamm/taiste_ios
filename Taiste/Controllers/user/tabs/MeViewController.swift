@@ -117,7 +117,7 @@ class MeViewController: UIViewController {
                 for doc in documents!.documents {
                     let data = doc.data()
                     
-                    if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let city = data["city"] as? String, let eventDates = data["eventDates"] as? [String], let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let menuItemId = data["menuItemId"] as? String, let orderDate = data["orderDate"] as? String, let orderUpdate = data["orderUpdate"] as? String, let totalCostOfEvent = data["totalCostOfEvent"] as? Double, let travelFee = data["travelFee"] as? String, let typeOfService = data["typeOfService"] as? String, let unitPrice = data["unitPrice"] as? String, let imageCount = data["imageCount"] as? Int, let itemCalories = data["itemCalories"] as? String {
+                    if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let city = data["city"] as? String, let eventDates = data["eventDates"] as? [String], let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let menuItemId = data["menuItemId"] as? String, let orderDate = data["orderDate"] as? String, let orderUpdate = data["orderUpdate"] as? String, let totalCostOfEvent = data["totalCostOfEvent"] as? Double, let travelFee = data["travelFee"] as? String, let typeOfService = data["typeOfService"] as? String, let unitPrice = data["unitPrice"] as? String, let imageCount = data["imageCount"] as? Int, let itemCalories = data["itemCalories"] as? String, let state = data["state"] as? String {
                         
                         self.db.collection("\(typeOfService)").document(menuItemId).getDocument { document, error in
                             if error == nil {
@@ -136,8 +136,10 @@ class MeViewController: UIViewController {
                                let itemImage = UIImage(data: data1!)!
                             
                             
-                                let newItem = UserOrders(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, city: city, eventDates: eventDates, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: unitPrice, menuItemId: menuItemId, itemImage: itemImage, orderDate: orderDate, orderUpdate: orderUpdate, totalCostOfEvent: totalCostOfEvent, travelFee: travelFee, typeOfService: typeOfService, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: 0.0, itemCalories: Int(itemCalories)!, documentId: doc.documentID)
+                                let newItem = UserOrders(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, city: city, state: state, zipCode: "", eventDates: eventDates, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: unitPrice, menuItemId: menuItemId, itemImage: itemImage, orderDate: orderDate, orderUpdate: orderUpdate, totalCostOfEvent: totalCostOfEvent, travelFee: travelFee, typeOfService: typeOfService, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: 0.0, itemCalories: Int(itemCalories)!, documentId: doc.documentID)
                         
+                                DispatchQueue.main.async {
+
                         if self.userOrders.isEmpty {
                             self.userOrders.append(newItem)
                             self.orders = self.userOrders
@@ -152,6 +154,7 @@ class MeViewController: UIViewController {
                             }
                         }
                     }
+                            }
                         }
                     }
                                 }
@@ -198,6 +201,7 @@ class MeViewController: UIViewController {
                         let liked : [String] = []
                         let newItem = UserChefs(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, chefName: chefName, chefPassion: chefPassion, timesLiked: 0, chefLiked: liked, chefOrders: 0, chefRating: 0)
                         
+                            DispatchQueue.main.async {
                         if self.userChefs.isEmpty {
                             self.userChefs.append(newItem)
                             self.chefs = self.userChefs
@@ -211,6 +215,7 @@ class MeViewController: UIViewController {
                             } else {
                                 self.userChefs[index!].timesLiked = self.userChefs[index!].timesLiked + 1
                             }
+                        }
                         }
                         }
                     }
@@ -235,6 +240,7 @@ class MeViewController: UIViewController {
         userReviews.removeAll()
         meTableView.reloadData()
         meTableView.register(UINib(nibName: "UserOrdersAndLikesTableViewCell", bundle: nil), forCellReuseIdentifier: "UserOrdersAndLikesReusableCell")
+        
         if self.likes.isEmpty {
             db.collection("User").document(Auth.auth().currentUser!.uid).collection("UserLikes").getDocuments { documents, error in
             if error == nil {
@@ -242,7 +248,7 @@ class MeViewController: UIViewController {
                 for doc in documents!.documents {
                     let data = doc.data()
                     
-                    if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["profileImageId"] as? String, let imageCount = data["imageCount"] as? Int, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let itemTitle = data["itemTitle"] as? String, let itemType = data["itemType"] as? String {
+                    if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["profileImageId"] as? String, let imageCount = data["imageCount"] as? Int, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let itemTitle = data["itemTitle"] as? String, let itemType = data["itemType"] as? String, let city = data["city"] as? String, let state = data["state"] as? String {
                         print("likes happening")
                         
                         var liked : [String] = []
@@ -270,19 +276,22 @@ class MeViewController: UIViewController {
                                         itemOrders = itemOrdersI
                                     
                                     
-                                    let newItem = UserLikes(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, itemType: itemType, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, itemImage: itemImage, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: itemRating, itemCalories: 0, documentId: doc.documentID)
+                                    let newItem = UserLikes(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, itemType: itemType, city: city, state: state, zipCode: "", itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, itemImage: itemImage, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: itemRating, itemCalories: 0, documentId: doc.documentID)
                                     
+                                        DispatchQueue.main.async {
+
                                     if self.userLikes.isEmpty {
                                         self.userLikes.append(newItem)
                                         self.likes = self.userLikes
                                         self.meTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
                                     } else {
-                                        let index = self.userLikes.append(newItem)
+                                        self.userLikes.append(newItem)
                                         self.likes = self.userLikes
                                         self.meTableView.insertRows(at: [IndexPath(item: self.likes.count - 1, section: 0)], with: .fade)
                                     }
                                     
                                 }
+                                    }
                                 }}
                         }
                             }}
@@ -324,7 +333,8 @@ class MeViewController: UIViewController {
                                
                             print("reviews happening")
                                 let newItem = UserReviews(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, chefName: chefUsername, date: date, documentID: doc.documentID, itemTitle: itemTitle, itemType: itemType, liked: liked, user: user, userChefRating: userChefRating, userExpectationsRating: userExpectationsRating, userImageId: userImageId, userQualityRating: qualityRating, userRecommendation: userRecommendation, userReviewTextField: userReviewTextField)
-                            
+                                DispatchQueue.main.async {
+
                             if self.userReviews.isEmpty {
                                 self.userReviews.append(newItem)
                                 self.reviews = self.userReviews
@@ -336,7 +346,8 @@ class MeViewController: UIViewController {
                                     self.reviews = self.userReviews
                                     self.meTableView.insertRows(at: [IndexPath(item: self.reviews.count - 1, section: 0)], with: .fade)
                                 }
-                            }
+                            }                                    
+                                }
                         }
                         }
                     }

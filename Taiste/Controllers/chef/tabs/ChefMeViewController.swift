@@ -275,13 +275,13 @@ class ChefMeViewController: UIViewController {
             return
           }
             
+            if videos.count == 0 {
+                
+            } else {
+                for i in 0..<videos.count {
           DispatchQueue.main.async {
               
               
-              if videos.count == 0 {
-                  
-              } else {
-                  for i in 0..<videos.count {
                       let id = videos[i]["id"]!
                       let createdAtI = videos[i]["createdAt"]!
                       if i == videos.count - 1 {
@@ -291,49 +291,59 @@ class ChefMeViewController: UIViewController {
                       var liked : [String] = []
                       var comments = 0
                       var shared = 0
+                      print("videos count \(videos.count)")
                       let data : [String : Any] = ["views" : 0, "liked" : [], "shared" : 0, "comments" : 0]
-                      self.db.collection("Videos").document("\(id)").getDocument { document, error in
-                          if error == nil {
-
-                              if document!.exists {
-                                  let data = document!.data()
-
-                                  if data!["views"] != nil {
-                                      views = data!["views"] as! Int
-                                  }
-
-                                  if data!["liked"] != nil {
-                                      liked = data!["liked"] as! [String]
-                                  }
-
-                                  if data!["shared"] != nil {
-                                      shared = data!["shared"] as! Int
-                                  }
-
-                                  if data!["comments"] != nil {
-                                      comments = data!["comments"] as! Int
-                                  }
-                              }
-                          }
-//                          print("videos \(videos)")
+//                      self.db.collection("Videos").document("\(id)").getDocument { document, error in
+//                          if error == nil {
+//
+//                              if document!.exists {
+//                                  let data = document!.data()
+//
+//                                  if data!["views"] != nil {
+//                                      views = data!["views"] as! Int
+//                                  }
+//
+//                                  if data!["liked"] != nil {
+//                                      liked = data!["liked"] as! [String]
+//                                  }
+//
+//                                  if data!["shared"] != nil {
+//                                      shared = data!["shared"] as! Int
+//                                  }
+//
+//                                  if data!["comments"] != nil {
+//                                      comments = data!["comments"] as! Int
+//                                  }
+//                              }
+//                          }
+                          print("videos \(videos)")
                        
                           
-                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared)
+                          let newVideo = VideoModel(dataUri: videos[i]["thumbnailUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared)
                           
                           if self.content.isEmpty {
                               self.content.append(newVideo)
+//                              self.contentCollectionView.insertItems(at: <#T##[IndexPath]#>)
                               self.contentCollectionView.reloadData()
+//                              let newIndexPath = IndexPath(item: self.content.count - 1, section: 0)
+//                              self.contentCollectionView.insertItems(at: [newIndexPath])
                               
                           } else {
-                              let index = self.content.firstIndex { $0.id == id as! String
-                              }
+                              let index = self.content.firstIndex { $0.id == id as! String }
                               if index == nil {
                                   self.content.append(newVideo)
+                                  
+                                  let newIndexPath = IndexPath(item: self.content.count - 1, section: 0)
+//                                  self.contentCollectionView.insertItems(at: [newIndexPath])
                                   self.contentCollectionView.reloadData()
                               }
                           }
+                      if i == videos.count - 1 {
+//                          self.contentCollectionView.reloadData()
+                      }
+                      print("done")
                       
-                  }
+//                  }
               }
               }
                           }
@@ -725,43 +735,30 @@ extension ChefMeViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let url = URL(string: content.dataUri)
         let data = try? Data(contentsOf: url!)
         cell.viewText.text = "\(content.views)"
+        cell.image.frame.size.width = contentCollectionView.frame.size.width / 3
+        cell.image.frame.size.height = contentCollectionView.frame.size.height / 3
         
         cell.image.image = UIImage(data: data!)
     
         if data != nil {
-            cell.configure(model: content)
+//            cell.configure(model: content)
             
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (contentCollectionView.frame.size.width / 3) - 3, height: (contentCollectionView.frame.size.height / 3) - 3)
+        
+        return CGSize(width: (contentCollectionView.frame.size.width / 3), height: (contentCollectionView.frame.size.height / 3))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 1
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 1
     }
     
-}
- func thumbnailForVideoAtURL(url: URL) -> UIImage? {
-
-     let asset = AVAsset(url: url)
-    let assetImageGenerator = AVAssetImageGenerator(asset: asset)
-
-    var time = asset.duration
-    time.value = min(time.value, 2)
-
-    do {
-        let imageRef = try assetImageGenerator.copyCGImage(at: time, actualTime: nil)
-        return UIImage(cgImage: imageRef)
-    } catch {
-        print("error")
-        return nil
-    }
 }

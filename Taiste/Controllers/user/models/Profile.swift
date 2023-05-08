@@ -15,6 +15,8 @@ struct UserOrders {
     let chefImageId: String
     let chefImage: UIImage?
     let city: String
+    let state: String
+    let zipCode: String
     let eventDates: [String]
     let itemTitle: String
     let itemDescription: String
@@ -55,6 +57,9 @@ struct UserLikes {
     let chefImageId: String
     let chefImage: UIImage?
     let itemType: String
+    let city: String
+    let state: String
+    let zipCode: String
     let itemTitle: String
     let itemDescription: String
     let itemPrice: String

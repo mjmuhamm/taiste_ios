@@ -16,7 +16,6 @@ class HomeViewController: UIViewController {
     
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
-    private let user = "malik@testing.com"
     
     @IBOutlet weak var cateringButton: MDCButton!
     @IBOutlet weak var personalChefButton: MDCButton!
@@ -133,6 +132,8 @@ class HomeViewController: UIViewController {
                             
                                         let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: chefImage, menuItemId: menuItemId, itemImage: image, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
                                         
+                            DispatchQueue.main.async {
+
                                         if self.toggle == "Cater Items" {
                                             if self.cateringItems.isEmpty {
                                                 self.cateringItems.append(newItem)
@@ -172,6 +173,7 @@ class HomeViewController: UIViewController {
                                                     self.homeTableView.insertRows(at: [IndexPath(item: self.mealKitItems.count - 1, section: 0)], with: .fade)
                                                 }
                                             }
+                                        }
                         }
                     }
                       }

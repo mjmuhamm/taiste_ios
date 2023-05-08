@@ -21,7 +21,7 @@ class ChefContentCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         // Initialization code
         
     }

@@ -5,43 +5,35 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChefContentCollectionViewReusableCell" id="gTV-IL-0wX" customClass="ChefContentCollectionViewCell" customModule="Taiste" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
+            <rect key="frame" x="0.0" y="0.0" width="137" height="217"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
+                <rect key="frame" x="0.0" y="0.0" width="137" height="217"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZY-4i-tT6">
-                        <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0md-zv-pkv">
-                                <rect key="frame" x="0.0" y="0.0" width="136" height="190"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="labelColor"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0md-zv-pkv">
+                        <rect key="frame" x="0.0" y="0.0" width="137" height="217"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="0md-zv-pkv" secondAttribute="bottom" id="Iq1-zQ-7LW"/>
-                            <constraint firstItem="0md-zv-pkv" firstAttribute="top" secondItem="JZY-4i-tT6" secondAttribute="top" id="Pyj-Wk-zT5"/>
-                            <constraint firstItem="0md-zv-pkv" firstAttribute="leading" secondItem="JZY-4i-tT6" secondAttribute="leading" id="RA3-R6-tqG"/>
-                            <constraint firstAttribute="trailing" secondItem="0md-zv-pkv" secondAttribute="trailing" id="yBe-sY-rYo"/>
+                            <constraint firstAttribute="height" constant="217" id="5a4-TE-W3u"/>
+                            <constraint firstAttribute="width" secondItem="0md-zv-pkv" secondAttribute="height" multiplier="137:217" id="Amu-z6-j4u"/>
+                            <constraint firstAttribute="width" constant="137" id="nZa-Hh-uD5"/>
                         </constraints>
-                    </view>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kPM-GI-TS1">
-                        <rect key="frame" x="6" y="164" width="47" height="20"/>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8No-hO-ddL">
+                        <rect key="frame" x="10" y="188" width="47" height="20"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qMh-bj-QEe">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d95-rI-J7o">
                                 <rect key="frame" x="0.0" y="3" width="11.5" height="13.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <imageReference key="image" image="play.fill" catalog="system" symbolScale="small"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="155" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pf-cO-cmk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="155" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOO-8g-dUS">
                                 <rect key="frame" x="19.5" y="0.0" width="27.5" height="20"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,26 +45,22 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="JZY-4i-tT6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0cS-98-cdg"/>
-                <constraint firstAttribute="bottom" secondItem="JZY-4i-tT6" secondAttribute="bottom" id="51e-71-AA4"/>
-                <constraint firstItem="JZY-4i-tT6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BNG-zD-GLc"/>
-                <constraint firstAttribute="bottom" secondItem="kPM-GI-TS1" secondAttribute="bottom" constant="6" id="WXs-FP-WM6"/>
-                <constraint firstItem="kPM-GI-TS1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="pwe-rY-YxX"/>
-                <constraint firstAttribute="trailing" secondItem="JZY-4i-tT6" secondAttribute="trailing" id="yXq-Jm-mG7"/>
+                <constraint firstAttribute="bottom" secondItem="8No-hO-ddL" secondAttribute="bottom" constant="9" id="DiC-jw-LpA"/>
+                <constraint firstAttribute="bottom" secondItem="0md-zv-pkv" secondAttribute="bottom" id="GAo-km-TLv"/>
+                <constraint firstItem="8No-hO-ddL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="S6p-40-983"/>
+                <constraint firstAttribute="trailing" secondItem="0md-zv-pkv" secondAttribute="trailing" id="Voc-Rl-0zm"/>
+                <constraint firstItem="0md-zv-pkv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="buD-cm-gO2"/>
+                <constraint firstItem="0md-zv-pkv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lzk-ZR-lRO"/>
             </constraints>
-            <size key="customSize" width="136" height="190"/>
+            <size key="customSize" width="135" height="217"/>
             <connections>
                 <outlet property="image" destination="0md-zv-pkv" id="q0r-be-63G"/>
-                <outlet property="videoView" destination="JZY-4i-tT6" id="I7M-6Y-z0J"/>
-                <outlet property="viewText" destination="4pf-cO-cmk" id="D4J-vf-aCU"/>
+                <outlet property="viewText" destination="yOO-8g-dUS" id="VjI-xc-SC8"/>
             </connections>
-            <point key="canvasLocation" x="198.55072463768118" y="119.19642857142857"/>
+            <point key="canvasLocation" x="174.63768115942031" y="128.23660714285714"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="play.fill" catalog="system" width="116" height="128"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
