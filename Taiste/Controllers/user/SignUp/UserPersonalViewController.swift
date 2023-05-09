@@ -238,6 +238,8 @@ class UserPersonalViewController: UIViewController {
             self.showToast(message: "Please make sure password has 1 uppercase letter, 1 special character, 1 number, 1 lowercase letter, and matches with the second insert.", font: .systemFont(ofSize: 12))
         } else if city.text == "" || state.text == "" || zipCode.text == "" {
             self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
+        } else if userImage1 == nil {
+            self.showToast(message: "Please add a profile pic.", font: .systemFont(ofSize: 12))
         } else  {
         
         if newOrEdit == "new" {

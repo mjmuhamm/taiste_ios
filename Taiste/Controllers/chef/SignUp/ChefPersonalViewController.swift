@@ -143,7 +143,9 @@ class ChefPersonalViewController: UIViewController {
             self.showToast(message: "Please enter chef passion.", font: .systemFont(ofSize: 12))
         } else if city.text == "" || state.text == "" || zipCode.text == "" {
             self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
-        } else  {
+        } else if userImage1 == nil {
+            self.showToast(message: "Please add a profile pic.", font: .systemFont(ofSize: 12))
+        } else {
         
             let storageRef = storage.reference()
             Auth.auth().createUser(withEmail: email.text!, password: password.text!) { authResult, error in
@@ -182,6 +184,8 @@ class ChefPersonalViewController: UIViewController {
                 self.showToast(message: "Please enter chef passion.", font: .systemFont(ofSize: 12))
             } else if city.text == "" || state.text == "" || zipCode.text == "" {
                 self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
+            } else if userImage1 == nil {
+                self.showToast(message: "Please add a profile pic.", font: .systemFont(ofSize: 12))
             } else  {
                 
             if !password.text!.contains("*") {
