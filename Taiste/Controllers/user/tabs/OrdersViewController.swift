@@ -346,8 +346,8 @@ extension OrdersViewController : UITableViewDataSource, UITableViewDelegate {
             cell.showInfoView.isHidden = false
             cell.showInfoLabel.text = "Review?"
             cell.showInfoText.text = "Please take a few seconds to review your event to help other users."
-            cell.showInfoLabel.textColor = UIColor.systemRed
-            cell.showInfoText.textColor = UIColor.systemRed
+            cell.showInfoLabel.textColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+            cell.showInfoText.textColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
             cell.cancelButtonPressed.isHidden = true
             cell.messageButtonPressed.isHidden = true
         }
@@ -390,6 +390,10 @@ extension OrdersViewController : UITableViewDataSource, UITableViewDelegate {
             cell.showInfoText.textColor = UIColor.systemRed
             cell.cancelButtonPressed.isHidden = true
             cell.messageButtonPressed.isHidden = true
+        } else {
+            cell.showInfoLabel.textColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+            cell.showInfoText.textColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+            
         }
         
         cell.messagesForTravelFeeButtonTapped = {

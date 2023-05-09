@@ -13,16 +13,24 @@ class FeedViewController: UIViewController {
     
     private let db = Firestore.firestore()
 
-    private var content : [VideoModel] = []
+    var content : [VideoModel] = []
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var index = 0
+    
+    var feedOrChefContent = "feed"
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("chefOrUser \(chefOrUser)")
         collectionView.register(UINib(nibName: "FeedCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FeedCollectionViewReusableCell")
         collectionView.dataSource = self
         collectionView.delegate = self
-        loadContent()
+        if feedOrChefContent == "feed" {
+            loadContent()
+        } else {
+            collectionView.reloadData()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +107,7 @@ class FeedViewController: UIViewController {
                           print("videos \(videos)")
                           print("dataUri \(videos[i]["dataUrl"]! as! String)")
                           
-                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared)
+                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared, thumbNailUrl: videos[i]["thumbnailUrl"]! as! String)
                           
                           if self.content.isEmpty {
                               self.content.append(newVideo)
@@ -121,7 +129,54 @@ class FeedViewController: UIViewController {
         task.resume()
     }
     
+    
+    private func deleteVideo(videoId: String) {
+            let json: [String: Any] = ["entryId": "\(videoId)"]
+            
+        
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            // MARK: Fetch the Intent client secret, Ephemeral Key secret, Customer ID, and publishable key
+            var request = URLRequest(url: URL(string: "https://ruh-video.herokuapp.com/delete-video")!)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+              guard let data = data,
+                    let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                   
+                    let self = self else {
+                // Handle error
+                return
+              }
+                
+              DispatchQueue.main.async {
+                  self.db.collection("Videos").document(videoId).delete()
+                  self.showToast(message: "Item Deleted.", font: .systemFont(ofSize: 12))
+                  self.dismiss(animated: true, completion: nil)
+                  }
+            })
+            task.resume()
+        }
 
+    func showToast(message : String, font: UIFont) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.size.height-180, width: (self.view.frame.width), height: 70))
+        toastLabel.backgroundColor = UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center;
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.numberOfLines = 4
+        toastLabel.layer.cornerRadius = 1;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+             toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    }
 }
 
 extension FeedViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -133,7 +188,15 @@ extension FeedViewController : UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeedCollectionViewReusableCell", for: indexPath) as! FeedCollectionViewCell
         
-        let model = content[indexPath.row]
+        var index = 0
+        if feedOrChefContent == "feed" {
+            index = indexPath.row
+        } else {
+            index = self.index
+            cell.deleteButton.isHidden = false
+            cell.backButton.isHidden = false
+        }
+        let model = content[index]
         
         cell.configure(model: model)
         cell.likeText.text = "\(model.liked.count)"
@@ -150,6 +213,34 @@ extension FeedViewController : UICollectionViewDelegate, UICollectionViewDataSou
                 cell.playImage.isHidden = true
             }
         }
+        
+        cell.backButtonTapped = {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        cell.deleteButtonTapped = {
+            let alert = UIAlertController(title: "Are you sure you want to delete this item?", message: nil, preferredStyle: .actionSheet)
+               
+               alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (handler) in
+                   self.deleteVideo(videoId: model.id)
+                   alert.dismiss(animated: true, completion: nil)
+               }))
+               
+               alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (handler) in
+                   alert.dismiss(animated: true, completion: nil)
+               }))
+               
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        cell.commentButtonTapped = {
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Comments") as? CommentsViewController  {
+                vc.videoId = model.id
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        
+        
         
         return cell
     }

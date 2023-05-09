@@ -33,7 +33,11 @@ class FeedCollectionViewCell: UICollectionViewCell {
     var commentButtonTapped: (() -> ()) = {}
     var shareButtonTapped: (() -> ()) = {}
     var playPauseButtonTapped: (() -> ()) = {}
+    var backButtonTapped: (() -> ()) = {}
+    var deleteButtonTapped: (() -> ()) = {}
     
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -50,6 +54,13 @@ class FeedCollectionViewCell: UICollectionViewCell {
       
     }
 
+    @IBAction func backButtonPressed(_ sender: Any) {
+        backButtonTapped()
+    }
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        deleteButtonTapped()
+    }
+    
     @IBAction func likeButtonPressed(_ sender: UIButton) {
         likeButtonTapped()
     }

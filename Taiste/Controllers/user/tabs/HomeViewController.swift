@@ -42,6 +42,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        chefOrUser = "User"
         homeTableView.delegate = self
         homeTableView.dataSource = self
         
@@ -117,20 +118,7 @@ class HomeViewController: UIViewController {
                     if let chefEmail = data["chefEmail"] as? String, let chefPassion = data["chefPassion"] as? String, let chefUsername = data["chefUsername"] as? String, let profileImageId = data["profileImageId"] as? String, let menuItemId = data["randomVariable"] as? String, let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let liked = data["liked"] as? [String], let itemOrders = data["itemOrders"] as? Int, let itemRating = data["itemRating"], let date = data["date"], let imageCount = data["imageCount"] as? Int, let itemType = data["itemType"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String, let user = data["user"] as? String, let healthy = data["healthy"] as? Int, let creative = data["creative"] as? Int, let vegan = data["vegan"] as? Int, let burger = data["burger"] as? Int, let seafood = data["seafood"] as? Int, let pasta = data["pasta"] as? Int, let workout = data["workout"] as? Int, let lowCal = data["lowCal"] as? Int, let lowCarb = data["lowCarb"] as? Int {
                         
                             
-                        storageRef.child("chefs/\(chefEmail)/profileImage/\(profileImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-                        
-                            if error != nil {
-                                print("error \(error)")
-                            }
-                              let chefImage = UIImage(data: data!)!
-                            
-                            
-                        storageRef.child("chefs/\(chefEmail)/\(self.toggle)/\(menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
-                            
-                               let image = UIImage(data: data1!)!
-                            
-                            
-                                        let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: chefImage, menuItemId: menuItemId, itemImage: image, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
+                                        let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: UIImage(), menuItemId: menuItemId, itemImage: UIImage(), itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
                                         
                             DispatchQueue.main.async {
 
@@ -174,8 +162,7 @@ class HomeViewController: UIViewController {
                                                 }
                                             }
                                         }
-                        }
-                    }
+                        
                       }
                     }
                   }
@@ -281,33 +268,32 @@ extension HomeViewController :  UITableViewDelegate, UITableViewDataSource  {
         var chefImage = UIImage()
         var itemImage = UIImage()
         let storageRef = storage.reference()
-        let chefRef = storageRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png")
-        let itemRef = storageRef.child("chefs/\(item.chefEmail)/\(item.itemType)/\(item.menuItemId)0.png")
+        let chefRef = storage.reference()
+        let itemRef = storage.reference()
         
-//        DispatchQueue.main.async {
-//        chefRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
-//          if let error = error {
-//              print("error \(error)")
-//            // Uh-oh, an error occurred!
-//          } else {
-//            print("occuring")
-//            chefImage = UIImage(data: data!)!
-//              cell.chefImage.image = UIImage(data: data!)
-//              itemRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
-//                if let error = error {
-//                  // Uh-oh, an error occurred!
-//                    print("error 2 \(error)")
-//                } else {
-//                  // Data for "images/island.jpg" is returned
-//                    print("occuring 2")
-//                  itemImage = UIImage(data: data!)!
-//                    cell.itemImage.image = UIImage(data: data!)
-//                }}}}}
+        
+            
+        chefRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+        
+            if error != nil {
+                print("error \(error)")
+            }
+//              let chefImage =
+            
+            cell.chefImage.image = UIImage(data: data!)!
+        }
+            
+        itemRef.child("chefs/\(item.chefEmail)/\(item.itemType)/\(item.menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
+            
+//               let image =
+                
+            cell.itemImage.image =  UIImage(data: data1!)!
+            item.itemImage = UIImage(data: data1!)!
+            }
+        
             
         
 
-        cell.chefImage.image = item.chefImage
-        cell.itemImage.image = item.itemImage
         cell.itemTitle.text = item.itemTitle
         cell.itemPrice.text = "$\(item.itemPrice)"
         cell.itemDescription.text = item.itemDescription

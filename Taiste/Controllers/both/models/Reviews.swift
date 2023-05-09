@@ -20,6 +20,7 @@ struct Reviews {
     let thoughts: String
     let image: UIImage
     let userImageId: String
+    let userEmail: String
     let documentId: String
     
     

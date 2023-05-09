@@ -184,6 +184,37 @@
                         </constraints>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                     </imageView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Huh-LE-gxO">
+                        <rect key="frame" x="20" y="17" width="58" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="09L-Gs-kO0"/>
+                            <constraint firstAttribute="width" constant="58" id="wKv-lD-EdC"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system">
+                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="19" scale="large" weight="bold"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="backButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Xjc-NC-fbk"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvE-r7-zLc">
+                        <rect key="frame" x="443" y="17" width="158" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="7zR-oV-FMi"/>
+                            <constraint firstAttribute="width" constant="158" id="dQW-8A-7Vu"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Delete">
+                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="15"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="backButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="7Wf-Ag-Anp"/>
+                            <action selector="deleteButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Xhf-Wb-rbd"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -191,22 +222,28 @@
                 <constraint firstAttribute="bottom" secondItem="6Yk-HJ-7MP" secondAttribute="bottom" id="2BD-Nm-ALB"/>
                 <constraint firstAttribute="trailing" secondItem="oAw-rw-YDa" secondAttribute="trailing" constant="100" id="59a-Su-hU0"/>
                 <constraint firstItem="yzc-Lw-xsc" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="9c6-XM-YdA"/>
+                <constraint firstAttribute="trailing" secondItem="pvE-r7-zLc" secondAttribute="trailing" constant="-25" id="BxI-Ek-uvX"/>
+                <constraint firstItem="Huh-LE-gxO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="17" id="HJw-oF-Fab"/>
                 <constraint firstItem="oAw-rw-YDa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="HUM-x3-0PA"/>
                 <constraint firstAttribute="trailing" secondItem="x7o-ap-j0h" secondAttribute="trailing" id="N3l-cj-kTr"/>
                 <constraint firstItem="6Yk-HJ-7MP" firstAttribute="top" secondItem="oAw-rw-YDa" secondAttribute="bottom" constant="17" id="Nbk-cU-EUm"/>
                 <constraint firstAttribute="trailing" secondItem="6Yk-HJ-7MP" secondAttribute="trailing" id="Nci-LM-Lw9"/>
                 <constraint firstItem="XrB-Dl-MB5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XeU-hL-Hc5"/>
                 <constraint firstAttribute="bottom" secondItem="XrB-Dl-MB5" secondAttribute="bottom" id="agN-KC-2cR"/>
+                <constraint firstItem="Huh-LE-gxO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="ceg-Xn-OuD"/>
                 <constraint firstAttribute="bottom" secondItem="x7o-ap-j0h" secondAttribute="bottom" id="hg7-jC-jPd"/>
                 <constraint firstItem="yzc-Lw-xsc" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="iAO-dc-zYU"/>
                 <constraint firstAttribute="trailing" secondItem="XrB-Dl-MB5" secondAttribute="trailing" id="jca-ld-22S"/>
                 <constraint firstItem="XrB-Dl-MB5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lA7-Z3-9ZC"/>
                 <constraint firstItem="6Yk-HJ-7MP" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mRZ-iz-Pfu"/>
                 <constraint firstItem="oAw-rw-YDa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" symbolic="YES" id="rL7-am-6jd"/>
+                <constraint firstItem="pvE-r7-zLc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="17" id="uWu-6o-LFs"/>
             </constraints>
             <size key="customSize" width="576" height="874"/>
             <connections>
+                <outlet property="backButton" destination="Huh-LE-gxO" id="jXf-B2-PL0"/>
                 <outlet property="commentText" destination="9b0-wq-Rtv" id="gHo-K9-znP"/>
+                <outlet property="deleteButton" destination="pvE-r7-zLc" id="T35-J1-R5B"/>
                 <outlet property="likeImage" destination="22p-H7-EeS" id="mIJ-3S-GHZ"/>
                 <outlet property="likeText" destination="0Vx-bP-EGc" id="Lhi-sJ-eQv"/>
                 <outlet property="playImage" destination="yzc-Lw-xsc" id="zvk-IH-ppU"/>
@@ -220,6 +257,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrowshape.turn.up.right.fill" catalog="system" width="128" height="106"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>

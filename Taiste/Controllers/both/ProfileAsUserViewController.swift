@@ -109,10 +109,12 @@ class ProfileAsUserViewController: UIViewController {
 
                         if let fullName = data["fullName"] as? String, let email = data["email"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let userName = data["userName"] as? String, let burger = data["burger"] as? Int, let creative = data["creative"] as? Int, let healthy = data["healthy"] as? Int, let lowCal = data["lowCal"] as? Int, let lowCarb = data["lowCarb"] as? Int, let pasta = data["pasta"] as? Int, let seafood = data["seafood"] as? Int, let workout = data["workout"] as? Int {
 
+                            DispatchQueue.main.async {
+
                             storageRef.child("users/\(Auth.auth().currentUser!.email!)/profileImage/\(Auth.auth().currentUser!.uid).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
 
                                     self.chefImage.image = UIImage(data: data!)!
-
+                            }
                             }
 
                         self.userName.text = "@\(userName)"
@@ -153,16 +155,6 @@ class ProfileAsUserViewController: UIViewController {
 
                                     if let liked = data1!["liked"] as? [String], let itemOrders = data1!["itemOrders"] as? Int, let itemRating = data1!["itemRating"] {
 
-                        storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-
-                                let chefImage = UIImage(data: data!)!
-
-
-                            storageRef.child("chefs/\(chefEmail)/\(typeOfService)/\(menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
-
-                               let itemImage = UIImage(data: data1!)!
-
-
                                 let newItem = UserOrders(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, city: city, state: state, zipCode: "", eventDates: eventDates, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: unitPrice, menuItemId: menuItemId, itemImage: itemImage, orderDate: orderDate, orderUpdate: orderUpdate, totalCostOfEvent: totalCostOfEvent, travelFee: travelFee, typeOfService: typeOfService, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: 0.0, itemCalories: Int(itemCalories)!, documentId: doc.documentID)
 
                         if self.userOrders.isEmpty {
@@ -177,8 +169,6 @@ class ProfileAsUserViewController: UIViewController {
                                 self.orders = self.userOrders
                                 self.itemTableView.insertRows(at: [IndexPath(item: self.orders.count - 1, section: 0)], with: .fade)
                             }
-                        }
-                    }
                         }
                     }
                                 }
@@ -217,13 +207,9 @@ class ProfileAsUserViewController: UIViewController {
 
                         print("chefs happening")
 
-                        storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-
-                               let chefImage = UIImage(data: data!)!
-
 
                         let liked : [String] = []
-                        let newItem = UserChefs(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, chefName: chefName, chefPassion: chefPassion, timesLiked: 0, chefLiked: liked, chefOrders: 0, chefRating: 0)
+                        let newItem = UserChefs(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: UIImage(), chefName: chefName, chefPassion: chefPassion, timesLiked: 0, chefLiked: liked, chefOrders: 0, chefRating: 0)
 
                         if self.userChefs.isEmpty {
                             self.userChefs.append(newItem)
@@ -239,7 +225,7 @@ class ProfileAsUserViewController: UIViewController {
                                 self.userChefs[index!].timesLiked = self.userChefs[index!].timesLiked + 1
                             }
                         }
-                        }
+                        
                     }
                 }
             }
@@ -276,14 +262,6 @@ class ProfileAsUserViewController: UIViewController {
                         var itemOrders = 0
                         var itemRating = 0.0
 
-                        storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-
-                               let chefImage = UIImage(data: data!)!
-
-
-                            storageRef.child("chefs/\(chefEmail)/\(itemType)/\(doc.documentID)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
-
-                               let itemImage = UIImage(data: data1!)!
 
 
 
@@ -297,7 +275,7 @@ class ProfileAsUserViewController: UIViewController {
                                         itemOrders = itemOrdersI
 
 
-                                        let newItem = UserLikes(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, itemType: itemType, city: city, state: state, zipCode: "", itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, itemImage: itemImage, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: itemRating, itemCalories: 0, documentId: doc.documentID)
+                                        let newItem = UserLikes(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: UIImage(), itemType: itemType, city: city, state: state, zipCode: "", itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, itemImage: UIImage(), imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: itemRating, itemCalories: 0, documentId: doc.documentID)
 
                                     if self.userLikes.isEmpty {
                                         self.userLikes.append(newItem)
@@ -309,8 +287,8 @@ class ProfileAsUserViewController: UIViewController {
                                         self.itemTableView.insertRows(at: [IndexPath(item: self.likes.count - 1, section: 0)], with: .fade)
                                     }
 
+                                
                                 }
-                                }}
                         }
                             }}
                     }
@@ -345,12 +323,8 @@ class ProfileAsUserViewController: UIViewController {
 
                         if let chefEmail = data["chefEmail"] as? String, let chefImageId = data["chefImageId"] as? String, let chefUsername = data["chefUsername"] as? String, let date = data["date"] as? String, let itemTitle = data["itemTitle"] as? String, let itemType = data["itemType"] as? String, let user = data["user"] as? String, let userChefRating = data["chefRating"] as? Int, let userExpectationsRating = data["expectations"] as? Int, let qualityRating = data["quality"] as? Int, let userRecommendation = data["recommendation"] as? Int, let userReviewTextField = data["thoughts"] as? String, let liked = data["liked"] as? [String] {
 
-                            storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-
-                                   let chefImage = UIImage(data: data!)!
-
                             print("reviews happening")
-                                let newItem = UserReviews(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: chefImage, chefName: chefUsername, date: date, documentID: doc.documentID, itemTitle: itemTitle, itemType: itemType, liked: liked, user: user, userChefRating: userChefRating, userExpectationsRating: userExpectationsRating, userImageId: userImageId, userQualityRating: qualityRating, userRecommendation: userRecommendation, userReviewTextField: userReviewTextField)
+                                let newItem = UserReviews(chefEmail: chefEmail, chefImageId: chefImageId, chefImage: UIImage(), chefName: chefUsername, date: date, documentID: doc.documentID, itemTitle: itemTitle, itemType: itemType, liked: liked, user: user, userChefRating: userChefRating, userExpectationsRating: userExpectationsRating, userImageId: userImageId, userQualityRating: qualityRating, userRecommendation: userRecommendation, userReviewTextField: userReviewTextField)
 
                             if self.userReviews.isEmpty {
                                 self.userReviews.append(newItem)
@@ -364,7 +338,7 @@ class ProfileAsUserViewController: UIViewController {
                                     self.itemTableView.insertRows(at: [IndexPath(item: self.reviews.count - 1, section: 0)], with: .fade)
                                 }
                             }
-                        }
+                        
                         }
                     }
                 }
@@ -449,7 +423,6 @@ class ProfileAsUserViewController: UIViewController {
                     if let chefEmail = data["chefEmail"] as? String, let chefPassion = data["chefPassion"] as? String, let chefUsername = data["chefUsername"] as? String, let profileImageId = data["profileImageId"] as? String, let menuItemId = data["randomVariable"] as? String, let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let date = data["date"], let imageCount = data["imageCount"] as? Int, let itemType = data["itemType"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String, let user = data["user"] as? String, let healthy = data["healthy"] as? Int, let creative = data["creative"] as? Int, let vegan = data["vegan"] as? Int, let burger = data["burger"] as? Int, let seafood = data["seafood"] as? Int, let pasta = data["pasta"] as? Int, let workout = data["workout"] as? Int, let lowCal = data["lowCal"] as? Int, let lowCarb = data["lowCarb"] as? Int {
                         
                         
-                        let itemRef = storageRef.child("chefs/\(chefEmail)/\(itemType)/\(menuItemId)0.png")
                         
                         self.db.collection("\(itemType)").document(menuItemId).getDocument { document, error in
                             if error == nil {
@@ -458,12 +431,8 @@ class ProfileAsUserViewController: UIViewController {
                                     
                                     if let liked = data!["liked"] as? [String], let itemOrders = data!["itemOrders"] as? Int, let itemRating = data!["itemRating"] {
                               
-                                        
-                        itemRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
-                         
-                            let itemImage = UIImage(data: data!)!
                               
-                                        let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: UIImage(), menuItemId: menuItemId, itemImage: itemImage, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
+                                        let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: UIImage(), menuItemId: menuItemId, itemImage: UIImage(), itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
                                         
                                         if self.toggle == "Cater Items" {
                                             if self.cateringItems.isEmpty {
@@ -504,7 +473,7 @@ class ProfileAsUserViewController: UIViewController {
                                                     self.itemTableView.insertRows(at: [IndexPath(item: self.mealKitItems.count - 1, section: 0)], with: .fade)
                                                 }}}}
                                         
-                                    }
+                                    
                                 }
                             }
                         }
@@ -589,7 +558,7 @@ class ProfileAsUserViewController: UIViewController {
                           print("videos \(videos)")
                           print("dataUri \(videos[i]["dataUrl"]! as! String)")
                           
-                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared)
+                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared, thumbNailUrl: videos[i]["thumbnailIUrl"]! as! String)
                           
                           if self.content.isEmpty {
                               self.content.append(newVideo)
@@ -772,9 +741,28 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
                 cell.orderText.text = "\(order.itemOrders)"
                 cell.itemPrice.text = "$\(order.itemPrice)"
                 cell.ratingText.text = "\(order.itemRating)"
-                cell.userImage.image = order.chefImage
                 cell.itemImage.image = order.itemImage
                 cell.likeImage.image = UIImage(systemName: "heart")
+                
+                let chefRef = storage.reference()
+                let itemRef = storage.reference()
+                DispatchQueue.main.async {
+
+                chefRef.child("chefs/\(order.chefEmail)/profileImage/\(order.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+
+                    cell.userImage.image = UIImage(data: data!)!
+                }
+
+                itemRef.child("chefs/\(order.chefEmail)/\(order.typeOfService)/\(order.menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
+
+                       
+                    cell.itemImage.image = UIImage(data: data1!)!
+                    order.itemImage = UIImage(data: data1!)!
+
+                    }
+                    
+                }
+
                 
                 cell.chefImageButtonTapped = {
                     if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAsUser") as? ProfileAsUserViewController  {
@@ -844,8 +832,16 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
                 cell.likeText.text = "\(item.chefLiked.count)"
                 cell.orderText.text = "\(item.chefOrders)"
                 cell.ratingText.text = "\(item.chefRating)"
-                cell.chefImage.image = item.chefImage
                 
+                let chefRef = storage.reference()
+                DispatchQueue.main.async {
+
+                    chefRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+
+                        cell.chefImage.image = UIImage(data: data!)!
+                }
+                    
+                }
                 
                 cell.chefImage.layer.borderWidth = 1
                 cell.chefImage.layer.masksToBounds = false
@@ -869,7 +865,7 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
                 
             var cell = itemTableView.dequeueReusableCell(withIdentifier: "UserOrdersAndLikesReusableCell", for: indexPath) as! UserOrdersAndLikesTableViewCell
                 
-                let item = userLikes[indexPath.row]
+                var item = userLikes[indexPath.row]
                 
                 cell.itemTitle.text = item.itemTitle
                 cell.itemDescription.text = item.itemDescription
@@ -877,10 +873,24 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
                 cell.likeText.text = "\(item.liked.count)"
                 cell.orderText.text = "\(item.itemOrders)"
                 cell.ratingText.text = "\(item.itemRating)"
-                cell.userImage.image = item.chefImage
-                cell.itemImage.image = item.itemImage
                 cell.likeImage.image = UIImage(systemName: "heart.fill")
                 
+                let chefRef = storage.reference()
+                let itemRef = storage.reference()
+                DispatchQueue.main.async {
+
+                chefRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+
+                    cell.userImage.image = UIImage(data: data!)!
+
+                }
+                
+                itemRef.child("chefs/\(item.chefEmail)/\(item.itemType)/\(item.documentId)0.png").getData(maxSize: 15 * 1024 * 1024) { data1, error in
+
+                        cell.itemImage.image = UIImage(data: data1!)!
+                        item.itemImage = UIImage(data: data1!)!
+                    }
+                }
                 
                 cell.chefImageButtonTapped = {
                     if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAsUser") as? ProfileAsUserViewController  {
@@ -948,6 +958,16 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
 
                 cell.itemTitle.text = item.itemTitle
                 cell.review.text = item.userReviewTextField
+                
+                let chefRef = storage.reference()
+                DispatchQueue.main.async {
+
+                chefRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+                    
+                    cell.chefImage.image = UIImage(data: data!)!
+
+                }
+                }
                 if item.userRecommendation == 1 {
                     cell.recommend.text = "Recommend: Yes"
                 } else {
@@ -965,7 +985,6 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
                 cell.qualityRating.text = "\(item.userQualityRating)"
                 cell.chefRating.text = "\(item.userChefRating)"
                 cell.likeText.text = "\(item.liked.count)"
-                cell.chefImage.image = item.chefImage
                 
             return cell
             }
@@ -974,9 +993,7 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
         var item = items[indexPath.row]
         cell.editImage.isHidden = true
         
-//        cell.chefImage.image = item.chefImage
         cell.itemTitle.text = item.itemTitle
-        cell.itemImage.image = item.itemImage
         cell.itemDescription.text = item.itemDescription
         cell.itemPrice.text = "$\(item.itemPrice)"
         cell.likeText.text = "\(item.liked.count)"
@@ -987,7 +1004,16 @@ extension ProfileAsUserViewController :  UITableViewDelegate, UITableViewDataSou
         } else {
             cell.likeImage.image = UIImage(systemName: "heart")
         }
-        
+            let itemRef = storage.reference()
+            DispatchQueue.main.async {
+
+            itemRef.child("chefs/\(item.chefEmail)/\(item.itemType)/\(item.menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+                
+                cell.itemImage.image = UIImage(data: data!)!
+                item.itemImage = UIImage(data: data!)!
+            }
+            }
+            
         cell.itemImageButtonTapped = {
             if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ItemDetail") as? ItemDetailViewController  {
                 vc.chefEmail = item.chefEmail

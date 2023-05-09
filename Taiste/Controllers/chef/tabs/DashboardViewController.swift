@@ -22,6 +22,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import Charts
 
+var chefOrUser = ""
 class DashboardViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var itemTypeText: MDCOutlinedTextField!
@@ -61,6 +62,7 @@ class DashboardViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        chefOrUser = "Chef"
         itemButton.applyOutlinedTheme(withScheme: globalContainerScheme())
         itemTypeButton.applyOutlinedTheme(withScheme: globalContainerScheme())
         itemButton.setBorderColor(.clear, for: .normal)

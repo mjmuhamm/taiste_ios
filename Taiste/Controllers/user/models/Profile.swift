@@ -22,7 +22,7 @@ struct UserOrders {
     let itemDescription: String
     let itemPrice: String
     let menuItemId: String
-    let itemImage: UIImage?
+    var itemImage: UIImage?
     let orderDate: String
     let orderUpdate: String
     let totalCostOfEvent: Double
@@ -63,7 +63,7 @@ struct UserLikes {
     let itemTitle: String
     let itemDescription: String
     let itemPrice: String
-    let itemImage: UIImage?
+    var itemImage: UIImage?
     let imageCount: Int
     let liked: [String]
     let itemOrders: Int

@@ -75,9 +75,11 @@ class LoginViewController: UIViewController {
         } else {
         Auth.auth().signIn(withEmail: emailText.text!, password: passwordText.text!) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
-          // ...
-            
+            if error == nil {
             self!.performSegue(withIdentifier: "LoginToUserTabSegue", sender: self)
+            } else {
+                self!.showToast(message: "Something went wrong. Please try again. \(error!.localizedDescription)", font: .systemFont(ofSize: 12))
+            }
         }
         }
         

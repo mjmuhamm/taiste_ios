@@ -81,6 +81,8 @@ class ChefMeViewController: UIViewController {
     private var profileImageId = ""
     private var menuItemId = UUID().uuidString
     
+    private var itemsCount = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +123,8 @@ class ChefMeViewController: UIViewController {
                         
                         print("email \(Auth.auth().currentUser!.email!)")
                         print("uid \(Auth.auth().currentUser!.uid)")
-                        
+                        DispatchQueue.main.async {
+
                         storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/profileImage/\(Auth.auth().currentUser!.uid).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
                             
                             if error == nil {
@@ -132,6 +135,8 @@ class ChefMeViewController: UIViewController {
                                 print("error \(error?.localizedDescription)")
                                 print("error \(error)")
                             }
+                        }
+                            
                         }
                         self.educationText.text = "Education: \(education)"
                         self.chefPassion.text = chefPassion
@@ -166,28 +171,18 @@ class ChefMeViewController: UIViewController {
         } else {
            itemsI = mealKitItems
         }
-        if itemsI.isEmpty {
+        if itemsI.count != self.itemsCount {
         
             db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(toggle).addSnapshotListener { documents, error in
             if error == nil {
                 for doc in documents!.documents {
-                    
+                    self.itemsCount = documents!.documents.count
                     let data = doc.data()
                     
                     if let chefEmail = data["chefEmail"] as? String, let chefPassion = data["chefPassion"] as? String, let chefUsername = data["chefUsername"] as? String, let profileImageId = data["profileImageId"] as? String, let menuItemId = data["randomVariable"] as? String, let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let liked = data["liked"] as? [String], let itemOrders = data["itemOrders"] as? Int, let itemRating = data["itemRating"], let date = data["date"], let imageCount = data["imageCount"] as? Int, let itemType = data["itemType"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String, let user = data["user"] as? String, let healthy = data["healthy"] as? Int, let creative = data["creative"] as? Int, let vegan = data["vegan"] as? Int, let burger = data["burger"] as? Int, let seafood = data["seafood"] as? Int, let pasta = data["pasta"] as? Int, let workout = data["workout"] as? Int, let lowCal = data["lowCal"] as? Int, let lowCarb = data["lowCarb"] as? Int {
                         
                             var image = UIImage()
                         
-                        storageRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(self.toggle)/\(menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-                            
-                            if error == nil {
-                                
-                                image = UIImage(data: data!)!
-                            } else {
-                                print("error \(error?.localizedDescription)")
-                                print("error \(error)")
-                            }
-                                        
                                         let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: image, menuItemId: menuItemId, itemImage: image, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
                                         
                                         if self.toggle == "Cater Items" {
@@ -231,7 +226,6 @@ class ChefMeViewController: UIViewController {
                                             }
                                         }
                                                             
-                    }
                         }
                     
                 
@@ -293,33 +287,33 @@ class ChefMeViewController: UIViewController {
                       var shared = 0
                       print("videos count \(videos.count)")
                       let data : [String : Any] = ["views" : 0, "liked" : [], "shared" : 0, "comments" : 0]
-//                      self.db.collection("Videos").document("\(id)").getDocument { document, error in
-//                          if error == nil {
-//
-//                              if document!.exists {
-//                                  let data = document!.data()
-//
-//                                  if data!["views"] != nil {
-//                                      views = data!["views"] as! Int
-//                                  }
-//
-//                                  if data!["liked"] != nil {
-//                                      liked = data!["liked"] as! [String]
-//                                  }
-//
-//                                  if data!["shared"] != nil {
-//                                      shared = data!["shared"] as! Int
-//                                  }
-//
-//                                  if data!["comments"] != nil {
-//                                      comments = data!["comments"] as! Int
-//                                  }
-//                              }
-//                          }
+                      self.db.collection("Videos").document("\(id)").getDocument { document, error in
+                          if error == nil {
+
+                              if document!.exists {
+                                  let data = document!.data()
+
+                                  if data!["views"] != nil {
+                                      views = data!["views"] as! Int
+                                  }
+
+                                  if data!["liked"] != nil {
+                                      liked = data!["liked"] as! [String]
+                                  }
+
+                                  if data!["shared"] != nil {
+                                      shared = data!["shared"] as! Int
+                                  }
+
+                                  if data!["comments"] != nil {
+                                      comments = data!["comments"] as! Int
+                                  }
+                              }
+                          }
                           print("videos \(videos)")
                        
                           
-                          let newVideo = VideoModel(dataUri: videos[i]["thumbnailUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared)
+                          let newVideo = VideoModel(dataUri: videos[i]["dataUrl"]! as! String, id: videos[i]["id"]! as! String, videoDate: String(createdAtI as! Int), user: videos[i]["name"]! as! String, description: videos[i]["description"]! as! String, views: views, liked: liked, comments: comments, shared: shared, thumbNailUrl: videos[i]["thumbnailUrl"]! as! String)
                           
                           if self.content.isEmpty {
                               self.content.append(newVideo)
@@ -343,7 +337,7 @@ class ChefMeViewController: UIViewController {
                       }
                       print("done")
                       
-//                  }
+                  }
               }
               }
                           }
@@ -675,10 +669,19 @@ extension ChefMeViewController :  UITableViewDelegate, UITableViewDataSource  {
             self.noItemsText.isHidden = true
         }
         
+        let itemRef = storage.reference()
+        itemRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(item.itemType)/\(item.menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+            
+            if error == nil {
+                
+                cell.itemImage.image = UIImage(data: data!)!
+                item.itemImage = UIImage(data: data!)!
+            }
+        }
+                        
         
 //        cell.chefImage.image = item.chefImage
         cell.itemTitle.text = item.itemTitle
-        cell.itemImage.image = item.itemImage
         cell.itemDescription.text = item.itemDescription
         cell.itemPrice.text = "$\(item.itemPrice)"
         cell.likeText.text = "\(item.liked.count)"
@@ -732,13 +735,15 @@ extension ChefMeViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         
         let content = content[indexPath.row]
-        let url = URL(string: content.dataUri)
+        let url = URL(string: content.thumbNailUrl)
         let data = try? Data(contentsOf: url!)
         cell.viewText.text = "\(content.views)"
         cell.image.frame.size.width = contentCollectionView.frame.size.width / 3
         cell.image.frame.size.height = contentCollectionView.frame.size.height / 3
         
         cell.image.image = UIImage(data: data!)
+        
+        
     
         if data != nil {
 //            cell.configure(model: content)
@@ -759,6 +764,17 @@ extension ChefMeViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("section \(indexPath.item)")
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "Feed") as? FeedViewController {
+            vc.feedOrChefContent = "chef"
+            vc.content = self.content
+            vc.index = indexPath.item
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
     
 }

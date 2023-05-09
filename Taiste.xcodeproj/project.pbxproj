@@ -37,6 +37,10 @@
 		F4A13EB827CD820700A63A00 /* Orders.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13EB727CD820700A63A00 /* Orders.swift */; };
 		F4A13EBC27CD882F00A63A00 /* UserOrderPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A13EBA27CD882F00A63A00 /* UserOrderPostTableViewCell.swift */; };
 		F4A13EBD27CD882F00A63A00 /* UserOrderPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4A13EBB27CD882F00A63A00 /* UserOrderPostTableViewCell.xib */; };
+		F4AD143C2A0A9DB2008C83D6 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD143A2A0A9DB2008C83D6 /* CommentsTableViewCell.swift */; };
+		F4AD143D2A0A9DB2008C83D6 /* CommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AD143B2A0A9DB2008C83D6 /* CommentsTableViewCell.xib */; };
+		F4AD143F2A0AA128008C83D6 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD143E2A0AA128008C83D6 /* CommentsViewController.swift */; };
+		F4AD14412A0AA1E9008C83D6 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD14402A0AA1E9008C83D6 /* Comments.swift */; };
 		F4AE2FEE27CF9B6700F529C5 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AE2FEC27CF9B6700F529C5 /* FeedCollectionViewCell.swift */; };
 		F4AE2FEF27CF9B6700F529C5 /* FeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4AE2FED27CF9B6700F529C5 /* FeedCollectionViewCell.xib */; };
 		F4B3D76F27CAB64100AA5544 /* CheckoutItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B3D76E27CAB64100AA5544 /* CheckoutItems.swift */; };
@@ -138,6 +142,10 @@
 		F4A13EB727CD820700A63A00 /* Orders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orders.swift; sourceTree = "<group>"; };
 		F4A13EBA27CD882F00A63A00 /* UserOrderPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrderPostTableViewCell.swift; sourceTree = "<group>"; };
 		F4A13EBB27CD882F00A63A00 /* UserOrderPostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserOrderPostTableViewCell.xib; sourceTree = "<group>"; };
+		F4AD143A2A0A9DB2008C83D6 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
+		F4AD143B2A0A9DB2008C83D6 /* CommentsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentsTableViewCell.xib; sourceTree = "<group>"; };
+		F4AD143E2A0AA128008C83D6 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		F4AD14402A0AA1E9008C83D6 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
 		F4AE2FEC27CF9B6700F529C5 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4AE2FED27CF9B6700F529C5 /* FeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedCollectionViewCell.xib; sourceTree = "<group>"; };
 		F4B3D76E27CAB64100AA5544 /* CheckoutItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutItems.swift; sourceTree = "<group>"; };
@@ -239,6 +247,7 @@
 		F481948027C8022C002BB9D3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F4AD14392A0A9DA0008C83D6 /* Comments */,
 				F4BD7F4A2A0991EC00AA0212 /* Reviews */,
 				F4A080CB2A0281CC00895938 /* Search */,
 				F4A080C22A01A0F900895938 /* Messages */,
@@ -307,6 +316,7 @@
 				F4A080C72A01A44800895938 /* Messages.swift */,
 				F4A080D22A02843900895938 /* Search.swift */,
 				F4BD7F512A09965D00AA0212 /* Reviews.swift */,
+				F4AD14402A0AA1E9008C83D6 /* Comments.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -320,6 +330,15 @@
 				F4F8D9FA29C7BC8100D6831C /* ChefOrdersTableViewCell.xib */,
 			);
 			path = Orders;
+			sourceTree = "<group>";
+		};
+		F4AD14392A0A9DA0008C83D6 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				F4AD143A2A0A9DB2008C83D6 /* CommentsTableViewCell.swift */,
+				F4AD143B2A0A9DB2008C83D6 /* CommentsTableViewCell.xib */,
+			);
+			path = Comments;
 			sourceTree = "<group>";
 		};
 		F4AE2FEB27CF9B5500F529C5 /* Feed */ = {
@@ -473,6 +492,7 @@
 				F4A080C02A019D4500895938 /* MessagesViewController.swift */,
 				F4A080C92A01AF6000895938 /* SearchViewController.swift */,
 				F4BD7F4F2A09922300AA0212 /* ReviewsViewController.swift */,
+				F4AD143E2A0AA128008C83D6 /* CommentsViewController.swift */,
 			);
 			path = both;
 			sourceTree = "<group>";
@@ -675,6 +695,7 @@
 				F4FDB63527CE83720078E563 /* UserOrdersAndLikesTableViewCell.xib in Resources */,
 				F4F8D9FC29C7BC8100D6831C /* ChefOrdersTableViewCell.xib in Resources */,
 				F4FDB64427CEAE5E0078E563 /* ChefContentCollectionViewCell.xib in Resources */,
+				F4AD143D2A0A9DB2008C83D6 /* CommentsTableViewCell.xib in Resources */,
 				F481948427C80252002BB9D3 /* HomeTableViewCell.xib in Resources */,
 				F4AE2FEF27CF9B6700F529C5 /* FeedCollectionViewCell.xib in Resources */,
 				F4E44B1B27C96DEF007F6295 /* ChefItemTableViewCell.xib in Resources */,
@@ -755,6 +776,8 @@
 				F436E53029F6FCFD00B2F38C /* Dashboard.swift in Sources */,
 				F4E44B1327C94100007F6295 /* ChefTabViewController.swift in Sources */,
 				F4A13EBC27CD882F00A63A00 /* UserOrderPostTableViewCell.swift in Sources */,
+				F4AD143F2A0AA128008C83D6 /* CommentsViewController.swift in Sources */,
+				F4AD14412A0AA1E9008C83D6 /* Comments.swift in Sources */,
 				F481948C27C817DD002BB9D3 /* ChefLoginViewController.swift in Sources */,
 				F4A080BF2A002A9E00895938 /* Banking.swift in Sources */,
 				F4B90E0327C70B5A004B1FB1 /* SearcViewController.swift in Sources */,
@@ -799,6 +822,7 @@
 				F4DA73202A056A66004FE58F /* UserReviewViewController.swift in Sources */,
 				F482BA6E29FB1379007965C9 /* MenuItemViewController.swift in Sources */,
 				F4A080CE2A0281EA00895938 /* SearchTableViewCell.swift in Sources */,
+				F4AD143C2A0A9DB2008C83D6 /* CommentsTableViewCell.swift in Sources */,
 				F485458B2A02CC9500158E1B /* UserPersonalViewController.swift in Sources */,
 				F4B90E0127C70B52004B1FB1 /* FeedViewController.swift in Sources */,
 				F4E44B1A27C96DEF007F6295 /* ChefItemTableViewCell.swift in Sources */,

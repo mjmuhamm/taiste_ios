@@ -123,15 +123,8 @@ class CheckoutViewController: UIViewController {
                         
                         
                         
-                        let chefRef = storageRef.child("chefs/\(chefEmail)/profileImage/\(chefImageId).png")
-                        chefRef.getData(maxSize: 15 * 1024 * 1024) { data, error in
-                          if let error = error {
-                            // Uh-oh, an error occurred!
-                          } else {
-                            // Data for "images/island.jpg" is returned
-                            chefImage = UIImage(data: data!)!
                         
-                        let newItem = CheckoutItems(chefEmail: chefEmail, chefImageId: chefImageId, chefUsername: chefUsername, chefImage: chefImage, menuItemId: menuItemId, itemTitle: itemTitle, itemDescription: itemDescription, datesOfEvent: datesOfEvent, timesForDatesOfEvent: timesForDatesOfEvent, travelExpenseOption: travelExpenseOption, totalCostOfEvent: totalCostOfEvent, priceToChef: priceToChef, quantityOfEvent: quantityOfEvent, unitPrice: unitPrice, distance: distance, location: location, latitudeOfEvent: latitudeOfEvent, longitudeOfEvent: longitudeOfEvent, notesToChef: notesToChef, typeOfService: typeOfService, typeOfEvent: typeOfEvent, city: city, state: state, user: user, documentId: doc.documentID, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: Double("\(itemRating)")!, itemCalories: Int(itemCalories)!)
+                        let newItem = CheckoutItems(chefEmail: chefEmail, chefImageId: chefImageId, chefUsername: chefUsername, chefImage: UIImage(), menuItemId: menuItemId, itemTitle: itemTitle, itemDescription: itemDescription, datesOfEvent: datesOfEvent, timesForDatesOfEvent: timesForDatesOfEvent, travelExpenseOption: travelExpenseOption, totalCostOfEvent: totalCostOfEvent, priceToChef: priceToChef, quantityOfEvent: quantityOfEvent, unitPrice: unitPrice, distance: distance, location: location, latitudeOfEvent: latitudeOfEvent, longitudeOfEvent: longitudeOfEvent, notesToChef: notesToChef, typeOfService: typeOfService, typeOfEvent: typeOfEvent, city: city, state: state, user: user, documentId: doc.documentID, imageCount: imageCount, liked: liked, itemOrders: itemOrders, itemRating: Double("\(itemRating)")!, itemCalories: Int(itemCalories)!)
                         
                         if self.checkoutItems.count == 0 {
                             self.checkoutItems.append(newItem)
@@ -166,9 +159,9 @@ class CheckoutViewController: UIViewController {
                             }
                         }
                     }
-                        }}
+                        }
                     
-                }
+                
             }
         }
     }
@@ -281,13 +274,24 @@ extension CheckoutViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = checkoutTableView.dequeueReusableCell(withIdentifier: "CheckoutReusableCell", for: indexPath) as! CheckoutTableViewCell
         
         let item = checkoutItems[indexPath.row]
-        cell.chefImage.image = item.chefImage
         cell.chefImage.layer.borderWidth = 1
         cell.chefImage.layer.masksToBounds = false
         cell.chefImage.layer.borderColor = UIColor.white.cgColor
         cell.chefImage.layer.cornerRadius = cell.chefImage.frame.height/2
         cell.chefImage.clipsToBounds = true
         cell.itemTitle.text = item.itemTitle
+        
+        let chefRef = storage.reference()
+        DispatchQueue.main.async {
+           
+        chefRef.child("chefs/\(item.chefEmail)/profileImage/\(item.chefImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+          if let error = error {
+            // Uh-oh, an error occurred!
+          } else {
+            // Data for "images/island.jpg" is returned
+              cell.chefImage.image = UIImage(data: data!)!
+          }}
+        }
         
         cell.eventTypeAndQuantity.text = "Event Type: \(item.typeOfEvent)   Event Quantity: \(item.quantityOfEvent)"
         cell.location.text = "Location: \(item.location)"

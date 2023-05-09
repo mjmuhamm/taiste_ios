@@ -44,12 +44,9 @@ class ReviewsViewController: UIViewController {
                         if let date = data["date"] as? String, let expectations = data["expectations"] as? Int, let likes = data["likes"] as? [String], let quality = data["quality"] as? Int, let recommend = data["recommend"] as? Int, let chefRating = data["chefRating"] as? Int, let thoughts = data["thoughts"] as? String, let userImageId = data["userImageId"] as? String, let userEmail = data["userEmail"] as? String {
                             
                             if let index = self.reviews.firstIndex(where: { $0.documentId == doc.documentID }) {} else {
-                            storageRef.child("users/\(userEmail)/profileImage/\(userImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
-                                if error == nil {
-                                    
-                                    let image = UIImage(data: data!)
+                            
                                         
-                                    self.reviews.append(Reviews(date: date, expectations: expectations, quality: quality, chefRating: chefRating, likes: likes, recommend: recommend, thoughts: thoughts, image: image!, userImageId: userImageId, documentId: doc.documentID))
+                                    self.reviews.append(Reviews(date: date, expectations: expectations, quality: quality, chefRating: chefRating, likes: likes, recommend: recommend, thoughts: thoughts, image: UIImage(), userImageId: userImageId, userEmail: userEmail, documentId: doc.documentID))
                                         }
                                 DispatchQueue.main.async {
                                     
@@ -60,8 +57,8 @@ class ReviewsViewController: UIViewController {
                                     }
                                     
                                 }
-                                }
-                            }
+                                
+                            
                             
                             
                         }
@@ -93,7 +90,19 @@ extension ReviewsViewController :  UITableViewDelegate, UITableViewDataSource  {
         cell.expectectationsText.text = "\(review.expectations)"
         cell.qualityText.text = "\(review.quality)"
         cell.chefRatingText.text = "\(review.chefRating)"
-        cell.userImage.image = review.image
+        
+        
+        let chefRef = storage.reference()
+        
+        DispatchQueue.main.async {
+
+        chefRef.child("users/\(review.userEmail)/profileImage/\(review.userImageId).png").getData(maxSize: 15 * 1024 * 1024) { data, error in
+            if error == nil {
+                cell.userImage.image = UIImage(data: data!)!
+            }}
+            
+        }
+        
         if review.recommend == 1 {
             cell.recommendText.text = "Yes"
         } else {

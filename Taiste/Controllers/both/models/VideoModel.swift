@@ -19,5 +19,6 @@ struct VideoModel {
     var liked: [String]
     var comments: Int
     var shared: Int
+    var thumbNailUrl: String
     
 }
