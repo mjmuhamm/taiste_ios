@@ -161,7 +161,7 @@ class ChefPersonalViewController: UIViewController {
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
                     self.db.collection("Chef").document(authResult!.user.uid).setData(data2)
                     let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                    changeRequest?.displayName = self.chefName.text
+                    changeRequest?.displayName = "Chef"
                     
                     changeRequest?.commitChanges { error in
                       // ...
