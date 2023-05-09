@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
             if error == nil {
             self!.performSegue(withIdentifier: "LoginToUserTabSegue", sender: self)
             } else {
-                self!.showToast(message: "Something went wrong. Please try again. \(error!.localizedDescription)", font: .systemFont(ofSize: 12))
+                self!.showToast(message: "Something went wrong. \(error!.localizedDescription)", font: .systemFont(ofSize: 12))
             }
         }
         }
