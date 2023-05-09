@@ -171,7 +171,7 @@ class ChefMeViewController: UIViewController {
         } else {
            itemsI = mealKitItems
         }
-        if itemsI.count != self.itemsCount {
+        if itemsI.count != self.itemsCount || itemsI.count == 0 {
         
             db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(toggle).addSnapshotListener { documents, error in
             if error == nil {
@@ -182,6 +182,7 @@ class ChefMeViewController: UIViewController {
                     if let chefEmail = data["chefEmail"] as? String, let chefPassion = data["chefPassion"] as? String, let chefUsername = data["chefUsername"] as? String, let profileImageId = data["profileImageId"] as? String, let menuItemId = data["randomVariable"] as? String, let itemTitle = data["itemTitle"] as? String, let itemDescription = data["itemDescription"] as? String, let itemPrice = data["itemPrice"] as? String, let liked = data["liked"] as? [String], let itemOrders = data["itemOrders"] as? Int, let itemRating = data["itemRating"], let date = data["date"], let imageCount = data["imageCount"] as? Int, let itemType = data["itemType"] as? String, let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String, let user = data["user"] as? String, let healthy = data["healthy"] as? Int, let creative = data["creative"] as? Int, let vegan = data["vegan"] as? Int, let burger = data["burger"] as? Int, let seafood = data["seafood"] as? Int, let pasta = data["pasta"] as? Int, let workout = data["workout"] as? Int, let lowCal = data["lowCal"] as? Int, let lowCarb = data["lowCarb"] as? Int {
                         
                             var image = UIImage()
+                        print("happening")
                         
                                         let newItem = FeedMenuItems(chefEmail: chefEmail, chefPassion: chefPassion, chefUsername: chefUsername, chefImageId: profileImageId, chefImage: image, menuItemId: menuItemId, itemImage: image, itemTitle: itemTitle, itemDescription: itemDescription, itemPrice: itemPrice, liked: liked, itemOrders: itemOrders, itemRating: 0.0, date: "\(date)", imageCount: imageCount, itemCalories: "0", itemType: itemType, city: city, state: state, zipCode: zipCode, user: user, healthy: healthy, creative: creative, vegan: vegan, burger: burger, seafood: seafood, pasta: pasta, workout: workout, lowCal: lowCal, lowCarb: lowCarb)
                                         
@@ -670,6 +671,8 @@ extension ChefMeViewController :  UITableViewDelegate, UITableViewDataSource  {
         }
         
         let itemRef = storage.reference()
+        DispatchQueue.main.async {
+
         itemRef.child("chefs/\(Auth.auth().currentUser!.email!)/\(item.itemType)/\(item.menuItemId)0.png").getData(maxSize: 15 * 1024 * 1024) { data, error in
             
             if error == nil {
@@ -678,7 +681,8 @@ extension ChefMeViewController :  UITableViewDelegate, UITableViewDataSource  {
                 item.itemImage = UIImage(data: data!)!
             }
         }
-                        
+            
+        }
         
 //        cell.chefImage.image = item.chefImage
         cell.itemTitle.text = item.itemTitle
