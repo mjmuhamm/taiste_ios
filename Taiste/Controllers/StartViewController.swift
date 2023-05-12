@@ -20,8 +20,10 @@ class StartViewController: UIViewController {
     
     let date = Date()
     let df = DateFormatter()
+    @IBOutlet weak var termsOfServiceText: UILabel!
     
 
+    @IBOutlet weak var termsOfServiceButton: UIButton!
     @IBOutlet weak var userButton: MDCButton!
     @IBOutlet weak var chefButton: MDCButton!
     override func viewDidLoad() {
@@ -37,6 +39,40 @@ class StartViewController: UIViewController {
         let year = dateString.prefix(4)
         let month = dateString.prefix(7).suffix(2)
 //        print("date \(year), \(month)")
+        
+        var normalText = "Please review our "
+
+        var boldText  = "Terms of Service"
+        
+        var secondNormalText = " and our "
+        var secondBoldText = "Privacy Policy"
+        var thirdNormalText = " before continuing."
+
+        var attributedString = NSMutableAttributedString(string:normalText)
+
+        var attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13)]
+        
+        var boldString = NSMutableAttributedString(string: boldText, attributes:attrs)
+        
+        var secondAttributedString = NSMutableAttributedString(string:secondNormalText)
+        
+        var secondBoldString = NSMutableAttributedString(string: secondBoldText, attributes:attrs)
+        
+        var thirdAttributedString = NSMutableAttributedString(string:thirdNormalText)
+        
+
+        
+        attributedString.append(boldString)
+        attributedString.append(secondAttributedString)
+        attributedString.append(secondBoldString)
+        attributedString.append(thirdAttributedString)
+        
+        
+        
+        
+        termsOfServiceText.attributedText = attributedString
+        
+                                      
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,7 +91,17 @@ class StartViewController: UIViewController {
 //        }
     }
     
+    
+    
+    @IBAction func termsOfServiceButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "StartToTermsOfService", sender: self)
+    }
+    
+    @IBAction func privacyPolicyButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "StartToPrivacyPolicy", sender: self)
+    }
 }
+
 
 
 

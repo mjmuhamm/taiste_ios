@@ -76,29 +76,339 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please review or Terms of Service and Privacy Policy before continuing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-Qd-3sG">
+                                <rect key="frame" x="15" y="509" width="384" height="31.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzT-uY-bFu">
+                                <rect key="frame" x="121" y="497" width="111" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="g1e-8W-jpO"/>
+                                    <constraint firstAttribute="width" constant="111" id="oUJ-ME-Dh2"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="termsOfServiceButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J4K-iH-84b"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOn-vg-GFZ">
+                                <rect key="frame" x="258" y="497" width="111" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="111" id="0B2-Rg-W9b"/>
+                                    <constraint firstAttribute="height" constant="38" id="ZPp-Cm-Dp8"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="privacyPolicyButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FWP-3Y-N4J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="gJW-Qd-3sG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4b1-5T-owz"/>
+                            <constraint firstItem="bzT-uY-bFu" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="10" id="4oi-ha-Nep"/>
+                            <constraint firstItem="gJW-Qd-3sG" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="22" id="7mZ-zU-rpb"/>
                             <constraint firstItem="nzV-vh-tHg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FSC-az-lgz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tOn-vg-GFZ" secondAttribute="trailing" constant="45" id="Fc0-Mw-aB1"/>
+                            <constraint firstItem="tOn-vg-GFZ" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="10" id="HJL-TO-y50"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gJW-Qd-3sG" secondAttribute="trailing" constant="15" id="J01-ij-idc"/>
                             <constraint firstItem="KTK-j0-UFj" firstAttribute="top" secondItem="nzV-vh-tHg" secondAttribute="bottom" constant="105.5" id="grX-ag-PEo"/>
                             <constraint firstItem="l7j-P8-api" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="72" id="gug-nx-GZu"/>
+                            <constraint firstItem="gJW-Qd-3sG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="lhA-Ja-YkC"/>
                             <constraint firstItem="KTK-j0-UFj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oLD-LR-mmb"/>
                             <constraint firstItem="nzV-vh-tHg" firstAttribute="top" secondItem="l7j-P8-api" secondAttribute="bottom" id="rPq-Gh-qU3"/>
+                            <constraint firstItem="bzT-uY-bFu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="121" id="tnv-Fa-hVx"/>
                             <constraint firstItem="l7j-P8-api" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-8" id="wvX-cK-S0P"/>
                         </constraints>
                     </view>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chefButton" destination="ySX-vl-Qgi" id="yoS-hR-Ie7"/>
+                        <outlet property="termsOfServiceButton" destination="bzT-uY-bFu" id="rMR-R9-p5I"/>
+                        <outlet property="termsOfServiceText" destination="gJW-Qd-3sG" id="ogu-8D-0tg"/>
                         <outlet property="userButton" destination="0BQ-Gz-yU0" id="nU2-OR-NgX"/>
                         <segue destination="kr3-rW-0mV" kind="presentation" identifier="StartToUserTabSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="K6P-qp-kmw"/>
                         <segue destination="qkw-nc-3h8" kind="presentation" identifier="StartToChefTabSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="VD0-qR-l0Z"/>
+                        <segue destination="1sl-hP-fno" kind="presentation" identifier="StartToTermsOfService" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="2YB-O3-5d4"/>
+                        <segue destination="Z5O-9f-Kwz" kind="presentation" identifier="StartToPrivacyPolicy" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="b60-ve-dzh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2567" y="1805"/>
+            <point key="canvasLocation" x="2566.666666666667" y="1804.6875"/>
+        </scene>
+        <!--Terms Of Service View Controller-->
+        <scene sceneID="lut-iQ-NpQ">
+            <objects>
+                <viewController storyboardIdentifier="TermsOfService" id="1sl-hP-fno" customClass="TermsOfServiceViewController" customModule="Taiste" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NFG-K0-eFW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0id-lO-QKR">
+                                <rect key="frame" x="0.0" y="85" width="414" height="0.5"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="FOw-Wk-Xy9"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="0.5" id="NCM-sm-gz7"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taïste Terms of Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Erz-1R-psE">
+                                <rect key="frame" x="116.5" y="51" width="181" height="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUr-1C-4U1">
+                                <rect key="frame" x="12" y="44" width="45.5" height="31"/>
+                                <color key="tintColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="1sl-hP-fno" eventType="touchUpInside" id="scV-fa-26o"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sel-7s-rIC">
+                                <rect key="frame" x="0.0" y="85.5" width="414" height="776.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ny4-ZY-si9">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-Js-TUu">
+                                                <rect key="frame" x="0.0" y="6" width="414" height="84"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="84" id="V3k-vu-MPx"/>
+                                                </constraints>
+                                                <string key="text">These Terms of Service govern your access to and use of the Taïste mobile application provided by Taïste, Inc. By accessing or using this app, you agree to be bound by this Agreement.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="434-v5-Yue">
+                                                <rect key="frame" x="8" y="82" width="406" height="151"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="151" id="gHu-Eb-T9Q"/>
+                                                </constraints>
+                                                <string key="text">User Accounts
+a. To use Taïste, you must create a user account by providing accurate and complete information.
+b. You are responsible for maintaining the confidentiality of your account login credentials and for all activities that occur under your account.
+c. You agree to notify us immediately of any unauthorized use of your account or any other security breach.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NGN-B2-XC4">
+                                                <rect key="frame" x="8" y="233" width="406" height="166"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="166" id="rFR-qM-ArE"/>
+                                                </constraints>
+                                                <string key="text">Use of Taïste
+a. Taïste provides a platform for culinary transactions, including ordering, delivery, and payment services.
+b. You agree to use Taïste solely for lawful purposes and in compliance with all applicable laws and regulations.
+c. You are solely responsible for any content you submit, including menu listings, reviews, and feedback, and you represent and warrant that you have all necessary rights to such content.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z8I-SV-mCu">
+                                                <rect key="frame" x="8" y="399" width="406" height="218"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="218" id="59S-f3-m7p"/>
+                                                </constraints>
+                                                <mutableString key="text">Transactions and Payments
+a. Taïste facilitates transactions between users and culinary service providers.
+b. Prices displayed on Taïste are determined by the respective providers and may be subject to additional taxes, fees, and delivery charges.
+c. You agree to provide accurate and complete payment information and authorize Taïste to charge your selected payment method for all transactions.
+d. All payments made through the App are final, and refunds or cancellations are subject to the respective provider's policies.</mutableString>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="40w-gG-6VQ">
+                                                <rect key="frame" x="0.0" y="617" width="414" height="121"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="121" id="eML-sn-9hw"/>
+                                                </constraints>
+                                                <string key="text">Intellectual Property
+a. Taïste and its content, including but not limited to text, graphics, logos, and software, are owned by or licensed to the Provider and are protected by intellectual property laws.
+b. You may not copy, modify, distribute, or reverse engineer Taïste or any part of it without the Provider's prior written consent.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XhC-2P-Hrl">
+                                                <rect key="frame" x="0.0" y="738" width="414" height="124"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="124" id="9NH-Hc-83Z"/>
+                                                </constraints>
+                                                <string key="text">Privacy
+a. The Provider collects and uses personal information in accordance with its Privacy Policy.
+b. By using Taïste, you consent to the Provider's collection, use, and disclosure of personal information as described in the Privacy Policy.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OEW-CT-YHw">
+                                                <rect key="frame" x="0.0" y="856" width="414" height="182"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="182" id="1zI-TN-Owg"/>
+                                                </constraints>
+                                                <string key="text">Disclaimers and Limitation of Liability
+a. Taïste is provided on an "as-is" basis without warranties of any kind, whether express or implied.
+b. The Provider is not responsible for the quality, safety, or legality of the culinary services provided by third-party providers.
+c. The Provider shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising out of or relating to the use of Taïste or any transactions conducted through it.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lff-LA-qO9">
+                                                <rect key="frame" x="0.0" y="1038" width="414" height="84"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="84" id="2Of-Mv-dza"/>
+                                                </constraints>
+                                                <string key="text">Termination
+a. The Provider reserves the right to suspend or terminate your access to Taïste at any time without notice if you violate this Agreement or engage in fraudulent or illegal activities.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wdL-sR-cg1">
+                                                <rect key="frame" x="0.0" y="1122" width="414" height="114"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="114" id="ks0-Jb-Xr3"/>
+                                                </constraints>
+                                                <string key="text">Modifications
+a. The Provider may update or modify this Agreement from time to time, and any changes will be effective upon posting on Taïste.
+b. Your continued use of Taïste after any modifications indicates your acceptance of the updated Agreement.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ob8-De-GIq">
+                                                <rect key="frame" x="0.0" y="1235" width="414" height="111"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="111" id="VCr-wn-L8H"/>
+                                                </constraints>
+                                                <string key="text">Governing Law and Jurisdiction
+a. This Agreement shall be governed by and construed in accordance with the laws of the United States.
+b. Any dispute arising out of or relating to this Agreement shall be subject to the exclusive jurisdiction of the courts of the United States.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yEB-vz-y22">
+                                                <rect key="frame" x="0.0" y="1346" width="414" height="73"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="73" id="MRl-wF-NM3"/>
+                                                </constraints>
+                                                <string key="text">This Agreement constitutes the entire agreement between you and the Provider regarding your use of Taïste and supersedes any prior agreements or understandings.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="itT-Z8-yNf">
+                                                <rect key="frame" x="0.0" y="1538" width="414" height="73"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="73" id="m5j-jB-Oyw"/>
+                                                </constraints>
+                                                <string key="text">Please read this Agreement carefully before using the App. If you do not agree with any provision of this Agreement, you should not access or use Taïste.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="434-v5-Yue" firstAttribute="leading" secondItem="NGN-B2-XC4" secondAttribute="leading" id="151-vv-wL7"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="top" secondItem="NGN-B2-XC4" secondAttribute="bottom" id="2NY-WW-Z65"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="399" id="3bi-36-0tN"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="trailing" secondItem="hIq-Js-TUu" secondAttribute="trailing" id="5Fk-26-jbt"/>
+                                            <constraint firstAttribute="trailing" secondItem="OEW-CT-YHw" secondAttribute="trailing" id="5Jh-V0-ggF"/>
+                                            <constraint firstItem="XhC-2P-Hrl" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="6fH-Dh-Tic"/>
+                                            <constraint firstItem="lff-LA-qO9" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="C3c-Kk-3iD"/>
+                                            <constraint firstAttribute="trailing" secondItem="yEB-vz-y22" secondAttribute="trailing" id="GhB-3b-1Is"/>
+                                            <constraint firstItem="yEB-vz-y22" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="Gmn-TI-Ifh"/>
+                                            <constraint firstItem="Ob8-De-GIq" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="Im0-QS-H6y"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="JbW-0I-rfS"/>
+                                            <constraint firstItem="wdL-sR-cg1" firstAttribute="top" secondItem="lff-LA-qO9" secondAttribute="bottom" id="Pme-6C-MsQ"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="centerX" secondItem="hIq-Js-TUu" secondAttribute="centerX" id="VrE-e7-FDf"/>
+                                            <constraint firstItem="434-v5-Yue" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leadingMargin" id="Xe2-7z-Uab"/>
+                                            <constraint firstItem="OEW-CT-YHw" firstAttribute="top" secondItem="XhC-2P-Hrl" secondAttribute="bottom" constant="-6" id="YDY-0u-2Qd"/>
+                                            <constraint firstItem="OEW-CT-YHw" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="ZfA-KQ-9F4"/>
+                                            <constraint firstAttribute="trailing" secondItem="lff-LA-qO9" secondAttribute="trailing" id="aEj-q4-fL4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Z8I-SV-mCu" secondAttribute="trailing" id="aUw-q3-Rkt"/>
+                                            <constraint firstAttribute="trailing" secondItem="wdL-sR-cg1" secondAttribute="trailing" id="aeR-y7-5zo"/>
+                                            <constraint firstItem="434-v5-Yue" firstAttribute="leading" secondItem="Z8I-SV-mCu" secondAttribute="leading" id="bXv-aZ-Yns"/>
+                                            <constraint firstItem="XhC-2P-Hrl" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="dmh-ow-R0B"/>
+                                            <constraint firstItem="XhC-2P-Hrl" firstAttribute="top" secondItem="40w-gG-6VQ" secondAttribute="bottom" id="gEB-Qb-ope"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ob8-De-GIq" secondAttribute="trailing" id="gJc-5E-9hc"/>
+                                            <constraint firstItem="NGN-B2-XC4" firstAttribute="top" secondItem="434-v5-Yue" secondAttribute="bottom" id="gev-iU-4qN"/>
+                                            <constraint firstItem="wdL-sR-cg1" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="hIa-e4-eQb"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="434-v5-Yue" secondAttribute="trailing" id="hzA-Fu-xUs"/>
+                                            <constraint firstItem="Ob8-De-GIq" firstAttribute="top" secondItem="lff-LA-qO9" secondAttribute="bottom" constant="113" id="mpo-t1-G18"/>
+                                            <constraint firstItem="hIq-Js-TUu" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="6" id="oTi-tz-5iv"/>
+                                            <constraint firstAttribute="height" constant="1500" id="pEx-es-eoM"/>
+                                            <constraint firstItem="yEB-vz-y22" firstAttribute="top" secondItem="Ob8-De-GIq" secondAttribute="bottom" id="pvA-jy-Dqn"/>
+                                            <constraint firstItem="lff-LA-qO9" firstAttribute="top" secondItem="OEW-CT-YHw" secondAttribute="bottom" id="qD9-0W-nMh"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="1538" id="rCj-pD-obJ"/>
+                                            <constraint firstItem="hIq-Js-TUu" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="rcc-FP-Die"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="40w-gG-6VQ" secondAttribute="trailing" id="sHb-Id-eAB"/>
+                                            <constraint firstItem="40w-gG-6VQ" firstAttribute="top" secondItem="Z8I-SV-mCu" secondAttribute="bottom" id="sYT-8O-wAH"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="itT-Z8-yNf" secondAttribute="trailing" id="shq-ua-MOW"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="hIq-Js-TUu" secondAttribute="trailing" id="wln-Tu-Mou"/>
+                                            <constraint firstItem="40w-gG-6VQ" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="xPW-eG-aI4"/>
+                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="NGN-B2-XC4" secondAttribute="trailing" id="xon-X7-8Qw"/>
+                                            <constraint firstAttribute="trailing" secondItem="XhC-2P-Hrl" secondAttribute="trailing" id="zf0-W0-8LH"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ny4-ZY-si9" firstAttribute="centerX" secondItem="sel-7s-rIC" secondAttribute="centerX" id="2Jc-N7-D22"/>
+                                    <constraint firstAttribute="bottom" secondItem="ny4-ZY-si9" secondAttribute="bottom" id="2tT-hR-bf2"/>
+                                    <constraint firstItem="ny4-ZY-si9" firstAttribute="top" secondItem="sel-7s-rIC" secondAttribute="top" id="6kI-6Z-y0m"/>
+                                    <constraint firstItem="ny4-ZY-si9" firstAttribute="leading" secondItem="sel-7s-rIC" secondAttribute="leading" id="KtG-Ec-xUc"/>
+                                    <constraint firstAttribute="trailing" secondItem="ny4-ZY-si9" secondAttribute="trailing" id="Qp9-1a-q8C"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="e6F-Cq-RUa"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sel-7s-rIC" firstAttribute="trailing" secondItem="e6F-Cq-RUa" secondAttribute="trailing" id="2sf-UN-yiJ"/>
+                            <constraint firstItem="CUr-1C-4U1" firstAttribute="top" secondItem="e6F-Cq-RUa" secondAttribute="top" id="5X1-cS-p0i"/>
+                            <constraint firstItem="Erz-1R-psE" firstAttribute="top" secondItem="e6F-Cq-RUa" secondAttribute="top" constant="7" id="IsK-mH-yMU"/>
+                            <constraint firstItem="0id-lO-QKR" firstAttribute="top" secondItem="CUr-1C-4U1" secondAttribute="bottom" constant="10" id="JBm-Aq-sNm"/>
+                            <constraint firstItem="sel-7s-rIC" firstAttribute="leading" secondItem="e6F-Cq-RUa" secondAttribute="leading" id="LUE-I1-WYY"/>
+                            <constraint firstItem="Erz-1R-psE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CUr-1C-4U1" secondAttribute="trailing" constant="8" symbolic="YES" id="PpQ-4w-SKS"/>
+                            <constraint firstItem="0id-lO-QKR" firstAttribute="leading" secondItem="sel-7s-rIC" secondAttribute="leading" id="Tvl-aW-tYN"/>
+                            <constraint firstItem="Erz-1R-psE" firstAttribute="centerX" secondItem="NFG-K0-eFW" secondAttribute="centerX" id="aWi-D0-fis"/>
+                            <constraint firstItem="sel-7s-rIC" firstAttribute="top" secondItem="0id-lO-QKR" secondAttribute="bottom" id="ca1-k4-kuS"/>
+                            <constraint firstItem="0id-lO-QKR" firstAttribute="trailing" secondItem="sel-7s-rIC" secondAttribute="trailing" id="djv-sK-otk"/>
+                            <constraint firstItem="e6F-Cq-RUa" firstAttribute="bottom" secondItem="sel-7s-rIC" secondAttribute="bottom" id="lFi-ey-f97"/>
+                            <constraint firstItem="CUr-1C-4U1" firstAttribute="leading" secondItem="e6F-Cq-RUa" secondAttribute="leading" constant="12" id="p6q-VY-get"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cYj-T2-wEK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3699" y="2326"/>
         </scene>
         <!--User Tab View Controller-->
         <scene sceneID="CyB-7F-9ew">
@@ -4541,19 +4851,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTz-zq-zK2">
-                                <rect key="frame" x="27" y="395" width="118" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="tintColor" systemColor="systemGray5Color"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title=" Data Privacy" image="square.and.pencil" catalog="system">
-                                    <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="dataPrivacyButtonPressed:" destination="UHJ-6K-3na" eventType="touchUpInside" id="TS5-iw-YhV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H84-gM-zcS">
-                                <rect key="frame" x="27" y="435" width="148" height="21"/>
+                                <rect key="frame" x="27" y="395" width="148" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" systemColor="systemGray5Color"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -4561,7 +4859,20 @@
                                     <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
+                                    <segue destination="1sl-hP-fno" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="gOg-iu-Ck5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H84-gM-zcS">
+                                <rect key="frame" x="27" y="435" width="127" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" systemColor="systemGray5Color"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title=" Privacy Policy" image="square.and.pencil" catalog="system">
+                                    <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
                                     <action selector="termsOfServiceButtonPressed:" destination="UHJ-6K-3na" eventType="touchUpInside" id="0Q4-ff-twF"/>
+                                    <segue destination="Z5O-9f-Kwz" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="efZ-Ao-dL0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnb-GF-N7g">
@@ -4736,19 +5047,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jzg-j4-hpP">
-                                <rect key="frame" x="27" y="248" width="118" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="tintColor" systemColor="systemGray5Color"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title=" Data Privacy" image="square.and.pencil" catalog="system">
-                                    <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="dataPrivacyButtonPressed:" destination="3gr-eD-A3r" eventType="touchUpInside" id="Q5d-4N-TVy"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5Z-j0-gKT">
-                                <rect key="frame" x="27" y="284" width="148" height="21"/>
+                                <rect key="frame" x="27" y="248" width="148" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" systemColor="systemGray5Color"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -4756,7 +5055,19 @@
                                     <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="termsOfServiceButtonPressed:" destination="3gr-eD-A3r" eventType="touchUpInside" id="sJ9-gJ-0Yl"/>
+                                    <segue destination="1sl-hP-fno" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="PfW-PC-xTy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5Z-j0-gKT">
+                                <rect key="frame" x="27" y="284" width="127" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" systemColor="systemGray5Color"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title=" Privacy Policy" image="square.and.pencil" catalog="system">
+                                    <color key="titleColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Z5O-9f-Kwz" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="j39-Vw-fPg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MWY-h0-UTC">
@@ -7795,16 +8106,239 @@
             </objects>
             <point key="canvasLocation" x="7987" y="791"/>
         </scene>
+        <!--Privacy Policy View Controller-->
+        <scene sceneID="RAt-vc-gEp">
+            <objects>
+                <viewController storyboardIdentifier="PrivacyPolicy" id="Z5O-9f-Kwz" customClass="PrivacyPolicyViewController" customModule="Taiste" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0KC-SG-iIQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hqA-S6-xOS">
+                                <rect key="frame" x="0.0" y="85" width="414" height="0.5"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="0.5" id="rsb-FW-clx"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="xin-zL-0Go"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taïste Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pL-jy-FlT">
+                                <rect key="frame" x="128" y="51" width="158.5" height="20"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yd-mv-Aeo">
+                                <rect key="frame" x="12" y="44" width="45.5" height="31"/>
+                                <color key="tintColor" red="0.38431372549999998" green="0.38823529410000002" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="Z5O-9f-Kwz" eventType="touchUpInside" id="oLg-Qy-n0R"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEu-Om-yt4">
+                                <rect key="frame" x="0.0" y="85.5" width="414" height="776.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osb-od-HcJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1600"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EBR-nE-OFs">
+                                                <rect key="frame" x="1" y="5" width="413" height="115"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="115" id="L6I-1Q-nFa"/>
+                                                </constraints>
+                                                <string key="text">This Privacy Policy describes how Taïste, Inc ("Provider," "we," "us," or "our") collects, uses, and discloses personal information when you access or use our transaction-based culinary software-as-a-service ("SaaS") mobile application ("Taïste"). By using Taïste, you agree to the terms and practices described in this Policy.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1gQ-GX-zDP">
+                                                <rect key="frame" x="0.0" y="122" width="414" height="258"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="258" id="0Nl-xL-Zu7"/>
+                                                </constraints>
+                                                <mutableString key="text"> Information We Collect
+        a. Personal Information: When you create an account or use the App, we may collect personal information such as your name, email address, phone number, and payment details.
+        b. Transaction Information: We collect information about your culinary transactions, including order details, delivery address, and payment history.
+        c. Usage and Device Information: We may collect information about your interactions with the App, such as your IP address, device information, operating system, and app usage data.
+        d. Location Information: With your consent, we may collect and process your precise location information to provide location-based services.</mutableString>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fW9-YM-gXh">
+                                                <rect key="frame" x="0.0" y="383" width="414" height="202"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="202" id="pe1-Yc-MjU"/>
+                                                </constraints>
+                                                <mutableString key="text">Use of Information
+        a. We use the collected information to provide, maintain, and improve the App's functionality and services, including order processing, delivery, and customer support.
+        b. We may use your email address or phone number to send transaction-related notifications, updates, and promotional communications, subject to your preferences and applicable laws.
+        c. We may aggregate and anonymize data for statistical and analytical purposes to enhance our services and better understand user preferences and trends.</mutableString>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aAp-nQ-H46">
+                                                <rect key="frame" x="0.0" y="586" width="414" height="296"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="296" id="Khw-SH-qgB"/>
+                                                </constraints>
+                                                <mutableString key="text">Sharing of Information
+        a. We may share your personal information with culinary service providers to fulfill your orders and facilitate transactions.
+        b. We may share your information with trusted third-party service providers who assist us in operating the App, such as payment processors, delivery partners, and customer support providers.
+        c. We may disclose your information if required by law, regulation, or legal process, or if we believe in good faith that such disclosure is necessary to protect our rights, the safety of others, or investigate fraud or security issues.
+        d. In the event of a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred or disclosed as part of the transaction, subject to privacy laws and contractual obligations.</mutableString>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c1R-tk-8Ed">
+                                                <rect key="frame" x="0.0" y="873" width="414" height="122"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="122" id="9wf-qW-Ddh"/>
+                                                </constraints>
+                                                <string key="text"> Data Retention
+        a. We retain personal information for as long as necessary to fulfill the purposes outlined in this Policy, unless a longer retention period is required or permitted by law.
+        b. We may retain and use aggregated or anonymized data indefinitely for analytical purposes.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-Mj-Gj8">
+                                                <rect key="frame" x="0.0" y="991.5" width="414" height="138"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="138" id="Rzt-Lj-CAq"/>
+                                                </constraints>
+                                                <string key="text">Security
+        a. We implement reasonable security measures to protect personal information from unauthorized access, disclosure, or alteration.
+        b. However, no method of transmission or electronic storage is completely secure. Therefore, we cannot guarantee the absolute security of your information.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9J6-IQ-wco">
+                                                <rect key="frame" x="0.0" y="1126.5" width="414" height="122"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="122" id="4Nf-Pu-q41"/>
+                                                </constraints>
+                                                <string key="text">Children's Privacy
+        Taïste is not intended for individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have inadvertently collected personal information from a child, we will take steps to delete such information.</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zUU-Er-CB2">
+                                                <rect key="frame" x="0.0" y="1245" width="414" height="205"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="205" id="mND-Hb-pmK"/>
+                                                </constraints>
+                                                <mutableString key="text"> Your Rights and Choices
+        a. You may access, update, correct, or delete your personal information through the Taïste's settings or by contacting us directly.
+        b. You may unsubscribe from marketing communications by following the instructions in the communication or adjusting your notification preferences.
+        c. Depending on your jurisdiction, you may have additional rights regarding your personal information, such as the right to object to processing or the right to data portability. Please contact us for further information.</mutableString>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WdS-Jf-Gac">
+                                                <rect key="frame" x="0.0" y="1444" width="414" height="106"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="106" id="K2X-Gb-q9y"/>
+                                                </constraints>
+                                                <string key="text">Third-Party Links and Services
+        Taïste may contain links to third-party websites or services that are not controlled or operated by us. This Policy does not apply to such third-party services, and we are not responsible for their privacy practices</string>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="EBR-nE-OFs" secondAttribute="trailing" id="0vD-SY-2lx"/>
+                                            <constraint firstItem="4t7-Mj-Gj8" firstAttribute="top" secondItem="aAp-nQ-H46" secondAttribute="bottom" constant="109.5" id="5Bg-BD-4rP"/>
+                                            <constraint firstItem="9J6-IQ-wco" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" constant="-3" id="9Pj-9T-fOR"/>
+                                            <constraint firstItem="EBR-nE-OFs" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" constant="1" id="AyJ-zy-ssd"/>
+                                            <constraint firstAttribute="trailing" secondItem="WdS-Jf-Gac" secondAttribute="trailing" id="D4q-7h-uIO"/>
+                                            <constraint firstItem="aAp-nQ-H46" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="F0N-aO-o0s"/>
+                                            <constraint firstItem="zUU-Er-CB2" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" constant="115.5" id="GKr-N9-q5u"/>
+                                            <constraint firstItem="zUU-Er-CB2" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="ISk-74-Ab9"/>
+                                            <constraint firstItem="WdS-Jf-Gac" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="IpM-IX-zvZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="1gQ-GX-zDP" secondAttribute="trailing" id="R9R-bV-YcC"/>
+                                            <constraint firstItem="c1R-tk-8Ed" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="U7A-cP-AHm"/>
+                                            <constraint firstAttribute="trailing" secondItem="c1R-tk-8Ed" secondAttribute="trailing" id="Yc7-d6-o8P"/>
+                                            <constraint firstAttribute="trailing" secondItem="zUU-Er-CB2" secondAttribute="trailing" id="bvy-0k-SqY"/>
+                                            <constraint firstItem="1gQ-GX-zDP" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="cG4-vN-OuG"/>
+                                            <constraint firstItem="c1R-tk-8Ed" firstAttribute="top" secondItem="fW9-YM-gXh" secondAttribute="bottom" constant="288" id="fgJ-1E-wit"/>
+                                            <constraint firstItem="EBR-nE-OFs" firstAttribute="top" secondItem="osb-od-HcJ" secondAttribute="top" constant="5" id="gyU-w8-c81"/>
+                                            <constraint firstItem="fW9-YM-gXh" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="ikm-FA-UHl"/>
+                                            <constraint firstItem="aAp-nQ-H46" firstAttribute="top" secondItem="fW9-YM-gXh" secondAttribute="bottom" constant="1" id="ji5-4E-e0e"/>
+                                            <constraint firstItem="9J6-IQ-wco" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="kUm-GR-v88"/>
+                                            <constraint firstAttribute="height" constant="1600" id="leX-L7-cNg"/>
+                                            <constraint firstAttribute="trailing" secondItem="4t7-Mj-Gj8" secondAttribute="trailing" id="lmS-Zz-Fr2"/>
+                                            <constraint firstAttribute="trailing" secondItem="aAp-nQ-H46" secondAttribute="trailing" id="pft-aL-aw2"/>
+                                            <constraint firstAttribute="trailing" secondItem="9J6-IQ-wco" secondAttribute="trailing" id="pu3-XG-7ED"/>
+                                            <constraint firstAttribute="trailing" secondItem="fW9-YM-gXh" secondAttribute="trailing" id="qJQ-gt-8Qw"/>
+                                            <constraint firstItem="WdS-Jf-Gac" firstAttribute="top" secondItem="9J6-IQ-wco" secondAttribute="bottom" constant="195.5" id="tj0-mQ-AXs"/>
+                                            <constraint firstItem="fW9-YM-gXh" firstAttribute="top" secondItem="1gQ-GX-zDP" secondAttribute="bottom" constant="3" id="vuJ-za-naQ"/>
+                                            <constraint firstItem="1gQ-GX-zDP" firstAttribute="top" secondItem="EBR-nE-OFs" secondAttribute="bottom" constant="2" id="x2S-7s-k7K"/>
+                                            <constraint firstItem="4t7-Mj-Gj8" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="y1c-Vz-Hnk"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="osb-od-HcJ" secondAttribute="bottom" id="0TQ-FR-amw"/>
+                                    <constraint firstItem="osb-od-HcJ" firstAttribute="top" secondItem="dEu-Om-yt4" secondAttribute="top" id="2el-J1-kBj"/>
+                                    <constraint firstItem="osb-od-HcJ" firstAttribute="leading" secondItem="dEu-Om-yt4" secondAttribute="leading" id="4ku-ox-2hT"/>
+                                    <constraint firstItem="osb-od-HcJ" firstAttribute="centerX" secondItem="dEu-Om-yt4" secondAttribute="centerX" id="9sv-BE-93F"/>
+                                    <constraint firstAttribute="trailing" secondItem="osb-od-HcJ" secondAttribute="trailing" id="OJ9-NX-wh5"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kXM-ww-eAM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hqA-S6-xOS" firstAttribute="leading" secondItem="dEu-Om-yt4" secondAttribute="leading" id="G7t-Po-pmI"/>
+                            <constraint firstItem="dEu-Om-yt4" firstAttribute="leading" secondItem="kXM-ww-eAM" secondAttribute="leading" id="Ina-5G-3uP"/>
+                            <constraint firstItem="dEu-Om-yt4" firstAttribute="trailing" secondItem="kXM-ww-eAM" secondAttribute="trailing" id="Wfm-3U-w7V"/>
+                            <constraint firstItem="6yd-mv-Aeo" firstAttribute="leading" secondItem="kXM-ww-eAM" secondAttribute="leading" constant="12" id="aBY-hn-bGP"/>
+                            <constraint firstItem="hqA-S6-xOS" firstAttribute="top" secondItem="6yd-mv-Aeo" secondAttribute="bottom" constant="10" id="gQS-XB-qHF"/>
+                            <constraint firstItem="6yd-mv-Aeo" firstAttribute="top" secondItem="kXM-ww-eAM" secondAttribute="top" id="hv5-Lz-SOM"/>
+                            <constraint firstItem="kXM-ww-eAM" firstAttribute="bottom" secondItem="dEu-Om-yt4" secondAttribute="bottom" id="iJi-x3-oQz"/>
+                            <constraint firstItem="hqA-S6-xOS" firstAttribute="trailing" secondItem="dEu-Om-yt4" secondAttribute="trailing" id="nu1-2Q-im5"/>
+                            <constraint firstItem="3pL-jy-FlT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6yd-mv-Aeo" secondAttribute="trailing" constant="8" symbolic="YES" id="qD8-a3-U6L"/>
+                            <constraint firstItem="3pL-jy-FlT" firstAttribute="centerX" secondItem="0KC-SG-iIQ" secondAttribute="centerX" id="saO-b4-UeI"/>
+                            <constraint firstItem="dEu-Om-yt4" firstAttribute="top" secondItem="hqA-S6-xOS" secondAttribute="bottom" id="tKo-vF-MwN"/>
+                            <constraint firstItem="3pL-jy-FlT" firstAttribute="top" secondItem="kXM-ww-eAM" secondAttribute="top" constant="7" id="vr6-93-EZb"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hdL-35-m9R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4410" y="2326"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zEQ-Ml-IWA"/>
+        <segue reference="b60-ve-dzh"/>
+        <segue reference="tjO-v4-2Va"/>
         <segue reference="Vbp-RS-odE"/>
         <segue reference="o3x-XZ-YkT"/>
         <segue reference="tkP-ld-7rs"/>
         <segue reference="gmU-Hz-wfQ"/>
-        <segue reference="Ydu-Q5-skZ"/>
+        <segue reference="VD0-qR-l0Z"/>
         <segue reference="KHa-l4-KAR"/>
-        <segue reference="sVL-o3-tul"/>
+        <segue reference="K6P-qp-kmw"/>
+        <segue reference="2YB-O3-5d4"/>
         <segue reference="tTE-cs-Wrc"/>
     </inferredMetricsTieBreakers>
     <resources>

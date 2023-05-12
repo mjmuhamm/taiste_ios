@@ -10,6 +10,8 @@
 		C85B21F142398F3FBD1C030A /* Pods_Taiste.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF6BC1FBC57B3B140EC4756 /* Pods_Taiste.framework */; };
 		F415572D27CAB0C2000C8DE5 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415572C27CAB0C2000C8DE5 /* CheckoutViewController.swift */; };
 		F436E53029F6FCFD00B2F38C /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F436E52F29F6FCFD00B2F38C /* Dashboard.swift */; };
+		F4608C7C2A0E83B30083BC18 /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4608C7B2A0E83B30083BC18 /* TermsOfServiceViewController.swift */; };
+		F4608C7E2A0E9B480083BC18 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4608C7D2A0E9B480083BC18 /* PrivacyPolicyViewController.swift */; };
 		F47031C329F5ADE300981048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47031C229F5ADE300981048 /* GoogleService-Info.plist */; };
 		F481948327C80252002BB9D3 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F481948127C80252002BB9D3 /* HomeTableViewCell.swift */; };
 		F481948427C80252002BB9D3 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F481948227C80252002BB9D3 /* HomeTableViewCell.xib */; };
@@ -115,6 +117,8 @@
 		50B88A05B0D69E5C5CBBB918 /* Pods-Taiste.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Taiste.release.xcconfig"; path = "Target Support Files/Pods-Taiste/Pods-Taiste.release.xcconfig"; sourceTree = "<group>"; };
 		F415572C27CAB0C2000C8DE5 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		F436E52F29F6FCFD00B2F38C /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dashboard.swift; path = Taiste/Controllers/user/Dashboard.swift; sourceTree = SOURCE_ROOT; };
+		F4608C7B2A0E83B30083BC18 /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
+		F4608C7D2A0E9B480083BC18 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		F47031C229F5ADE300981048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F481948127C80252002BB9D3 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		F481948227C80252002BB9D3 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -444,6 +448,8 @@
 			isa = PBXGroup;
 			children = (
 				F4B90DC727C709A9004B1FB1 /* StartViewController.swift */,
+				F4608C7B2A0E83B30083BC18 /* TermsOfServiceViewController.swift */,
+				F4608C7D2A0E9B480083BC18 /* PrivacyPolicyViewController.swift */,
 				F4B90DF927C70B2B004B1FB1 /* both */,
 				F4B90DF827C70B27004B1FB1 /* chef */,
 				F4B90DF727C70B21004B1FB1 /* user */,
@@ -779,9 +785,11 @@
 				F4AD143F2A0AA128008C83D6 /* CommentsViewController.swift in Sources */,
 				F4AD14412A0AA1E9008C83D6 /* Comments.swift in Sources */,
 				F481948C27C817DD002BB9D3 /* ChefLoginViewController.swift in Sources */,
+				F4608C7C2A0E83B30083BC18 /* TermsOfServiceViewController.swift in Sources */,
 				F4A080BF2A002A9E00895938 /* Banking.swift in Sources */,
 				F4B90E0327C70B5A004B1FB1 /* SearcViewController.swift in Sources */,
 				F4B90E1027C70B90004B1FB1 /* MeViewController.swift in Sources */,
+				F4608C7E2A0E9B480083BC18 /* PrivacyPolicyViewController.swift in Sources */,
 				F4B3D76F27CAB64100AA5544 /* CheckoutItems.swift in Sources */,
 				F4A080D32A02843900895938 /* Search.swift in Sources */,
 				F4FDB63F27CEAD110078E563 /* VideoModel.swift in Sources */,
