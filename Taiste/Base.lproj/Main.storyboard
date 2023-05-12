@@ -323,10 +323,10 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="itT-Z8-yNf">
-                                                <rect key="frame" x="0.0" y="1538" width="414" height="73"/>
+                                                <rect key="frame" x="0.0" y="1419" width="414" height="73"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="73" id="m5j-jB-Oyw"/>
+                                                    <constraint firstAttribute="height" constant="73" id="qeK-QN-3NM"/>
                                                 </constraints>
                                                 <string key="text">Please read this Agreement carefully before using the App. If you do not agree with any provision of this Agreement, you should not access or use Taïste.</string>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -339,16 +339,14 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                             <constraint firstItem="434-v5-Yue" firstAttribute="leading" secondItem="NGN-B2-XC4" secondAttribute="leading" id="151-vv-wL7"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="top" secondItem="NGN-B2-XC4" secondAttribute="bottom" id="2NY-WW-Z65"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="399" id="3bi-36-0tN"/>
-                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="trailing" secondItem="hIq-Js-TUu" secondAttribute="trailing" id="5Fk-26-jbt"/>
                                             <constraint firstAttribute="trailing" secondItem="OEW-CT-YHw" secondAttribute="trailing" id="5Jh-V0-ggF"/>
                                             <constraint firstItem="XhC-2P-Hrl" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="6fH-Dh-Tic"/>
                                             <constraint firstItem="lff-LA-qO9" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="C3c-Kk-3iD"/>
                                             <constraint firstAttribute="trailing" secondItem="yEB-vz-y22" secondAttribute="trailing" id="GhB-3b-1Is"/>
                                             <constraint firstItem="yEB-vz-y22" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="Gmn-TI-Ifh"/>
                                             <constraint firstItem="Ob8-De-GIq" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="Im0-QS-H6y"/>
-                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="JbW-0I-rfS"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="O07-n2-nIS"/>
                                             <constraint firstItem="wdL-sR-cg1" firstAttribute="top" secondItem="lff-LA-qO9" secondAttribute="bottom" id="Pme-6C-MsQ"/>
-                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="centerX" secondItem="hIq-Js-TUu" secondAttribute="centerX" id="VrE-e7-FDf"/>
                                             <constraint firstItem="434-v5-Yue" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leadingMargin" id="Xe2-7z-Uab"/>
                                             <constraint firstItem="OEW-CT-YHw" firstAttribute="top" secondItem="XhC-2P-Hrl" secondAttribute="bottom" constant="-6" id="YDY-0u-2Qd"/>
                                             <constraint firstItem="OEW-CT-YHw" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="ZfA-KQ-9F4"/>
@@ -362,17 +360,17 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                             <constraint firstItem="NGN-B2-XC4" firstAttribute="top" secondItem="434-v5-Yue" secondAttribute="bottom" id="gev-iU-4qN"/>
                                             <constraint firstItem="wdL-sR-cg1" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="hIa-e4-eQb"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="434-v5-Yue" secondAttribute="trailing" id="hzA-Fu-xUs"/>
+                                            <constraint firstAttribute="trailing" secondItem="itT-Z8-yNf" secondAttribute="trailing" id="k0H-Nh-7YE"/>
                                             <constraint firstItem="Ob8-De-GIq" firstAttribute="top" secondItem="lff-LA-qO9" secondAttribute="bottom" constant="113" id="mpo-t1-G18"/>
                                             <constraint firstItem="hIq-Js-TUu" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="6" id="oTi-tz-5iv"/>
                                             <constraint firstAttribute="height" constant="1500" id="pEx-es-eoM"/>
                                             <constraint firstItem="yEB-vz-y22" firstAttribute="top" secondItem="Ob8-De-GIq" secondAttribute="bottom" id="pvA-jy-Dqn"/>
                                             <constraint firstItem="lff-LA-qO9" firstAttribute="top" secondItem="OEW-CT-YHw" secondAttribute="bottom" id="qD9-0W-nMh"/>
-                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="top" secondItem="ny4-ZY-si9" secondAttribute="top" constant="1538" id="rCj-pD-obJ"/>
                                             <constraint firstItem="hIq-Js-TUu" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="rcc-FP-Die"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="40w-gG-6VQ" secondAttribute="trailing" id="sHb-Id-eAB"/>
                                             <constraint firstItem="40w-gG-6VQ" firstAttribute="top" secondItem="Z8I-SV-mCu" secondAttribute="bottom" id="sYT-8O-wAH"/>
-                                            <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="itT-Z8-yNf" secondAttribute="trailing" id="shq-ua-MOW"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="hIq-Js-TUu" secondAttribute="trailing" id="wln-Tu-Mou"/>
+                                            <constraint firstItem="itT-Z8-yNf" firstAttribute="top" secondItem="yEB-vz-y22" secondAttribute="bottom" id="xD3-5J-Hml"/>
                                             <constraint firstItem="40w-gG-6VQ" firstAttribute="leading" secondItem="ny4-ZY-si9" secondAttribute="leading" id="xPW-eG-aI4"/>
                                             <constraint firstItem="Z8I-SV-mCu" firstAttribute="trailing" secondItem="NGN-B2-XC4" secondAttribute="trailing" id="xon-X7-8Qw"/>
                                             <constraint firstAttribute="trailing" secondItem="XhC-2P-Hrl" secondAttribute="trailing" id="zf0-W0-8LH"/>
