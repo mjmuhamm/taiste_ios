@@ -76,7 +76,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please review or Terms of Service and Privacy Policy before continuing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-Qd-3sG">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please review our Terms of Service and Privacy Policy before continuing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-Qd-3sG">
                                 <rect key="frame" x="15" y="509" width="384" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -95,7 +95,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOn-vg-GFZ">
-                                <rect key="frame" x="258" y="497" width="111" height="38"/>
+                                <rect key="frame" x="249" y="497" width="111" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="111" id="0B2-Rg-W9b"/>
                                     <constraint firstAttribute="height" constant="38" id="ZPp-Cm-Dp8"/>
@@ -114,7 +114,7 @@
                             <constraint firstItem="bzT-uY-bFu" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="10" id="4oi-ha-Nep"/>
                             <constraint firstItem="gJW-Qd-3sG" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="22" id="7mZ-zU-rpb"/>
                             <constraint firstItem="nzV-vh-tHg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FSC-az-lgz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tOn-vg-GFZ" secondAttribute="trailing" constant="45" id="Fc0-Mw-aB1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tOn-vg-GFZ" secondAttribute="trailing" constant="54" id="Fc0-Mw-aB1"/>
                             <constraint firstItem="tOn-vg-GFZ" firstAttribute="top" secondItem="KTK-j0-UFj" secondAttribute="bottom" constant="10" id="HJL-TO-y50"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gJW-Qd-3sG" secondAttribute="trailing" constant="15" id="J01-ij-idc"/>
                             <constraint firstItem="KTK-j0-UFj" firstAttribute="top" secondItem="nzV-vh-tHg" secondAttribute="bottom" constant="105.5" id="grX-ag-PEo"/>
@@ -8153,109 +8153,109 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1gQ-GX-zDP">
-                                                <rect key="frame" x="0.0" y="122" width="414" height="258"/>
+                                                <rect key="frame" x="0.0" y="122" width="414" height="240"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="258" id="0Nl-xL-Zu7"/>
+                                                    <constraint firstAttribute="height" constant="240" id="0Nl-xL-Zu7"/>
                                                 </constraints>
-                                                <mutableString key="text"> Information We Collect
-        a. Personal Information: When you create an account or use the App, we may collect personal information such as your name, email address, phone number, and payment details.
-        b. Transaction Information: We collect information about your culinary transactions, including order details, delivery address, and payment history.
-        c. Usage and Device Information: We may collect information about your interactions with the App, such as your IP address, device information, operating system, and app usage data.
-        d. Location Information: With your consent, we may collect and process your precise location information to provide location-based services.</mutableString>
+                                                <mutableString key="text">Information We Collect
+a. Personal Information: When you create an account or use Taïste, we may collect personal information such as your name, email address, phone number, and payment details.
+b. Transaction Information: We collect information about your culinary transactions, including order details, delivery address, and payment history.
+c. Usage and Device Information: We may collect information about your interactions with Taïste, such as your IP address, device information, operating system, and app usage data.
+d. Location Information: With your consent, we may collect and process your precise location information to provide location-based services.</mutableString>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fW9-YM-gXh">
-                                                <rect key="frame" x="0.0" y="383" width="414" height="202"/>
+                                                <rect key="frame" x="0.0" y="359" width="414" height="202"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="202" id="pe1-Yc-MjU"/>
                                                 </constraints>
                                                 <mutableString key="text">Use of Information
-        a. We use the collected information to provide, maintain, and improve the App's functionality and services, including order processing, delivery, and customer support.
-        b. We may use your email address or phone number to send transaction-related notifications, updates, and promotional communications, subject to your preferences and applicable laws.
-        c. We may aggregate and anonymize data for statistical and analytical purposes to enhance our services and better understand user preferences and trends.</mutableString>
+a. We use the collected information to provide, maintain, and improve Taïste's functionality and services, including order processing, delivery, and customer support.
+b. We may use your email address or phone number to send transaction-related notifications, updates, and promotional communications, subject to your preferences and applicable laws.
+c. We may aggregate and anonymize data for statistical and analytical purposes to enhance our services and better understand user preferences and trends.</mutableString>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aAp-nQ-H46">
-                                                <rect key="frame" x="0.0" y="586" width="414" height="296"/>
+                                                <rect key="frame" x="0.0" y="557" width="414" height="296"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="296" id="Khw-SH-qgB"/>
                                                 </constraints>
                                                 <mutableString key="text">Sharing of Information
-        a. We may share your personal information with culinary service providers to fulfill your orders and facilitate transactions.
-        b. We may share your information with trusted third-party service providers who assist us in operating the App, such as payment processors, delivery partners, and customer support providers.
-        c. We may disclose your information if required by law, regulation, or legal process, or if we believe in good faith that such disclosure is necessary to protect our rights, the safety of others, or investigate fraud or security issues.
-        d. In the event of a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred or disclosed as part of the transaction, subject to privacy laws and contractual obligations.</mutableString>
+a. We may share your personal information with culinary service providers to fulfill your orders and facilitate transactions.
+b. We may share your information with trusted third-party service providers who assist us in operating the App, such as payment processors, delivery partners, and customer support providers.
+c. We may disclose your information if required by law, regulation, or legal process, or if we believe in good faith that such disclosure is necessary to protect our rights, the safety of others, or investigate fraud or security issues.
+d. In the event of a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred or disclosed as part of the transaction, subject to privacy laws and contractual obligations.</mutableString>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c1R-tk-8Ed">
-                                                <rect key="frame" x="0.0" y="873" width="414" height="122"/>
+                                                <rect key="frame" x="0.0" y="849" width="414" height="122"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="122" id="9wf-qW-Ddh"/>
                                                 </constraints>
-                                                <string key="text"> Data Retention
-        a. We retain personal information for as long as necessary to fulfill the purposes outlined in this Policy, unless a longer retention period is required or permitted by law.
-        b. We may retain and use aggregated or anonymized data indefinitely for analytical purposes.</string>
+                                                <string key="text">Data Retention
+a. We retain personal information for as long as necessary to fulfill the purposes outlined in this Policy, unless a longer retention period is required or permitted by law.
+b. We may retain and use aggregated or anonymized data indefinitely for analytical purposes.</string>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-Mj-Gj8">
-                                                <rect key="frame" x="0.0" y="991.5" width="414" height="138"/>
+                                                <rect key="frame" x="0.0" y="967.5" width="414" height="138"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="138" id="Rzt-Lj-CAq"/>
                                                 </constraints>
                                                 <string key="text">Security
-        a. We implement reasonable security measures to protect personal information from unauthorized access, disclosure, or alteration.
-        b. However, no method of transmission or electronic storage is completely secure. Therefore, we cannot guarantee the absolute security of your information.</string>
+a. We implement reasonable security measures to protect personal information from unauthorized access, disclosure, or alteration.
+b. However, no method of transmission or electronic storage is completely secure. Therefore, we cannot guarantee the absolute security of your information.</string>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9J6-IQ-wco">
-                                                <rect key="frame" x="0.0" y="1126.5" width="414" height="122"/>
+                                                <rect key="frame" x="0.0" y="1105.5" width="414" height="122"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="122" id="4Nf-Pu-q41"/>
                                                 </constraints>
                                                 <string key="text">Children's Privacy
-        Taïste is not intended for individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have inadvertently collected personal information from a child, we will take steps to delete such information.</string>
+Taïste is not intended for individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have inadvertently collected personal information from a child, we will take steps to delete such information.</string>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zUU-Er-CB2">
-                                                <rect key="frame" x="0.0" y="1245" width="414" height="205"/>
+                                                <rect key="frame" x="0.0" y="1228" width="414" height="205"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="205" id="mND-Hb-pmK"/>
                                                 </constraints>
-                                                <mutableString key="text"> Your Rights and Choices
-        a. You may access, update, correct, or delete your personal information through the Taïste's settings or by contacting us directly.
-        b. You may unsubscribe from marketing communications by following the instructions in the communication or adjusting your notification preferences.
-        c. Depending on your jurisdiction, you may have additional rights regarding your personal information, such as the right to object to processing or the right to data portability. Please contact us for further information.</mutableString>
+                                                <mutableString key="text">Your Rights and Choices
+a. You may access, update, correct, or delete your personal information through Taïste's settings or by contacting us directly.
+b. You may unsubscribe from marketing communications by following the instructions in the communication or adjusting your notification preferences.
+c. Depending on your jurisdiction, you may have additional rights regarding your personal information, such as the right to object to processing or the right to data portability. Please contact us for further information.</mutableString>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WdS-Jf-Gac">
-                                                <rect key="frame" x="0.0" y="1444" width="414" height="106"/>
+                                                <rect key="frame" x="0.0" y="1428" width="414" height="106"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="106" id="K2X-Gb-q9y"/>
                                                 </constraints>
                                                 <string key="text">Third-Party Links and Services
-        Taïste may contain links to third-party websites or services that are not controlled or operated by us. This Policy does not apply to such third-party services, and we are not responsible for their privacy practices</string>
+Taïste may contain links to third-party websites or services that are not controlled or operated by us. This Policy does not apply to such third-party services, and we are not responsible for their privacy practices</string>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -8264,12 +8264,12 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="EBR-nE-OFs" secondAttribute="trailing" id="0vD-SY-2lx"/>
-                                            <constraint firstItem="4t7-Mj-Gj8" firstAttribute="top" secondItem="aAp-nQ-H46" secondAttribute="bottom" constant="109.5" id="5Bg-BD-4rP"/>
-                                            <constraint firstItem="9J6-IQ-wco" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" constant="-3" id="9Pj-9T-fOR"/>
+                                            <constraint firstItem="4t7-Mj-Gj8" firstAttribute="top" secondItem="aAp-nQ-H46" secondAttribute="bottom" constant="114.5" id="5Bg-BD-4rP"/>
+                                            <constraint firstItem="9J6-IQ-wco" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" id="9Pj-9T-fOR"/>
                                             <constraint firstItem="EBR-nE-OFs" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" constant="1" id="AyJ-zy-ssd"/>
                                             <constraint firstAttribute="trailing" secondItem="WdS-Jf-Gac" secondAttribute="trailing" id="D4q-7h-uIO"/>
                                             <constraint firstItem="aAp-nQ-H46" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="F0N-aO-o0s"/>
-                                            <constraint firstItem="zUU-Er-CB2" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" constant="115.5" id="GKr-N9-q5u"/>
+                                            <constraint firstItem="zUU-Er-CB2" firstAttribute="top" secondItem="4t7-Mj-Gj8" secondAttribute="bottom" constant="122.5" id="GKr-N9-q5u"/>
                                             <constraint firstItem="zUU-Er-CB2" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="ISk-74-Ab9"/>
                                             <constraint firstItem="WdS-Jf-Gac" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="IpM-IX-zvZ"/>
                                             <constraint firstAttribute="trailing" secondItem="1gQ-GX-zDP" secondAttribute="trailing" id="R9R-bV-YcC"/>
@@ -8280,15 +8280,15 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                                             <constraint firstItem="c1R-tk-8Ed" firstAttribute="top" secondItem="fW9-YM-gXh" secondAttribute="bottom" constant="288" id="fgJ-1E-wit"/>
                                             <constraint firstItem="EBR-nE-OFs" firstAttribute="top" secondItem="osb-od-HcJ" secondAttribute="top" constant="5" id="gyU-w8-c81"/>
                                             <constraint firstItem="fW9-YM-gXh" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="ikm-FA-UHl"/>
-                                            <constraint firstItem="aAp-nQ-H46" firstAttribute="top" secondItem="fW9-YM-gXh" secondAttribute="bottom" constant="1" id="ji5-4E-e0e"/>
+                                            <constraint firstItem="aAp-nQ-H46" firstAttribute="top" secondItem="fW9-YM-gXh" secondAttribute="bottom" constant="-4" id="ji5-4E-e0e"/>
                                             <constraint firstItem="9J6-IQ-wco" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="kUm-GR-v88"/>
                                             <constraint firstAttribute="height" constant="1600" id="leX-L7-cNg"/>
                                             <constraint firstAttribute="trailing" secondItem="4t7-Mj-Gj8" secondAttribute="trailing" id="lmS-Zz-Fr2"/>
                                             <constraint firstAttribute="trailing" secondItem="aAp-nQ-H46" secondAttribute="trailing" id="pft-aL-aw2"/>
                                             <constraint firstAttribute="trailing" secondItem="9J6-IQ-wco" secondAttribute="trailing" id="pu3-XG-7ED"/>
                                             <constraint firstAttribute="trailing" secondItem="fW9-YM-gXh" secondAttribute="trailing" id="qJQ-gt-8Qw"/>
-                                            <constraint firstItem="WdS-Jf-Gac" firstAttribute="top" secondItem="9J6-IQ-wco" secondAttribute="bottom" constant="195.5" id="tj0-mQ-AXs"/>
-                                            <constraint firstItem="fW9-YM-gXh" firstAttribute="top" secondItem="1gQ-GX-zDP" secondAttribute="bottom" constant="3" id="vuJ-za-naQ"/>
+                                            <constraint firstItem="WdS-Jf-Gac" firstAttribute="top" secondItem="9J6-IQ-wco" secondAttribute="bottom" constant="200.5" id="tj0-mQ-AXs"/>
+                                            <constraint firstItem="fW9-YM-gXh" firstAttribute="top" secondItem="1gQ-GX-zDP" secondAttribute="bottom" constant="-3" id="vuJ-za-naQ"/>
                                             <constraint firstItem="1gQ-GX-zDP" firstAttribute="top" secondItem="EBR-nE-OFs" secondAttribute="bottom" constant="2" id="x2S-7s-k7K"/>
                                             <constraint firstItem="4t7-Mj-Gj8" firstAttribute="leading" secondItem="osb-od-HcJ" secondAttribute="leading" id="y1c-Vz-Hnk"/>
                                         </constraints>
@@ -8323,7 +8323,7 @@ b. Any dispute arising out of or relating to this Agreement shall be subject to 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdL-35-m9R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4410" y="2326"/>
+            <point key="canvasLocation" x="4408.695652173913" y="2325.6696428571427"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

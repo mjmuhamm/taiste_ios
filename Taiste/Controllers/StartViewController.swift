@@ -44,7 +44,7 @@ class StartViewController: UIViewController {
 
         var boldText  = "Terms of Service"
         
-        var secondNormalText = " and our "
+        var secondNormalText = " and "
         var secondBoldText = "Privacy Policy"
         var thirdNormalText = " before continuing."
 
