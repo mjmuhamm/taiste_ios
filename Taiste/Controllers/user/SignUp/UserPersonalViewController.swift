@@ -27,7 +27,6 @@ class UserPersonalViewController: UIViewController {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var city: UITextField!
     @IBOutlet weak var state: UITextField!
-    @IBOutlet weak var zipCode: UITextField!
     
     @IBOutlet weak var burgerButton: MDCButton!
     @IBOutlet weak var creativeButton: MDCButton!
@@ -39,6 +38,13 @@ class UserPersonalViewController: UIViewController {
     @IBOutlet weak var seafoodButton: MDCButton!
     @IBOutlet weak var workoutButton: MDCButton!
     
+    @IBOutlet weak var localButton: MDCButton!
+    @IBOutlet weak var regionalButton: MDCButton!
+    @IBOutlet weak var nationalButton: MDCButton!
+    @IBOutlet weak var preferenceConstant: NSLayoutConstraint!
+    @IBOutlet weak var stateConstant: NSLayoutConstraint!
+    //region - 20
+    //local - 164
     var burger = 0
     var creative = 0
     var lowCal = 0
@@ -48,6 +54,10 @@ class UserPersonalViewController: UIViewController {
     var vegan = 0
     var seafood = 0
     var workout = 0
+    
+    var local = 0
+    var region = 0
+    var nation = 0
     
     private var newOrEdit = "new"
     
@@ -99,6 +109,55 @@ class UserPersonalViewController: UIViewController {
         }))
         present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func localButtonPressed(_ sender: Any) {
+        local = 1
+        region = 0
+        nation = 0
+        preferenceConstant.constant = 67.5
+        stateConstant.constant = 164
+        city.isHidden = false
+        state.isHidden = false
+        
+        localButton.setTitleColor(UIColor.white, for: .normal)
+        localButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+        regionalButton.backgroundColor = UIColor.white
+        regionalButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+        nationalButton.backgroundColor = UIColor.white
+        nationalButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+        
+    }
+    @IBAction func regionalButtonPressed(_ sender: Any) {
+        local = 0
+        region = 1
+        nation = 0
+        preferenceConstant.constant = 67.5
+        stateConstant.constant = 20
+        city.isHidden = true
+        state.isHidden = false
+        
+        regionalButton.setTitleColor(UIColor.white, for: .normal)
+        regionalButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+        localButton.backgroundColor = UIColor.white
+        localButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+        nationalButton.backgroundColor = UIColor.white
+        nationalButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+    }
+    @IBAction func nationalButtonPressed(_ sender: Any) {
+        local = 0
+        region = 0
+        nation = 1
+        preferenceConstant.constant = 23.5
+        city.isHidden = true
+        state.isHidden = true
+        nationalButton.setTitleColor(UIColor.white, for: .normal)
+        nationalButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
+        regionalButton.backgroundColor = UIColor.white
+        regionalButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+        localButton.backgroundColor = UIColor.white
+        localButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
+    }
+    
     
     @IBAction func burgerButtonPressed(_ sender: Any) {
         if burgerButton.isSelected {
@@ -236,8 +295,10 @@ class UserPersonalViewController: UIViewController {
             self.showToast(message: "Please enter your valid email.", font: .systemFont(ofSize: 12))
         } else if isPasswordValid(password: password.text!) == false || password.text != confirmPassword.text {
             self.showToast(message: "Please make sure password has 1 uppercase letter, 1 special character, 1 number, 1 lowercase letter, and matches with the second insert.", font: .systemFont(ofSize: 12))
-        } else if city.text == "" || state.text == "" || zipCode.text == "" {
-            self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
+        } else if local == 1 && (city.text == "" || state.text == "") {
+            self.showToast(message: "Please enter a city and state.", font: .systemFont(ofSize: 12))
+        } else if nation == 1 && state.text == "" {
+            self.showToast(message: "Please enter a state.", font: .systemFont(ofSize: 12))
         } else if userImage1 == nil {
             self.showToast(message: "Please add a profile pic.", font: .systemFont(ofSize: 12))
         } else  {
@@ -250,8 +311,8 @@ class UserPersonalViewController: UIViewController {
                     if self.userImage1 != nil {
                         storageRef.child("users//\(self.email.text!)/profileImage/\(authResult!.user.uid).png").putData(self.userImageData!)
                     }
-                    let data: [String: Any] = ["fullName" : self.fullName.text, "userName" : self.userName.text, "email": self.email.text,  "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text, "burger" : self.burger, "creative" : self.creative, "lowCal" : self.lowCal, "lowCarb" : self.lowCarb, "pasta" : self.pasta, "healthy" : self.healthy, "vegan" : self.vegan, "seafood" : self.seafood, "workout" : self.workout]
-                    let data1: [String: Any] = ["username" : self.userName.text!, "email" : self.email.text!, "chefOrUser" : "user"]
+                    let data: [String: Any] = ["fullName" : self.fullName.text, "userName" : self.userName.text, "email": self.email.text,  "city" : self.city.text, "state" : self.state.text, "burger" : self.burger, "creative" : self.creative, "lowCal" : self.lowCal, "lowCarb" : self.lowCarb, "pasta" : self.pasta, "healthy" : self.healthy, "vegan" : self.vegan, "seafood" : self.seafood, "workout" : self.workout, "local" : self.local, "region" : self.region, "nation" : self.nation]
+                    let data1: [String: Any] = ["username" : self.userName.text!, "email" : self.email.text!, "chefOrUser" : "user", "fullName" : self.fullName.text]
                     let data2: [String: Any] = ["chefOrUser" : "User"]
                     self.db.collection("User").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)

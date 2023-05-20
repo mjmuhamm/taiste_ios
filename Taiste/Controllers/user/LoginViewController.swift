@@ -88,7 +88,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUpButtonPressed(_ sender: MDCButton) {
-        self.performSegue(withIdentifier: "LoginToUserSignUpSegue", sender: self)
     }
     
     @IBAction func forgotPasswordButtonPressed(_ sender: Any) {

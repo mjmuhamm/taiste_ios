@@ -34,7 +34,7 @@ class OrdersViewController: UIViewController {
     @IBOutlet weak var ordersTableView: UITableView!
     
     private let db = Firestore.firestore()
-    private let user = "malik@testing.com"
+    @IBOutlet weak var disclaimer: UILabel!
     
     private var pendingOrders : [Orders] = []
     private var scheduledOrders : [Orders] = []
@@ -47,7 +47,7 @@ class OrdersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        disclaimer.text = "*Orders appear hear until the chef accepts, and will transfer to the 'Schedule' tab after. If you cancel here, a full refund will be dispersed immediately.*"
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dfCompare.dateFormat = "MM-dd-yyyy HH:mm"
         ordersTableView.register(UINib(nibName: "UserOrderPostTableViewCell", bundle: nil), forCellReuseIdentifier: "UserOrderPostReusableCell")
@@ -177,21 +177,24 @@ class OrdersViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                    
-                    let data : [String: Any] = ["refundId" : refundId, "paymentIntent" : paymentId, "orderId" : orderId, "date" : self.df.string(from: Date()), "userImageId" : userImageId, "chefImageId" : chefImageId]
+                    let data : [String: Any] = ["refundId" : refundId, "paymentIntent" : paymentId, "orderId" : orderId, "date" : self.df.string(from: Date()), "userImageId" : userImageId, "chefImageId" : chefImageId, "chargeForPayout" : chargeForPayout]
                     let data1 : [String: Any] = ["cancelled" : "refunded", "orderUpdate" : "cancelled"]
-                    let data2 : [String : Any] = ["cancelled" : "refunded"]
+                    let data2 : [String : Any] = ["cancelled" : "\(chargeForPayout * 0.85)"]
                     self.db.collection("Refunds").document(orderId).setData(data)
-                    self.db.collection("Chef").document(chefImageId).collection("Orders").document(orderId).updateData(data2)
                     self.db.collection("User").document(userImageId).collection("Orders").document(orderId).updateData(data1)
+                    self.db.collection("Chef").document(chefImageId).collection("Orders").document(orderId).updateData(data2)
                     self.db.collection("Orders").document(orderId).updateData(data1)
                     if self.toggle == "Scheduled" {
-                        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).getDocument { document, error in
+                        self.db.collection("Chef").document(chefImageId).getDocument { document, error in
                             if error == nil {
                                 if document != nil {
                                     let data = document!.data()
                                     if let previousChargeForPayout = data!["chargeForPayout"] as? Double {
-                                        let data3 : [String: Any] = ["chargeForPayout" : chargeForPayout + previousChargeForPayout]
-                                        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).updateData(data3)
+                                        let data3 : [String: Any] = ["chargeForPayout" : (chargeForPayout * 0.85) + previousChargeForPayout]
+                                        self.db.collection("Chef").document(chefImageId).updateData(data3)
+                                    } else {
+                                        let data3 : [String: Any] = ["chargeForPayout" : (chargeForPayout * 0.85)]
+                                        self.db.collection("Chef").document(chefImageId).setData(data3)
                                     }
                                 }
                             }
@@ -230,6 +233,7 @@ class OrdersViewController: UIViewController {
     @IBAction func pendingButtonPressed(_ sender: Any) {
         
         toggle = "Pending"
+        disclaimer.text = "*Orders appear hear until the chef accepts, and will transfer to the 'Schedule' tab after. If you cancel here, a full refund will be dispersed immediately.*"
         loadOrders()
         pendingButton.setTitleColor(UIColor.white, for: .normal)
         pendingButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
@@ -240,8 +244,8 @@ class OrdersViewController: UIViewController {
     }
     
     @IBAction func scheduledButtonPressed(_ sender: Any) {
-        
         toggle = "Scheduled"
+        disclaimer.text = "*Orders appear hear when the chef accepts. If you cancel within 7 days of the event you will be refunded 85% of the total order cost, otherwise, you can expect 95% of the total order cost to be refunded.*"
         loadOrders()
         pendingButton.backgroundColor = UIColor.white
         pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -253,6 +257,7 @@ class OrdersViewController: UIViewController {
     
     @IBAction func completeButtonPressed(_ sender: Any) {
         toggle = "Complete"
+        disclaimer.text = "*Orders appear after completion. Please consider reviewing each order to help other users best decide on their selections.*"
         loadOrders()
         pendingButton.backgroundColor = UIColor.white
         pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)

@@ -21,18 +21,15 @@ class ChefOrdersViewController: UIViewController {
 //    private let chef = Auth.auth().currentUser!.email!
 
     @IBOutlet weak var chefName: UILabel!
-    @IBOutlet weak var education: UILabel!
-    @IBOutlet weak var chefPassion: UILabel!
-    @IBOutlet weak var location: UILabel!
     
-    @IBOutlet weak var chefImage: UIImageView!
     
     @IBOutlet weak var pendingButton: MDCButton!
     @IBOutlet weak var scheduledButton: MDCButton!
     @IBOutlet weak var completeButton: MDCButton!
     
     private var toggle = "Pending"
-
+    @IBOutlet weak var disclaimer: UILabel!
+    
     private var pendingOrders : [Orders] = []
     private var scheduledOrders : [Orders] = []
     private var completeOrders : [Orders] = []
@@ -45,6 +42,7 @@ class ChefOrdersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disclaimer.text = "*Orders appear hear until you have accepted the event, and will transfer to the 'Schedule' tab after. If you cancel here, a full refund will be dispersed to the user immediately with no charge to you.*"
         
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dfCompare.dateFormat = "MM-dd-yyyy HH:mm"
@@ -159,7 +157,24 @@ class ChefOrdersViewController: UIViewController {
             orderTableView.reloadData()
         }
     }
-    private func payout(transferAmount: Double, orderId: String, userImageId: String, chefImageId: String) {
+    
+    private func prePayout(userImageId: String, amount: Double, orderId: String) {
+        
+        db.collection("Chef").document(Auth.auth().currentUser!.uid).getDocument { document, error in
+            if error == nil {
+                if document != nil {
+                    let data = document!.data()
+                    
+                    if let chargeForPayout = data!["chargeForPayout"] as? Double {
+                        self.payout(transferAmount: amount, orderId: orderId, userImageId: userImageId, chefImageId: Auth.auth().currentUser!.uid, totalOwe: chargeForPayout)
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    private func payout(transferAmount: Double, orderId: String, userImageId: String, chefImageId: String, totalOwe: Double) {
         self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("BankingInfo").getDocuments { documents, error in
             if error == nil {
                 if documents != nil {
@@ -167,8 +182,10 @@ class ChefOrdersViewController: UIViewController {
                         let data = doc.data()
                         
                         if let stripeAccountId = data["stripeAccountId"] as? String {
-                            let a = transferAmount * 100
+                            let a = (transferAmount + totalOwe) * 100
                             let amount = String(format: "%.0f", a)
+                            
+                            if Int(amount)! >= 0 {
                             
                             let json: [String: Any] = ["amount": amount, "stripeAccountId" : stripeAccountId]
                                 
@@ -189,7 +206,7 @@ class ChefOrdersViewController: UIViewController {
                                     
                                     DispatchQueue.main.async {
                                        
-                                        let data : [String: Any] = ["transferId" : transferId, "orderId" : orderId, "date" : self.df.string(from: Date()), "userImageId" : userImageId, "chefImageId" : chefImageId]
+                                        let data : [String: Any] = ["transferId" : transferId, "transferAmount": transferAmount, "orderId" : orderId, "date" : self.df.string(from: Date()), "userImageId" : userImageId, "chefImageId" : chefImageId]
                                         let data2 : [String : Any] = ["orderUpdate" : "complete"]
                                         self.db.collection("Transfers").document(orderId).setData(data)
                                         self.db.collection("Chef").document(chefImageId).collection("Orders").document(orderId).updateData(data2)
@@ -200,6 +217,11 @@ class ChefOrdersViewController: UIViewController {
                                         }
                                 })
                                 task.resume()
+                            } else {
+                                
+                                let data8: [String: Any] = ["chargeForPayout" : Double(amount)! / 100]
+                                self.db.collection("Chef").document(Auth.auth().currentUser!.uid).updateData(data8)
+                            }
                         }
                         
                     }
@@ -244,6 +266,9 @@ class ChefOrdersViewController: UIViewController {
                                     if let previousChargeForPayout = data!["chargeForPayout"] as? Double {
                                         let data3 : [String: Any] = ["chargeForPayout" : -chargeForPayout + previousChargeForPayout]
                                         self.db.collection("Chef").document(Auth.auth().currentUser!.uid).updateData(data3)
+                                    } else {
+                                        let data3 : [String: Any] = ["chargeForPayout" : -chargeForPayout]
+                                        self.db.collection("Chef").document(Auth.auth().currentUser!.uid).setData(data3)
                                     }
                                 }
                             }
@@ -278,6 +303,7 @@ class ChefOrdersViewController: UIViewController {
     
     @IBAction func pendingOrdersButtonPressed(_ sender: Any) {
         toggle = "Pending"
+        disclaimer.text = "*Orders appear hear until you have accepted the event, and will transfer to the 'Schedule' tab after. If you cancel here, a full refund will be dispersed to the user immediately with no charge to you.*"
         loadOrders()
         pendingButton.setTitleColor(UIColor.white, for: .normal)
         pendingButton.backgroundColor = UIColor(red: 160/255, green: 162/255, blue: 104/255, alpha: 1)
@@ -289,6 +315,7 @@ class ChefOrdersViewController: UIViewController {
     
     @IBAction func scheduledOrdersButtonPressed(_ sender: Any) {
         toggle = "Scheduled"
+        disclaimer.text = "*Orders appear hear after you have accepted. If you cancel within 7 days of the event, you will be charged 15% of the total order cost on your next payout. Otherwise, you can expect 5% charge of the total order cost to be charged on your next payout.*"
         loadOrders()
         pendingButton.backgroundColor = UIColor.white
         pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -300,6 +327,7 @@ class ChefOrdersViewController: UIViewController {
     
     @IBAction func completeOrdersButtonPressed(_ sender: Any) {
             toggle = "Complete"
+            disclaimer.text = "*Orders appear hear after completion. Please consider viewing the user's profile to optimize your menu options for your consumer base.*"
             loadOrders()
             pendingButton.backgroundColor = UIColor.white
             pendingButton.setTitleColor(UIColor(red: 98/255, green: 99/255, blue: 72/255, alpha: 1), for: .normal)
@@ -334,7 +362,7 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
         cell.eventTypeAndQauntity.text = "Event Type: \(order.eventType)   Event Quantity: \(order.eventQuantity)"
         cell.location.text = "Location: \(order.location)"
         cell.costOfEventText.text = "$\(String(format: "%.2f", order.totalCostOfEvent))"
-        cell.taxesAndFeesText.text = "$\(String(format: "%.2f", order.totalCostOfEvent * 0.05))"
+        cell.taxesAndFeesText.text = "$\(String(format: "%.2f", (order.totalCostOfEvent - order.taxesAndFees) * 0.05))"
         cell.takeHomeText.text = "$\(String(format: "%.2f", (order.totalCostOfEvent - (order.totalCostOfEvent * 0.05))))"
         
         if self.toggle == "Scheduled" {
@@ -360,7 +388,7 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
                 
                 let x = today!.distance(to: newEventDates[0]) / 3600
                 let hourAfterEventEnds = x + 1
-                
+                print("this is x \(hourAfterEventEnds)")
                 
               if hourAfterEventEnds <= 0 {
                     cell.showInfoView.isHidden = false
@@ -370,8 +398,7 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
                     cell.messagesButton.isHidden = true
                     cell.showNotesButton.isHidden = true
                   
-                  self.payout(transferAmount: (order.totalCostOfEvent - (order.totalCostOfEvent * 0.05)), orderId: order.documentId, userImageId: order.userImageId, chefImageId: order.chefImageId)
-                  
+//                  self.prePayout(userImageId: userImageId, amount: order.priceToChef, orderId: order.orderId)
                   if let index = self.orders.firstIndex(where: { $0.documentId == order.documentId }) {
                       self.orders.remove(at: index)
                       self.scheduledOrders.remove(at: index)
@@ -409,7 +436,11 @@ extension ChefOrdersViewController : UITableViewDataSource, UITableViewDelegate 
         if order.cancelled != "" {
             cell.showInfoView.isHidden = false
             cell.showInfoLabel.text = "Order Cancelled"
+            if self.toggle == "Scheduled" {
+                cell.showInfoText.text = "The user has cancelled this order. $\(order.cancelled) will be awarded to you on your next payout for this inconvenience."
+            } else {
             cell.showInfoText.text = "The user has cancelled this order."
+            }
             cell.showInfoLabel.textColor = UIColor.systemRed
             cell.showInfoText.textColor = UIColor.systemRed
             cell.cancelButton.isHidden = true

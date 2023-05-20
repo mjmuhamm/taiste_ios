@@ -81,14 +81,13 @@ class ChefBusinessViewController: UIViewController {
                     if error == nil {
                         if documents != nil {
                             for doc in documents!.documents {
-                                let data = doc.data()
+
                                 
                                 let data1 : [String : Any] = ["city" : self.city.text , "state" : self.state.text , "zipCode" : self.zipCode.text]
-                                if let city = data["city"] as? String, let state = data["state"] as? String, let zipCode = data["zipCode"] as? String {
                                     
                                     self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection(array[i]).document(doc.documentID).updateData(data1)
                                     self.db.collection(array[i]).document(doc.documentID).updateData(data1)
-                                }
+                                
                                 
                             }
                         }

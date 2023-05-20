@@ -430,7 +430,7 @@ class AddPersonViewController: UIViewController {
     @IBAction func bankingSaveButtonPressed(_ sender: Any) {
         
         if newAccountOrEditedAccount == "edit" {
-            let alert = UIAlertController(title: "Please make sure that there are no pending deposits before continuing.", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "This will delete your old external account and create a new one with this information. Continue?", message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (handler) in
                     if self.bankName.text == "" {

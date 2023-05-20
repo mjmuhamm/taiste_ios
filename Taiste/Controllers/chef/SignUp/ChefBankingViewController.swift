@@ -554,7 +554,7 @@ class ChefBankingViewController: UIViewController {
             let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
                 guard let data = data,
                     let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
-                    let id = json["id"] as? String,
+                   
                       
                     let self = self else {
                 // Handle error

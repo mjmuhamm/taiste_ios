@@ -41,7 +41,7 @@ class ReviewsViewController: UIViewController {
                     for doc in documents!.documents {
                         let data = doc.data()
                         
-                        if let date = data["date"] as? String, let expectations = data["expectations"] as? Int, let likes = data["likes"] as? [String], let quality = data["quality"] as? Int, let recommend = data["recommend"] as? Int, let chefRating = data["chefRating"] as? Int, let thoughts = data["thoughts"] as? String, let userImageId = data["userImageId"] as? String, let userEmail = data["userEmail"] as? String {
+                        if let date = data["date"] as? String, let expectations = data["expectations"] as? Int, let likes = data["liked"] as? [String], let quality = data["quality"] as? Int, let recommend = data["recommend"] as? Int, let chefRating = data["chefRating"] as? Int, let thoughts = data["thoughts"] as? String, let userImageId = data["userImageId"] as? String, let userEmail = data["userEmail"] as? String {
                             
                             if let index = self.reviews.firstIndex(where: { $0.documentId == doc.documentID }) {} else {
                             

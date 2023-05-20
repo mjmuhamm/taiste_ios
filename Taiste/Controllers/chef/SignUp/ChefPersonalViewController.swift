@@ -138,13 +138,13 @@ class ChefPersonalViewController: UIViewController {
         } else if isPasswordValid(password: password.text!) == false || password.text != confirmPassword.text {
             self.showToast(message: "Please make sure password has 1 uppercase letter, 1 special character, 1 number, 1 lowercase letter, and matches with the second insert.", font: .systemFont(ofSize: 12))
         } else if education.text == "" {
-            self.showToast(message: "Please enter education. Can be 'Self-Educated'", font: .systemFont(ofSize: 12))
+            self.showToast(message: "Please enter your education. Can be 'Self-Educated'", font: .systemFont(ofSize: 12))
         } else if chefPassion.text == "" {
             self.showToast(message: "Please enter chef passion.", font: .systemFont(ofSize: 12))
         } else if city.text == "" || state.text == "" || zipCode.text == "" {
             self.showToast(message: "Please enter your city, state, and zip code.", font: .systemFont(ofSize: 12))
         } else if userImage1 == nil {
-            self.showToast(message: "Please add a profile pic.", font: .systemFont(ofSize: 12))
+            self.showToast(message: "Please add a profile image.", font: .systemFont(ofSize: 12))
         } else {
         
             let storageRef = storage.reference()
@@ -155,7 +155,7 @@ class ChefPersonalViewController: UIViewController {
                         storageRef.child("chefs/\(self.email.text!)/profileImage/\(authResult!.user.uid).png").putData(self.userImageData!)
                     }
                     let data: [String: Any] = ["fullName" : self.fullName.text, "chefName" : self.chefName.text, "email": self.email.text, "education" : self.education.text, "chefPassion" : self.chefPassion.text, "city" : self.city.text, "state" : self.state.text, "zipCode" : self.zipCode.text]
-                    let data1: [String: Any] = ["username" : self.chefName.text!, "email" : self.email.text!, "chefOrUser" : "Chef"]
+                    let data1: [String: Any] = ["username" : self.chefName.text!, "email" : self.email.text!, "chefOrUser" : "Chef", "fullName" : self.fullName.text]
                     let data2: [String: Any] = ["chefOrUser" : "Chef", "chargeForPayout" : 0.0]
                     self.db.collection("Chef").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
@@ -200,12 +200,7 @@ class ChefPersonalViewController: UIViewController {
                     
                             self.db.collection("Chef").document(Auth.auth().currentUser!.uid).collection("PersonalInfo").document(self.documentId).updateData(data)
                     self.db.collection("Usernames").document(Auth.auth().currentUser!.uid).updateData(data1)
-                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                    changeRequest?.displayName = self.chefName.text
-                    
-                    changeRequest?.commitChanges { error in
-                      // ...
-                    }
+                  
                         self.dismiss(animated: true, completion: nil)
                         } else {
                             self.showToast(message: "Something went wrong. Please try again. \(error?.localizedDescription)", font: .systemFont(ofSize: 12))
