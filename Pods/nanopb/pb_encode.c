@@ -293,17 +293,18 @@ static bool pb_check_proto3_default_value(const pb_field_t *field, const void *p
              * because the C struct may contain padding bytes that must
              * be skipped.
              */
-            pb_field_iter_t iter;
-            if (pb_field_iter_begin(&iter, (const pb_field_t*)field->ptr, pb_const_cast(pData)))
-            {
-                do
-                {
-                    if (!pb_check_proto3_default_value(iter.pos, iter.pData))
-                    {
-                        return false;
-                    }
-                } while (pb_field_iter_next(&iter));
-            }
+//            pb_field_iter_t iter;
+//            if (pb_field_iter_begin(&iter, (const pb_field_t*)field->ptr, pb_const_cast(pData)))
+//            {
+//                do
+//                {
+//                    if (!pb_check_proto3_default_value(iter.pos, iter.pData))
+//                    {
+//                        return false;
+//                    }
+//                }
+////                while (pb_field_iter_next(&iter));
+//            }
             return true;
         }
     }
@@ -525,29 +526,30 @@ static void *pb_const_cast(const void *p)
     return t.p1;
 }
 
-bool checkreturn pb_encode(pb_ostream_t *stream, const pb_field_t fields[], const void *src_struct)
-{
-    pb_field_iter_t iter;
-    if (!pb_field_iter_begin(&iter, fields, pb_const_cast(src_struct)))
-        return true; /* Empty message type */
-    
-    do {
-        if (PB_LTYPE(iter.pos->type) == PB_LTYPE_EXTENSION)
-        {
-            /* Special case for the extension field placeholder */
-            if (!encode_extension_field(stream, iter.pos, iter.pData))
-                return false;
-        }
-        else
-        {
-            /* Regular field */
-            if (!encode_field(stream, iter.pos, iter.pData))
-                return false;
-        }
-    } while (pb_field_iter_next(&iter));
-    
-    return true;
-}
+//bool checkreturn pb_encode(pb_ostream_t *stream, const pb_field_t fields[], const void *src_struct)
+//{
+////    pb_field_iter_t iter;
+//    if (!pb_field_iter_begin(&iter, fields, pb_const_cast(src_struct)))
+//        return true; /* Empty message type */
+//
+//    do {
+//        if (PB_LTYPE(iter.pos->type) == PB_LTYPE_EXTENSION)
+//        {
+//            /* Special case for the extension field placeholder */
+////            if (!encode_extension_field(stream, iter.pos, iter.pData))
+////                return false;
+//        }
+//        else
+//        {
+//            /* Regular field */
+////            if (!encode_field(stream, iter.pos, iter.pData))
+////                return false;
+//        }
+//    }
+////    while (pb_field_iter_next(&iter));
+//
+//    return true;
+//}
 
 bool pb_encode_delimited(pb_ostream_t *stream, const pb_field_t fields[], const void *src_struct)
 {

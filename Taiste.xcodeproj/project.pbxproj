@@ -51,7 +51,6 @@
 		F4B90DC427C709A9004B1FB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B90DC327C709A9004B1FB1 /* AppDelegate.swift */; };
 		F4B90DC627C709A9004B1FB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B90DC527C709A9004B1FB1 /* SceneDelegate.swift */; };
 		F4B90DC827C709A9004B1FB1 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B90DC727C709A9004B1FB1 /* StartViewController.swift */; };
-		F4B90DCB27C709A9004B1FB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B90DC927C709A9004B1FB1 /* Main.storyboard */; };
 		F4B90DCD27C709AB004B1FB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4B90DCC27C709AB004B1FB1 /* Assets.xcassets */; };
 		F4B90DD027C709AB004B1FB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4B90DCE27C709AB004B1FB1 /* LaunchScreen.storyboard */; };
 		F4B90DDB27C709AB004B1FB1 /* TaisteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B90DDA27C709AB004B1FB1 /* TaisteTests.swift */; };
@@ -69,6 +68,7 @@
 		F4BD7F4E2A09920600AA0212 /* ReviewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4BD7F4C2A09920500AA0212 /* ReviewsTableViewCell.xib */; };
 		F4BD7F502A09922300AA0212 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BD7F4F2A09922300AA0212 /* ReviewsViewController.swift */; };
 		F4BD7F522A09965D00AA0212 /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BD7F512A09965D00AA0212 /* Reviews.swift */; };
+		F4C5E7FB2A1ABBE60063A5E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C5E7FA2A1ABBE60063A5E1 /* Main.storyboard */; };
 		F4DA73202A056A66004FE58F /* UserReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA731F2A056A66004FE58F /* UserReviewViewController.swift */; };
 		F4DA73222A05AC8D004FE58F /* TravelFeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA73212A05AC8D004FE58F /* TravelFeeViewController.swift */; };
 		F4E44B1127C940F3007F6295 /* UserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E44B1027C940F3007F6295 /* UserTabViewController.swift */; };
@@ -159,7 +159,6 @@
 		F4B90DC327C709A9004B1FB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4B90DC527C709A9004B1FB1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F4B90DC727C709A9004B1FB1 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
-		F4B90DCA27C709A9004B1FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4B90DCC27C709AB004B1FB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4B90DCF27C709AB004B1FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4B90DD127C709AB004B1FB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -180,6 +179,7 @@
 		F4BD7F4C2A09920500AA0212 /* ReviewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewsTableViewCell.xib; sourceTree = "<group>"; };
 		F4BD7F4F2A09922300AA0212 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
 		F4BD7F512A09965D00AA0212 /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
+		F4C5E7FA2A1ABBE60063A5E1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
 		F4DA731F2A056A66004FE58F /* UserReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReviewViewController.swift; sourceTree = "<group>"; };
 		F4DA73212A05AC8D004FE58F /* TravelFeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelFeeViewController.swift; sourceTree = "<group>"; };
 		F4E44B1027C940F3007F6295 /* UserTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTabViewController.swift; sourceTree = "<group>"; };
@@ -406,7 +406,7 @@
 		F4B90DC227C709A9004B1FB1 /* Taiste */ = {
 			isa = PBXGroup;
 			children = (
-				F4B90DC927C709A9004B1FB1 /* Main.storyboard */,
+				F4C5E7FA2A1ABBE60063A5E1 /* Main.storyboard */,
 				F4B90DD127C709AB004B1FB1 /* Info.plist */,
 				F47031C229F5ADE300981048 /* GoogleService-Info.plist */,
 				F4B90DF327C70A25004B1FB1 /* Resources */,
@@ -705,8 +705,8 @@
 				F481948427C80252002BB9D3 /* HomeTableViewCell.xib in Resources */,
 				F4AE2FEF27CF9B6700F529C5 /* FeedCollectionViewCell.xib in Resources */,
 				F4E44B1B27C96DEF007F6295 /* ChefItemTableViewCell.xib in Resources */,
-				F4B90DCB27C709A9004B1FB1 /* Main.storyboard in Resources */,
 				F47031C329F5ADE300981048 /* GoogleService-Info.plist in Resources */,
+				F4C5E7FB2A1ABBE60063A5E1 /* Main.storyboard in Resources */,
 				F4A080C62A01A11600895938 /* MessagesTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,14 +873,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F4B90DC927C709A9004B1FB1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4B90DCA27C709A9004B1FB1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F4B90DCE27C709AB004B1FB1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -918,7 +910,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -943,7 +935,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -979,7 +971,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -998,7 +990,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -312,7 +312,7 @@ class UserPersonalViewController: UIViewController {
                         storageRef.child("users//\(self.email.text!)/profileImage/\(authResult!.user.uid).png").putData(self.userImageData!)
                     }
                     let data: [String: Any] = ["fullName" : self.fullName.text, "userName" : self.userName.text, "email": self.email.text,  "city" : self.city.text, "state" : self.state.text, "burger" : self.burger, "creative" : self.creative, "lowCal" : self.lowCal, "lowCarb" : self.lowCarb, "pasta" : self.pasta, "healthy" : self.healthy, "vegan" : self.vegan, "seafood" : self.seafood, "workout" : self.workout, "local" : self.local, "region" : self.region, "nation" : self.nation]
-                    let data1: [String: Any] = ["username" : self.userName.text!, "email" : self.email.text!, "chefOrUser" : "user", "fullName" : self.fullName.text]
+                    let data1: [String: Any] = ["username" : self.userName.text!, "email" : self.email.text!, "chefOrUser" : "User", "fullName" : self.fullName.text]
                     let data2: [String: Any] = ["chefOrUser" : "User"]
                     self.db.collection("User").document(authResult!.user.uid).collection("PersonalInfo").document().setData(data)
                     self.db.collection("Usernames").document(authResult!.user.uid).setData(data1)
